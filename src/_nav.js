@@ -23,6 +23,12 @@ import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react-pro'
 const _nav = [
   {
     component: CNavItem,
+    name: 'Api Calls',
+    to: '/api',
+    icon: <CIcon icon={cilEnvelopeOpen} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
     name: 'Dashboard',
     to: '/dashboard',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,

@@ -18,22 +18,18 @@ const AppSidebar = () => {
   return (
     <CSidebar
       position="fixed"
-      visible={!sidebarShow}
-      onVisibleChange={(visible) => {
-        dispatch({ type: 'set', sidebarShow: visible })
-      }}
-    >
+      visible={sidebarShow}>
       <CSidebarBrand className="d-none d-md-flex" to="/">
         <img
           alt='SMN-logo-minimized'
           className="sidebar-brand-full"
           src='foodboot-logo.png'
-          height={35} />
+          height={60} />
         <img
           alt='SMN-logo-minimized'
           className="sidebar-brand-narrow"
           src='foodboot-logo.png'
-          height={35} />
+          height={60} />
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>

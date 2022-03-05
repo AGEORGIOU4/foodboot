@@ -1,5 +1,7 @@
 import React from 'react'
 
+const Api = React.lazy(() => import('./views/api/Api'))
+
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
@@ -117,6 +119,8 @@ const routes = [
   { path: '/apps/email/inbox', name: 'Inbox', exact: true },
   { path: '/apps/email/compose', name: 'Compose', exact: true },
   { path: '/apps/email/message', name: 'Message', exact: true },
+
+  { path: '/api', name: 'Api', component: Api },
 ]
 
 export default routes
