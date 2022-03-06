@@ -1,10 +1,10 @@
 {
-  "name": "@foodboot",
+  "name": "foodboot",
   "version": "1.0.0",
   "description": "Meal Planning App - UCLan Cyprus Final Year Project",
   "homepage": ".",
   "bugs": {
-    "url": ""
+    "url": "https://github.com/AGEORGIOU4/foodboot-frontend/"
   },
   "repository": {
     "type": "git",
