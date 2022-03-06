@@ -49,7 +49,11 @@ const AppHeader = () => {
           <CIcon icon={cilMenu} size="lg" />
         </CHeaderToggler>
         <CHeaderBrand className="mx-auto d-md-none" to="/">
-          <CIcon icon={logo} height={48} alt="Logo" />
+          <img
+            alt='SMN-logo-minimized'
+            className="sidebar-brand-narrow"
+            src='foodboot-logo.png'
+            height={60} />
         </CHeaderBrand>
         <CHeaderNav className="d-none d-md-flex me-auto">
           <CNavItem>
@@ -58,7 +62,7 @@ const AppHeader = () => {
             </CNavLink>
           </CNavItem>
           <CNavItem>
-            <CNavLink href="#">Users</CNavLink>
+            <CNavLink href="#">Customers</CNavLink>
           </CNavItem>
           <CNavItem>
             <CNavLink href="#">Settings</CNavLink>
