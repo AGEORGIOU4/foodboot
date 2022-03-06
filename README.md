@@ -1,1 +1,1 @@
-Final Year Project
+Final Year Thesis Project. Frontend written in React
