@@ -19,7 +19,7 @@ class App extends Component {
   render() {
     return (
       <HashRouter>
-        <Suspense fallback={<CSpinner color="primary" />}>
+        <Suspense fallback={<CSpinner variant="grow" color="primary" />}>
           <Switch>
             <Route exact path="/login" name="Login Page" render={(props) => <Login {...props} />} />
             <Route

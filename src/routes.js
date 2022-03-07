@@ -1,6 +1,9 @@
 import React from 'react'
 
-const Api = React.lazy(() => import('./views/api/Api'))
+const Users = React.lazy(() => import('./views/users/Users'))
+
+const Customers = React.lazy(() => import('./views/customers/Customers'))
+const CreateCustomer = React.lazy(() => import('./views/customers/Create-Customer'))
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -120,7 +123,10 @@ const routes = [
   { path: '/apps/email/compose', name: 'Compose', exact: true },
   { path: '/apps/email/message', name: 'Message', exact: true },
 
-  { path: '/api', name: 'Api', component: Api },
+  { path: '/users', name: 'Users', component: Users },
+
+  { path: '/customers', name: 'Customers', component: Customers },
+  { path: '/create-customer', name: 'Create Customer', component: CreateCustomer },
 ]
 
 export default routes

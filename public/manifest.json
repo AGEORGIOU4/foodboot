@@ -3,8 +3,8 @@
   "name": "foodboot",
   "icons": [
     {
-      "src": "./assets/img/favicon.png",
-      "sizes": "100x100",
+      "src": "./foodboot-logo.png",
+      "sizes": "250x250",
       "type": "image/png"
     }
   ],
