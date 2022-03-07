@@ -4,7 +4,7 @@ import CustomersTable from './CustomersTable';
 import axios from 'axios';
 import { cilUserPlus } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
-import { customersUrl } from 'src/components/Common';
+import { mainUrl } from 'src/components/Common';
 
 export default function Customers() {
   const [data, setData] = useState(null);
@@ -13,7 +13,7 @@ export default function Customers() {
   React.useEffect(() => {
     setLoading(true);
 
-    axios.get(customersUrl + '/customers')
+    axios.get(mainUrl + '/customers')
       .then((response) => {
         console.log(response.data)
         setData(response.data);

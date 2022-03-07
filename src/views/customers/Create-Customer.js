@@ -10,7 +10,7 @@ import {
 } from '@coreui/react-pro'
 import axios from 'axios';
 import { SwalMixin } from 'src/components/SwalMixin';
-import { customersUrl } from 'src/components/Common';
+import { mainUrl } from 'src/components/Common';
 
 const CreateCustomer = () => {
   const [name, setName] = useState();
@@ -31,7 +31,7 @@ const CreateCustomer = () => {
     } else {
       setLoading(true);
 
-      axios.post(customersUrl + '/customers/create', {
+      axios.post(mainUrl + '/customers/create', {
         "name": name,
         "surname": surname,
         "email": email,
