@@ -13,19 +13,31 @@ import {
   cilMap,
   cilNotes,
   cilPencil,
+  cilPeople,
   cilPuzzle,
   cilSpeedometer,
   cilSpreadsheet,
   cilStar,
+  cilUser,
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react-pro'
 
 const _nav = [
   {
+    component: CNavTitle,
+    name: 'Project',
+  },
+  {
     component: CNavItem,
-    name: 'Api Calls',
-    to: '/api',
-    icon: <CIcon icon={cilEnvelopeOpen} customClassName="nav-icon" />,
+    name: 'Users',
+    to: '/users',
+    icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Customers',
+    to: '/customers',
+    icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,

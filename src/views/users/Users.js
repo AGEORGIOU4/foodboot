@@ -1,18 +1,17 @@
 import React, { useState } from 'react'
-import { CCard, CCardBody, CCardHeader } from '@coreui/react-pro'
-import CustomersTable from './CustomersTable';
+import { CButton, CCard, CCardBody, CCardHeader } from '@coreui/react-pro'
+import UsersTable from './UsersTable';
 import axios from 'axios';
+import { cilUserPlus } from '@coreui/icons';
+import CIcon from '@coreui/icons-react';
 
-export default function Api() {
+export default function Users() {
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   React.useEffect(() => {
-    // GET request using axios inside useEffect React hook
-    axios.get('http://localhost:5000/customers')
-      .then(response => console.log(response.data));
-  }, []);
+    setLoading(true);
 
-  React.useEffect(() => {
     var options = {
       method: 'GET',
       url: 'https://foodboot.eu.auth0.com/api/v2/users',
@@ -23,18 +22,20 @@ export default function Api() {
     axios.request(options).then((response) => {
       console.log(response.data)
       setData(response.data);
+      setLoading(false);
     }).catch(function (error) {
       console.error(error);
+      setLoading(false);
     });
   }, []);
 
   return (
     <CCard className="mb-4">
       <CCardHeader>
-        <strong>Customers</strong> <small>Table</small>
+        <strong>Users</strong>
       </CCardHeader>
       <CCardBody>
-        <CustomersTable data={data} />
+        <UsersTable data={data} loading={loading} />
       </CCardBody>
     </CCard >
   )
