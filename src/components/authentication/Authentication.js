@@ -21,7 +21,7 @@ function SetRole(user_id, user_metadata) {
           'content-type': 'application/json'
         },
         data: {
-          user_metadata: { role: (result.value) ? 'Nutritionist' : 'Customer' },
+          user_metadata: { role: (result.value) ? 'Nutritionist' : 'Client' },
         }
       };
 

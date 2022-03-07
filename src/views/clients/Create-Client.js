@@ -12,7 +12,7 @@ import axios from 'axios';
 import { SwalMixin } from 'src/components/SweetAlerts/Swal';
 import { mainUrl } from 'src/components/Common';
 
-const CreateCustomer = () => {
+const CreateClient = () => {
   const [name, setName] = useState();
   const [surname, setSurname] = useState();
   const [email, setEmail] = useState();
@@ -31,7 +31,7 @@ const CreateCustomer = () => {
     } else {
       setLoading(true);
 
-      axios.post(mainUrl + '/customers/create', {
+      axios.post(mainUrl + '/clients/create', {
         "name": name,
         "surname": surname,
         "email": email,
@@ -40,7 +40,7 @@ const CreateCustomer = () => {
       })
         .then(function (response) {
           console.log(response);
-          SwalMixin('success', 'Added!');
+          SwalMixin('success', 'Created!');
           setLoading(false);
         })
         .catch(function (error) {
@@ -102,4 +102,4 @@ const CreateCustomer = () => {
   )
 }
 
-export default CreateCustomer
+export default CreateClient

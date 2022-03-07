@@ -2,7 +2,7 @@ import React from 'react'
 import { CSmartTable } from '@coreui/react-pro'
 import { FormatTimestamp, removeTime } from 'src/components/Common'
 
-const CustomersTable = (props) => {
+const ClientsTable = (props) => {
   const columns = [
     { key: 'name' },
     { key: 'surname' },
@@ -42,4 +42,4 @@ const CustomersTable = (props) => {
   )
 }
 
-export default CustomersTable
+export default ClientsTable
