@@ -18,6 +18,7 @@ const CustomersTable = (props) => {
       tableProps={{
         striped: true,
         hover: true,
+        responsive: true
       }}
       activePage={1}
       items={props.data}

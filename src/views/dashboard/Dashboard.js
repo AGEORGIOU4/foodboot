@@ -50,6 +50,7 @@ import avatar3 from 'src/assets/images/avatars/3.jpg'
 import avatar4 from 'src/assets/images/avatars/4.jpg'
 import avatar5 from 'src/assets/images/avatars/5.jpg'
 import avatar6 from 'src/assets/images/avatars/6.jpg'
+import Authentication from 'src/components/authentication/Authentication.js'
 
 const WidgetsDropdown = lazy(() => import('../widgets/WidgetsDropdown.js'))
 const WidgetsBrand = lazy(() => import('../widgets/WidgetsBrand.js'))
@@ -185,6 +186,7 @@ const Dashboard = () => {
       <WidgetsDropdown />
       <CCard className="mb-4">
         <CCardBody>
+          <Authentication />
           <CRow>
             <CCol sm={5}>
               <h4 id="traffic" className="card-title mb-0">

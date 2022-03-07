@@ -5,6 +5,8 @@ const Users = React.lazy(() => import('./views/users/Users'))
 const Customers = React.lazy(() => import('./views/customers/Customers'))
 const CreateCustomer = React.lazy(() => import('./views/customers/Create-Customer'))
 
+const Profile = React.lazy(() => import('./views/profile/Profile'))
+
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
@@ -127,6 +129,8 @@ const routes = [
 
   { path: '/customers', name: 'Customers', component: Customers },
   { path: '/create-customer', name: 'Create Customer', component: CreateCustomer },
+
+  { path: '/profile', name: 'Profile', component: Profile },
 ]
 
 export default routes

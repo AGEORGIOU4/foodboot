@@ -5,7 +5,8 @@ const UsersTable = (props) => {
   const columns = [
     { key: 'name' },
     { key: 'email' },
-    { key: 'picture', _style: { width: '1%' }, filter: false, sorter: false, },
+    { key: 'user_metadata', 'label': 'Role' },
+    { key: 'picture', label: '', _style: { width: '1%' }, filter: false, sorter: false, },
   ]
 
   return (
@@ -14,9 +15,10 @@ const UsersTable = (props) => {
       clickableRows
       tableProps={{
         striped: true,
-        hover: true,
+        // hover: true,
+        responsive: true
       }}
-      activePage={3}
+      activePage={1}
       items={props.data}
       columns={columns}
       columnFilter
@@ -28,11 +30,16 @@ const UsersTable = (props) => {
       columnSorter
       pagination
       scopedColumns={{
+        user_metadata: (item) => (
+          <td>
+            {(item.user_metadata) ? item.user_metadata.role : 'N/A'}
+          </td>
+        ),
         picture: (item) => (
           <td>
             <CImage src={(item.picture) ? item.picture : "avatar.png"}
               width="36" height="36"
-              shape="rounded-circle" />
+              rounded={true} />
           </td>
         ),
       }}

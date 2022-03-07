@@ -1,5 +1,4 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   CButtonGroup,
@@ -20,12 +19,7 @@ import { AppBreadcrumb } from './index'
 
 import {
   AppHeaderDropdown,
-  AppHeaderDropdownMssg,
-  AppHeaderDropdownNotif,
-  AppHeaderDropdownTasks,
 } from './header/index'
-
-import { logo } from 'src/assets/brand/logo'
 
 const AppHeader = () => {
   const dispatch = useDispatch()
@@ -57,15 +51,10 @@ const AppHeader = () => {
         </CHeaderBrand>
         <CHeaderNav className="d-none d-md-flex me-auto">
           <CNavItem>
-            <CNavLink to="/dashboard" component={NavLink} activeClassName="active">
-              Dashboard
-            </CNavLink>
+            <CNavLink href="#/dashboard">Dashboard</CNavLink>
           </CNavItem>
           <CNavItem>
-            <CNavLink href="#">Customers</CNavLink>
-          </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">Settings</CNavLink>
+            <CNavLink href="#/customers">Customers</CNavLink>
           </CNavItem>
         </CHeaderNav>
         <CHeaderNav className="ms-auto me-4">
@@ -92,11 +81,6 @@ const AppHeader = () => {
             />
           </CButtonGroup>
         </CHeaderNav>
-        <CHeaderNav>
-          <AppHeaderDropdownNotif />
-          <AppHeaderDropdownTasks />
-          <AppHeaderDropdownMssg />
-        </CHeaderNav>
         <CHeaderNav className="ms-3 me-4">
           <AppHeaderDropdown />
         </CHeaderNav>
@@ -106,10 +90,6 @@ const AppHeader = () => {
         >
           <CIcon icon={cilApplicationsSettings} size="lg" />
         </CHeaderToggler>
-      </CContainer>
-      <CHeaderDivider />
-      <CContainer fluid>
-        <AppBreadcrumb />
       </CContainer>
     </CHeader>
   )

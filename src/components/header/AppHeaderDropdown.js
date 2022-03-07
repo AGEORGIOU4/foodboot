@@ -23,7 +23,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import avatar from './../../assets/images/avatars/avatar.png'
 
 const AppHeaderDropdown = () => {
-  const { user, isAuthenticated, isLoading, loginWithRedirect, logout } = useAuth0();
+  const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
   return (
     <CDropdown variant="nav-item" alignment="end">
@@ -47,7 +47,7 @@ const AppHeaderDropdown = () => {
           </CBadge>
         </CDropdownItem>
         <CDropdownHeader className="bg-light fw-semibold py-2">Settings</CDropdownHeader>
-        <CDropdownItem href="#">
+        <CDropdownItem href="#/profile">
           <CIcon icon={cilUser} className="me-2" />
           Profile
         </CDropdownItem>
@@ -56,11 +56,11 @@ const AppHeaderDropdown = () => {
           Settings
         </CDropdownItem>
         <CDropdownDivider />
-        <CDropdownItem href="#" onClick={() => loginWithRedirect()}>
+        <CDropdownItem onClick={() => loginWithRedirect()}>
           <CIcon icon={cilArrowCircleRight} className="me-2" />
           Login
         </CDropdownItem>
-        <CDropdownItem href="#" onClick={() => logout({ returnTo: window.location.origin })}>
+        <CDropdownItem onClick={() => logout({ returnTo: window.location.origin })}>
           <CIcon icon={cilArrowCircleLeft} className="me-2" />
           Logout
         </CDropdownItem>

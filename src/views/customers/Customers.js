@@ -5,6 +5,7 @@ import axios from 'axios';
 import { cilUserPlus } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import { mainUrl } from 'src/components/Common';
+import { SwalMixin } from 'src/components/SweetAlerts/Swal';
 
 export default function Customers() {
   const [data, setData] = useState(null);
@@ -18,8 +19,18 @@ export default function Customers() {
         console.log(response.data)
         setData(response.data);
         setLoading(false);
-      }).catch(function (error) {
-        console.error(error);
+      })
+      .catch(function (error) {
+        if (error.response) {
+          setLoading(false);
+          console.log(error.response.data);
+          SwalMixin('error', error.response.data.error);
+        } else if (error.request) {
+          setLoading(false);
+          console.log(error.request);
+          SwalMixin('error', error);
+        }
+        console.log(error);
         setLoading(false);
       });
   }, []);

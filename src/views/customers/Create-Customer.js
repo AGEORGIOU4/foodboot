@@ -9,7 +9,7 @@ import {
   CSpinner,
 } from '@coreui/react-pro'
 import axios from 'axios';
-import { SwalMixin } from 'src/components/SwalMixin';
+import { SwalMixin } from 'src/components/SweetAlerts/Swal';
 import { mainUrl } from 'src/components/Common';
 
 const CreateCustomer = () => {
@@ -44,8 +44,16 @@ const CreateCustomer = () => {
           setLoading(false);
         })
         .catch(function (error) {
-          console.log(error.response.data);
-          SwalMixin('error', error.response.data.error);
+          if (error.response) {
+            setLoading(false);
+            console.log(error.response.data);
+            SwalMixin('error', error.response.data.error);
+          } else if (error.request) {
+            setLoading(false);
+            console.log(error.request);
+            SwalMixin('error', error);
+          }
+          console.log(error);
           setLoading(false);
         });
     }
