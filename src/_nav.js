@@ -29,26 +29,27 @@ const _nav = [
   },
   {
     component: CNavItem,
+    name: 'Dashboard',
+    to: '/dashboard',
+    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+    badge: {
+      color: 'success-gradient',
+      text: 'NEW',
+    },
+  },
+  {
+    component: CNavItem,
     name: 'Users',
     to: '/users',
     icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
-    name: 'Customers',
-    to: '/customers',
+    name: 'Clients',
+    to: '/clients',
     icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
   },
-  {
-    component: CNavItem,
-    name: 'Dashboard',
-    to: '/dashboard',
-    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
-    badge: {
-      color: 'info-gradient',
-      text: 'NEW',
-    },
-  },
+
   {
     component: CNavTitle,
     name: 'Theme',

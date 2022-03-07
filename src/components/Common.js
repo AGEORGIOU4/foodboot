@@ -1,6 +1,6 @@
 export const mainUrl = (window.location.hostname == 'localhost') ? 'http://localhost:5000' : 'https://foodboot-backend.herokuapp.com';
 
-console.log(mainUrl);
+console.log("Fetching data from " + mainUrl);
 
 export const FormatTimestamp = (props) => {
   var date = new Date(props.date);

@@ -2,8 +2,10 @@ import React from 'react'
 
 const Users = React.lazy(() => import('./views/users/Users'))
 
-const Customers = React.lazy(() => import('./views/customers/Customers'))
-const CreateCustomer = React.lazy(() => import('./views/customers/Create-Customer'))
+const Clients = React.lazy(() => import('./views/clients/Clients'))
+const CreateClient = React.lazy(() => import('./views/clients/Create-Client'))
+
+const Profile = React.lazy(() => import('./views/profile/Profile'))
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -125,8 +127,10 @@ const routes = [
 
   { path: '/users', name: 'Users', component: Users },
 
-  { path: '/customers', name: 'Customers', component: Customers },
-  { path: '/create-customer', name: 'Create Customer', component: CreateCustomer },
+  { path: '/clients', name: 'Clients', component: Clients },
+  { path: '/create-client', name: 'Create Client', component: CreateClient },
+
+  { path: '/profile', name: 'Profile', component: Profile },
 ]
 
 export default routes

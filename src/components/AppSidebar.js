@@ -24,12 +24,12 @@ const AppSidebar = () => {
           alt='SMN-logo-minimized'
           className="sidebar-brand-full"
           src='foodboot-logo.png'
-          height={60} />
+          height={50} />
         <img
           alt='SMN-logo-minimized'
           className="sidebar-brand-narrow"
           src='foodboot-logo.png'
-          height={60} />
+          height={50} />
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>
