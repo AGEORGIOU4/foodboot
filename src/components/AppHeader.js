@@ -13,9 +13,8 @@ import {
   CNavItem,
 } from '@coreui/react-pro'
 import CIcon from '@coreui/icons-react'
-import { cilApplicationsSettings, cilMenu, cilMoon, cilSun } from '@coreui/icons'
+import { cilMenu } from '@coreui/icons'
 
-import { AppBreadcrumb } from './index'
 
 import {
   AppHeaderDropdown,
@@ -57,39 +56,10 @@ const AppHeader = () => {
             <CNavLink href="#/clients">Clients</CNavLink>
           </CNavItem>
         </CHeaderNav>
-        <CHeaderNav className="ms-auto me-4">
-          <CButtonGroup aria-label="Theme switch">
-            <CFormCheck
-              type="radio"
-              button={{ color: 'primary' }}
-              name="theme-switch"
-              id="btn-light-theme"
-              autoComplete="off"
-              label={<CIcon icon={cilSun} />}
-              checked={theme === 'default'}
-              onChange={() => dispatch({ type: 'set', theme: 'light' })}
-            />
-            <CFormCheck
-              type="radio"
-              button={{ color: 'primary' }}
-              name="theme-switch"
-              id="btn-dark-theme"
-              autoComplete="off"
-              label={<CIcon icon={cilMoon} />}
-              checked={theme === 'dark'}
-              onChange={() => dispatch({ type: 'set', theme: 'dark' })}
-            />
-          </CButtonGroup>
-        </CHeaderNav>
+
         <CHeaderNav className="ms-3 me-4">
           <AppHeaderDropdown />
         </CHeaderNav>
-        <CHeaderToggler
-          className="px-md-0 me-md-3"
-          onClick={() => dispatch({ type: 'set', asideShow: !asideShow })}
-        >
-          <CIcon icon={cilApplicationsSettings} size="lg" />
-        </CHeaderToggler>
       </CContainer>
     </CHeader>
   )

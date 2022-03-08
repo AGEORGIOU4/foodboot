@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { CSidebar, CSidebarBrand, CSidebarNav } from '@coreui/react-pro'
+import { CLink, CSidebar, CSidebarBrand, CSidebarNav } from '@coreui/react-pro'
 
 import { AppSidebarNav } from './AppSidebarNav'
 
@@ -20,16 +20,18 @@ const AppSidebar = () => {
       position="fixed"
       visible={sidebarShow}>
       <CSidebarBrand className="d-none d-md-flex" to="/">
-        <img
-          alt='SMN-logo-minimized'
-          className="sidebar-brand-full"
-          src='foodboot-logo.png'
-          height={50} />
-        <img
-          alt='SMN-logo-minimized'
-          className="sidebar-brand-narrow"
-          src='foodboot-logo.png'
-          height={50} />
+        <CLink disabled href='/'>
+          <img
+            alt='SMN-logo-minimized'
+            className="sidebar-brand-full"
+            src='foodboot-logo.png'
+            height={50} />
+          <img
+            alt='SMN-logo-minimized'
+            className="sidebar-brand-narrow"
+            src='foodboot-logo.png'
+            height={50} />
+        </CLink>
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>
