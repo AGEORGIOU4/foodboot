@@ -10,3 +10,14 @@ export const FormatTimestamp = (props) => {
 
   return formattedDate;
 }
+
+export function FormatTimestampFunction(date) {
+  var date = new Date(date);
+  var setDate = (date.getDate() < 10) ? '0' + date.getDate() : date.getDate();
+  var incrementMonth = date.getMonth() + 1;
+  var setMonth = (incrementMonth) < 10 ? '0' + incrementMonth : incrementMonth;
+
+  var formattedDate = date.getFullYear() + '-' + setMonth + '-' + setDate;
+
+  return formattedDate;
+}

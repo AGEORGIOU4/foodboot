@@ -1,15 +1,25 @@
 import React, { useState } from "react";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
-import { CButton, CRow, CCol, CImage, CCard, CCardBody, CInputGroupText, CInputGroup, CFormInput, CFormSelect } from "@coreui/react-pro";
-import CIcon from "@coreui/icons-react";
-import { cilPencil } from "@coreui/icons";
+import { CButton, CRow, CCol, CImage, CCard, CCardBody, CInputGroupText, CInputGroup, CFormInput, CFormSelect, CForm, CFormFeedback } from "@coreui/react-pro";
 import { CSpinner } from "@coreui/react-pro";
-import { auth0ApiCall } from "src/components/apiCalls/auth0";
+import { auth0ApiCall, EditUser } from "src/components/apiCalls/auth0";
+import { cilSave } from "@coreui/icons";
+import CIcon from "@coreui/icons-react";
+import { SwalMixin } from "src/components/SweetAlerts/Swal";
 
-const EditProfile = props => {
-  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
+const EditProfile = () => {
+  const { user } = useAuth0();
   const [userData, setUserData] = useState("");
   const [loading, setLoading] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+
+  var userProfile = "";
+
+  const [nickname, setNickname] = useState();
+  const [given_name, setGiven_Name] = useState();
+  const [family_name, setFamily_Name] = useState();
+  const [email, setEmail] = useState();
+  const [role, setRole] = useState();
 
   React.useEffect(() => {
     setLoading(true);
@@ -17,74 +27,124 @@ const EditProfile = props => {
       auth0ApiCall('GET', 'https://foodboot.eu.auth0.com/api/v2/users', 'q:' + user.email, ", search_engine: 'v3'", true)
         .then(function (value) {
           setUserData(value);
+
+          setNickname(value.nickname);
+          setGiven_Name(value.given_name);
+          setFamily_Name(value.family_name);
+          setEmail(value.email)
+          setRole(value.user_metadata.role)
+
+          if (value.user_id.includes("google")) {
+            setDisabled(true);
+            SwalMixin('error', 'Google accounts cannot be modified')
+          }
           setLoading(false);
         }));
   }, []);
 
+  const [validated, setValidated] = useState(false)
+
+  const handleSubmit = (event) => {
+    const form = event.currentTarget
+
+    if (form.checkValidity() === false) {
+      event.preventDefault()
+      event.stopPropagation()
+    } else {
+      userProfile = {
+        given_name: given_name,
+        family_name: family_name,
+        email: email,
+        user_metadata: { role: role }
+      }
+
+      // Update User
+      if (!disabled) {
+        setLoading(true);
+        Promise.resolve(
+          auth0ApiCall('GET', 'https://foodboot.eu.auth0.com/api/v2/users', 'q: ' + user.email + ', search_engine: v3', true)
+            .then(function (value) {
+              EditUser(userData.user_id, userProfile);
+              setLoading(false);
+            }))
+        setValidated(true)
+      }
+    }
+  }
+
   return (
     <>
-      <CRow>
-        <CCol md={12}>
-          <CCard>
-            <CCardBody style={{ display: (loading) ? "none" : "block" }}>
+      <CForm
+        className="row g-3 needs-validation"
+        noValidate
+        validated={validated}
+      >
+        <CRow>
+          <CCol md={12}>
+            <CCard>
+              <CCardBody style={{ display: (loading) ? "none" : "block" }}>
+                <CCol md={12}>
+                  <CCol style={{ textAlign: 'center' }}>
+                    <CImage src={(user.picture) ? user.picture : "avatar.png"}
+                      width={80}
+                      rounded={true}
+                    />
+                  </CCol>
 
-              <CCol md={12}>
-                <CCol style={{ textAlign: 'center' }}>
-                  <CImage src={(user.picture) ? user.picture : "avatar.png"}
-                    width={80}
-                    rounded={true}
-                  />
+                  <div style={{ width: "100%" }}>
+                    <hr></hr>
+                  </div>
+
+                  <CInputGroup size="sm" className="mb-3">
+                    <CInputGroupText id="inputGroup-sizing-sm">Nickname</CInputGroupText>
+                    <CFormInput aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value={nickname} disabled />
+                    <CFormFeedback valid>Looks good!</CFormFeedback>
+                  </CInputGroup>
+
+                  <CInputGroup size="sm" className="mb-3">
+                    <CInputGroupText id="inputGroup-sizing-sm">First Name</CInputGroupText>
+                    <CFormInput aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value={given_name} type="text" id="validationCustom02" required onChange={e => setGiven_Name(e.target.value)} disabled={disabled} />
+                  </CInputGroup>
+
+                  <CInputGroup size="sm" className="mb-3">
+                    <CInputGroupText id="inputGroup-sizing-sm">Last Name</CInputGroupText>
+                    <CFormInput aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value={family_name} type="text" id="validationCustom02" required onChange={e => setFamily_Name(e.target.value)} disabled={disabled} />
+                  </CInputGroup>
+
+                  <CInputGroup size="sm" className="mb-3">
+                    <CInputGroupText id="inputGroup-sizing-sm">Email</CInputGroupText>
+                    <CFormInput aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value={email} type="text" id="validationCustom03" required onChange={e => setEmail(e.target.value)} disabled={disabled} />
+                  </CInputGroup>
+
+                  <CInputGroup size="sm" className="mb-3">
+                    <CInputGroupText component="label" htmlFor="inputGroupSelect01">Roles</CInputGroupText>
+                    <CFormSelect id="inputGroupSelect01" required value={role} onChange={e => setRole(e.target.value)} disabled={disabled}>
+                      <option>Choose...</option>
+                      <option value="Nutritionist">Nutritionist</option>
+                      <option value="Client">Client</option>
+                    </CFormSelect>
+                  </CInputGroup>
                 </CCol>
 
                 <div style={{ width: "100%" }}>
                   <hr></hr>
                 </div>
 
-                <CInputGroup size="sm" className="mb-3">
-                  <CInputGroupText id="inputGroup-sizing-sm">Nickname</CInputGroupText>
-                  <CFormInput aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder={userData.nickname} />
-                </CInputGroup>
+                <CCol md={12} style={{ textAlign: 'end' }}>
+                  <CButton disabled={loading} color="info" variant="outline" type="button" onClick={handleSubmit}>
+                    Update <CIcon icon={cilSave} />
+                  </CButton>
+                </CCol>
+              </CCardBody>
 
-                <CInputGroup size="sm" className="mb-3">
-                  <CInputGroupText id="inputGroup-sizing-sm">First Name</CInputGroupText>
-                  <CFormInput aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder={userData.given_name} />
-                </CInputGroup>
+              <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
+                <CSpinner color='primary' variant='grow' />
+              </CCardBody>
 
-                <CInputGroup size="sm" className="mb-3">
-                  <CInputGroupText id="inputGroup-sizing-sm">Last Name</CInputGroupText>
-                  <CFormInput aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder={userData.family_name} />
-                </CInputGroup>
-
-                <CInputGroup size="sm" className="mb-3">
-                  <CInputGroupText id="inputGroup-sizing-sm">Email</CInputGroupText>
-                  <CFormInput aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder={userData.email} />
-                </CInputGroup>
-
-                <CInputGroup size="sm" className="mb-3">
-                  <CInputGroupText component="label" htmlFor="inputGroupSelect01">Roles</CInputGroupText>
-                  <CFormSelect id="inputGroupSelect01" >
-                    <option>Choose...</option>
-                    <option value="Nutritionist">Nutritionist</option>
-                    <option value="Client">Client</option>
-                  </CFormSelect>
-                </CInputGroup>
-              </CCol>
-
-              <div style={{ width: "100%" }}>
-                <hr></hr>
-              </div>
-
-              <CButton color="info" variant="outline">Edit <CIcon icon={cilPencil} /></CButton>
-
-            </CCardBody>
-
-            <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
-              <CSpinner color='primary' variant='grow' />
-            </CCardBody>
-
-          </CCard>
-        </CCol>
-      </CRow >
+            </CCard>
+          </CCol>
+        </CRow >
+      </CForm>
     </>
   )
 }

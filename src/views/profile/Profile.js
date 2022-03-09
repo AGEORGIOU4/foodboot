@@ -55,7 +55,7 @@ const Profile = props => {
                 </CCol>
 
                 <CCol style={{ padding: "10px" }}>
-                  <span><strong>Email:</strong></span> {user.email}
+                  <span><strong>Email:</strong></span> {userData.email}
                 </CCol>
 
                 <CCol style={{ padding: "10px" }}>
@@ -67,9 +67,11 @@ const Profile = props => {
                 <hr></hr>
               </div>
 
-              <Route render={({ history }) => (
-                <CButton color="info" variant="outline" onClick={() => { history.push({ pathname: "/edit-profile", state: userData }) }} >Edit <CIcon icon={cilPencil} /></CButton>
-              )} />
+              <CCol md={12} style={{ textAlign: 'end' }}>
+                <Route render={({ history }) => (
+                  <CButton color="info" variant="outline" onClick={() => { history.push({ pathname: "/edit-profile", state: userData }) }} >Edit <CIcon icon={cilPencil} /></CButton>
+                )} />
+              </CCol>
 
               <CCol style={{ textAlign: 'center', marginBottom: '20px' }}>
                 <Link to="/profile" style={{ color: '#e55353' }} onClick={() => removeUser(userData, logout)}> Permanently delete your account</Link>

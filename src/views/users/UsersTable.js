@@ -1,12 +1,17 @@
 import React from 'react'
-import { CImage, CSmartTable } from '@coreui/react-pro'
+import { CImage, CSmartTable, CButton } from '@coreui/react-pro'
+import CIcon from '@coreui/icons-react'
+import { cilPencil, cilTrash } from '@coreui/icons'
 
 const UsersTable = (props) => {
   const columns = [
-    { key: 'name' },
+    { key: 'given_name' },
+    { key: 'family_name' },
     { key: 'email' },
     { key: 'user_metadata', 'label': 'Role' },
-    { key: 'picture', label: '', _style: { width: '1%' }, filter: false, sorter: false, },
+    { key: 'picture', label: '', filter: false, sorter: false, },
+    { key: 'edit', label: '', _style: { width: '0%' }, sorter: false, filter: false },
+    { key: 'remove', label: '', _style: { width: '0%' }, sorter: false, filter: false },
   ]
 
   return (
@@ -15,7 +20,7 @@ const UsersTable = (props) => {
       clickableRows
       tableProps={{
         striped: true,
-        // hover: true,
+        hover: true,
         responsive: true
       }}
       activePage={1}
@@ -42,6 +47,34 @@ const UsersTable = (props) => {
               rounded={true} />
           </td>
         ),
+        edit:
+          (item) => (
+            <td>
+              <CButton
+                size="sm"
+                color='success'
+                variant="outline"
+                onClick={() => {
+                  //   this.removeAdmin(item.email)
+                }}
+
+              ><CIcon icon={cilPencil} /></CButton>
+            </td>
+          ),
+        remove:
+          (item) => (
+            <td>
+              <CButton
+                size="sm"
+                color='danger'
+                variant="outline"
+                onClick={() => {
+                  //   this.removeAdmin(item.email)
+                }}
+
+              ><CIcon icon={cilTrash} /></CButton>
+            </td>
+          ),
       }}
     />
   )

@@ -4,6 +4,7 @@ const Users = React.lazy(() => import('./views/users/Users'))
 
 const Clients = React.lazy(() => import('./views/clients/Clients'))
 const CreateClient = React.lazy(() => import('./views/clients/Create-Client'))
+const EditClient = React.lazy(() => import('./views/clients/Edit-Client'))
 
 const Profile = React.lazy(() => import('./views/profile/Profile'))
 const EditProfile = React.lazy(() => import('./views/profile/Edit-Profile'))
@@ -130,6 +131,7 @@ const routes = [
 
   { path: '/clients', name: 'Clients', component: Clients },
   { path: '/create-client', name: 'Create Client', component: CreateClient },
+  { path: '/edit-client', name: 'Edit Client', component: EditClient },
 
   { path: '/profile', name: 'Profile', component: Profile },
   { path: '/edit-profile', name: 'Edit Profile', component: EditProfile },
