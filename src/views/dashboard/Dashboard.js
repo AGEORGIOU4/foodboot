@@ -1,4 +1,5 @@
-import React, { lazy } from 'react'
+import React, { lazy, useState } from 'react'
+import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react'
 
 import {
   CAvatar,
@@ -50,12 +51,29 @@ import avatar3 from 'src/assets/images/avatars/3.jpg'
 import avatar4 from 'src/assets/images/avatars/4.jpg'
 import avatar5 from 'src/assets/images/avatars/5.jpg'
 import avatar6 from 'src/assets/images/avatars/6.jpg'
-import Authentication from 'src/components/authentication/Authentication.js'
+import { auth0ApiCall, SetUserInfo } from 'src/components/apiCalls/auth0.js'
 
 const WidgetsDropdown = lazy(() => import('../widgets/WidgetsDropdown.js'))
 const WidgetsBrand = lazy(() => import('../widgets/WidgetsBrand.js'))
 
 const Dashboard = () => {
+  const { user } = useAuth0();
+  var userData = "";
+
+  // Update User if missing data
+  React.useEffect(() => {
+    Promise.resolve(
+      auth0ApiCall('GET', 'https://foodboot.eu.auth0.com/api/v2/users', 'q: ' + user.email + ', search_engine: v3', true)
+        .then(function (value) {
+          userData = value;
+          if (!userData.given_name || !userData.family_name || !userData.user_metadata) {
+            SetUserInfo(userData.user_id, userData.given_name, userData.family_name, userData.user_metadata);
+          }
+        }))
+  });
+
+
+
   const random = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
@@ -183,10 +201,8 @@ const Dashboard = () => {
 
   return (
     <>
-      <WidgetsDropdown />
       <CCard className="mb-4">
         <CCardBody>
-          <Authentication />
           <CRow>
             <CCol sm={5}>
               <h4 id="traffic" className="card-title mb-0">
@@ -471,4 +487,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default withAuthenticationRequired(Dashboard)
