@@ -26,20 +26,20 @@ const Clients = () => {
       <CCard className="mb-4">
         <CCardHeader>
           <strong>Clients</strong>
+
+          <CButton
+            href='#/create-client'
+            className="me-1 float-end"
+            size="sm"
+            color='success'
+            variant="ghost"
+          ><CIcon icon={cilUserPlus} /> Create
+          </CButton>
+
         </CCardHeader>
         <CCardBody>
           <ClientsTable data={data} loading={loading} />
         </CCardBody>
-        <CCardFooter>
-          <CLink disabled href='#/create-client'>
-            <CCol md={12} style={{ textAlign: 'end' }}>
-              <CButton variant='outline' color='info'>
-                <CIcon icon={cilUserPlus} className="me-2" />
-                Create Client
-              </CButton>
-            </CCol>
-          </CLink>
-        </CCardFooter>
       </CCard >
     </>
   )

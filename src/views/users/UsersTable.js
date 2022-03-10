@@ -5,11 +5,11 @@ import { cilPencil, cilTrash } from '@coreui/icons'
 
 const UsersTable = (props) => {
   const columns = [
+    { key: 'picture', label: '', filter: false, sorter: false, },
     { key: 'given_name' },
     { key: 'family_name' },
     { key: 'email' },
     { key: 'user_metadata', 'label': 'Role' },
-    { key: 'picture', label: '', filter: false, sorter: false, },
     { key: 'edit', label: '', _style: { width: '0%' }, sorter: false, filter: false },
     { key: 'remove', label: '', _style: { width: '0%' }, sorter: false, filter: false },
   ]
@@ -26,7 +26,7 @@ const UsersTable = (props) => {
       activePage={1}
       items={props.data}
       columns={columns}
-      columnFilter
+      // columnFilter
       tableFilter
       cleaner
       loading={props.loading}
@@ -53,7 +53,7 @@ const UsersTable = (props) => {
               <CButton
                 size="sm"
                 color='success'
-                variant="outline"
+                variant="ghost"
                 onClick={() => {
                   //   this.removeAdmin(item.email)
                 }}
@@ -67,7 +67,7 @@ const UsersTable = (props) => {
               <CButton
                 size="sm"
                 color='danger'
-                variant="outline"
+                variant="ghost"
                 onClick={() => {
                   //   this.removeAdmin(item.email)
                 }}

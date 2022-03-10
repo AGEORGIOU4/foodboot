@@ -1,4 +1,5 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 import { SwalMixin } from "../SweetAlerts/Swal";
 
 export async function restApiGet(url) {
@@ -21,42 +22,42 @@ export async function restApiGet(url) {
   return data;
 }
 
-export async function restApiPost(url, object) {
+export async function restApiPost(url, object, alertMessage) {
   var data = "";
 
   await axios.post(url, object).then(function (response) {
     console.log(response.data)
     data = response.data;
-    SwalMixin('success', 'Created!');
+    SwalMixin('success', alertMessage, 'bottom-end');
     return data;
   }).catch(function (error) {
     if (error.response) {
       console.log(error.response.data);
-      SwalMixin('error', error.response.data.error);
+      SwalMixin('error', error.response.data.error, 'bottom-end');
     } else if (error.request) {
       console.log(error.request);
-      SwalMixin('error', error);
+      SwalMixin('error', error, 'bottom-end');
     }
     console.log(error);
   });
   return data;
 }
 
-export async function restApiPut(url, object) {
+export async function restApiPut(url, object, message, position, showAlert) {
   var data = "";
 
   await axios.put(url, object).then(function (response) {
     console.log(response.data)
     data = response.data;
-    SwalMixin('success', 'Updated!');
+    (showAlert) ? (SwalMixin('success', message, position)) : 0;
     return data;
   }).catch(function (error) {
     if (error.response) {
       console.log(error.response.data);
-      SwalMixin('error', error.response.data.error);
+      SwalMixin('error', error.response.data.error, 'bottom-end');
     } else if (error.request) {
       console.log(error.request);
-      SwalMixin('error', error);
+      SwalMixin('error', error, 'bottom-end');
     }
     console.log(error);
   });
@@ -69,15 +70,15 @@ export async function restApiDelete(url, item) {
   await axios.delete(url).then(function (response) {
     console.log(response.data)
     data = response.data;
-    SwalMixin('success', 'Deleted!');
+    SwalMixin('success', 'Deleted!', 'bottom-end');
     return data;
   }).catch(function (error) {
     if (error.response) {
       console.log(error.response.data);
-      SwalMixin('error', error.response.data.error);
+      SwalMixin('error', error.response.data.error, 'bottom-end');
     } else if (error.request) {
       console.log(error.request);
-      SwalMixin('error', error);
+      SwalMixin('error', error, 'bottom-end');
     }
     console.log(error);
   });

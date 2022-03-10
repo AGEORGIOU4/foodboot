@@ -1126,6 +1126,11 @@
   "resolved" "https://registry.npmjs.org/@coreui/coreui/-/coreui-4.0.0.tgz"
   "version" "4.0.0"
 
+"@coreui/icons-pro@^2.0.3":
+  "integrity" "sha512-3EUNOY7cisBZWjNGRBTtOm0kqQNVsg1yEAvXEfiqbMxCBOrXHVZu2gcPOihMsWN1+wqOZP8eVag0QqcPcT5WLg=="
+  "resolved" "https://registry.npmjs.org/@coreui/icons-pro/-/icons-pro-2.0.3.tgz"
+  "version" "2.0.3"
+
 "@coreui/icons-react@2.0.0":
   "integrity" "sha512-WelvsvDehCryH+tcUMui3r6oPmmb0gMiV9OvghytWTgm5bc0wn/VnL4fxn1PAwBEiMyL/maINLWp6zG0vv/8Wg=="
   "resolved" "https://registry.npmjs.org/@coreui/icons-react/-/icons-react-2.0.0.tgz"

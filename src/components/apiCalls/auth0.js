@@ -136,7 +136,7 @@ export function EditUser(user_id, object) {
 
   axios.request(options).then(function (response) {
     console.log(response.data);
-
+    SwalBottomToast2('success', 'Info saved successfully!', true);
   }).catch(function (error) {
     if (error.response) {
       console.log(error.response.data);
@@ -147,7 +147,6 @@ export function EditUser(user_id, object) {
     }
     console.log(error);
   });
-  SwalBottomToast2('success', 'Info saved successfully!', false);
 }
 
 export function removeUser(userData, logout) {
@@ -171,6 +170,7 @@ export function removeUser(userData, logout) {
 
         axios.request(options).then(function (response) {
           console.log(response.data);
+          SwalBottomToast2('success', 'Deleted successfully!', true);
         }).catch(function (error) {
           if (error.response) {
             console.log(error.response.data);
@@ -184,8 +184,6 @@ export function removeUser(userData, logout) {
       } catch (error) {
         console.log(error);
       }
-
-      SwalBottomToast2('success', 'Deleted successfully!', true);
 
       setTimeout(function () {
         logout({ returnTo: window.location.origin });

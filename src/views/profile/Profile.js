@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { withAuthenticationRequired } from '@auth0/auth0-react'
 import { useAuth0 } from "@auth0/auth0-react";
-import { CButton, CRow, CCol, CImage, CCard, CCardBody } from "@coreui/react-pro";
+import { CButton, CRow, CCol, CImage, CCard, CCardBody, CCardHeader } from "@coreui/react-pro";
 import CIcon from "@coreui/icons-react";
 import { cilPencil } from "@coreui/icons";
 import { CSpinner } from "@coreui/react-pro";
@@ -32,6 +32,22 @@ const Profile = props => {
       <CRow>
         <CCol>
           <CCard>
+            <CCardHeader>
+              <CCol className="me-1 float-end" md={12} style={{ textAlign: 'end' }}>
+                <Route render={({ history }) => (
+                  <CButton
+                    className="me-1 float-end"
+                    size="sm"
+                    color='success'
+                    variant="ghost"
+                    onClick={() => { history.push({ pathname: "/edit-profile", state: userData }) }}
+                  ><CIcon icon={cilPencil} /> Edit
+                  </CButton>
+                )} />
+              </CCol>
+
+            </CCardHeader>
+
             <CCardBody style={{ display: (loading) ? "none" : "block" }}>
 
               <CCol xs="12" style={{ textAlign: 'center' }}>
@@ -67,14 +83,8 @@ const Profile = props => {
                 <hr></hr>
               </div>
 
-              <CCol md={12} style={{ textAlign: 'end' }}>
-                <Route render={({ history }) => (
-                  <CButton color="info" variant="outline" onClick={() => { history.push({ pathname: "/edit-profile", state: userData }) }} >Edit <CIcon icon={cilPencil} /></CButton>
-                )} />
-              </CCol>
-
               <CCol style={{ textAlign: 'center', marginBottom: '20px' }}>
-                <Link to="/profile" style={{ color: '#e55353' }} onClick={() => removeUser(userData, logout)}> Permanently delete your account</Link>
+                <Link to="/profile" style={{ fontSize: 'small', color: '#e55353' }} onClick={() => removeUser(userData, logout)}> Permanently delete your account</Link>
               </CCol>
             </CCardBody>
 
