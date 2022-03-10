@@ -1,12 +1,9 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
-  CButtonGroup,
-  CFormCheck,
   CContainer,
   CHeader,
   CHeaderBrand,
-  CHeaderDivider,
   CHeaderNav,
   CHeaderToggler,
   CNavLink,

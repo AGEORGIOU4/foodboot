@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
-import { CButton, CRow, CCol, CImage, CCard, CCardBody, CInputGroupText, CInputGroup, CFormInput, CFormSelect, CForm, CFormFeedback } from "@coreui/react-pro";
+import { CButton, CRow, CCol, CImage, CCard, CCardBody, CInputGroupText, CInputGroup, CFormInput, CFormSelect, CForm, CFormFeedback, CCardHeader } from "@coreui/react-pro";
 import { CSpinner } from "@coreui/react-pro";
 import { auth0ApiCall, EditUser } from "src/components/apiCalls/auth0";
 import { cilSave } from "@coreui/icons";
@@ -82,6 +82,21 @@ const EditProfile = () => {
         <CRow>
           <CCol md={12}>
             <CCard>
+
+              <CCardHeader>
+                <CSpinner className="me-1 float-end" style={{ display: (loading) ? "block" : "none" }} color='primary' variant='grow' />
+                <strong>Create Client</strong>
+                <CButton
+                  disabled={loading}
+                  className="me-1 float-end"
+                  size="sm"
+                  color='success'
+                  variant="ghost"
+                  onClick={handleSubmit}
+                ><CIcon icon={cilSave} /> Save
+                </CButton>
+              </CCardHeader>
+
               <CCardBody style={{ display: (loading) ? "none" : "block" }}>
                 <CCol md={12}>
                   <CCol style={{ textAlign: 'center' }}>
@@ -130,11 +145,6 @@ const EditProfile = () => {
                   <hr></hr>
                 </div>
 
-                <CCol md={12} style={{ textAlign: 'end' }}>
-                  <CButton disabled={loading} color="info" variant="outline" type="button" onClick={handleSubmit}>
-                    Update <CIcon icon={cilSave} />
-                  </CButton>
-                </CCol>
               </CCardBody>
 
               <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>

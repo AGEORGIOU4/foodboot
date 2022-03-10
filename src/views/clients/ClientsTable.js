@@ -7,14 +7,17 @@ import { cilPencil, cilTrash } from '@coreui/icons'
 import { Route } from 'react-router-dom'
 import { restApiDelete } from 'src/components/apiCalls/rest'
 import Swal from 'sweetalert2'
+import { cilEye } from '@coreui/icons-pro'
 
 const ClientsTable = (props) => {
   const columns = [
-    { key: 'name' },
-    { key: 'surname' },
+    { key: 'view', label: '', _style: { width: '0%' }, sorter: false, filter: false },
+    { key: 'last_name' },
+    { key: 'first_name' },
+    { key: 'dob', label: 'DOB' },
     { key: 'email' },
     { key: 'phone' },
-    { key: 'dob', label: 'DOB' },
+    { key: 'address' },
     { key: 'edit', label: '', _style: { width: '0%' }, sorter: false, filter: false },
     { key: 'remove', label: '', _style: { width: '0%' }, sorter: false, filter: false },
   ]
@@ -22,17 +25,11 @@ const ClientsTable = (props) => {
   return (
     <Route render={({ history }) => (
       <CSmartTable
-        sorterValue={{ column: 'name', state: 'asc' }}
-        clickableRows
-        tableProps={{
-          striped: true,
-          hover: true,
-          responsive: true
-        }}
+        sorterValue={{ column: 'last_name', state: 'asc' }}
+        tableProps={{ striped: true, responsive: true }}
         activePage={1}
         items={props.data}
         columns={columns}
-        columnFilter
         tableFilter
         cleaner
         loading={props.loading}
@@ -46,6 +43,25 @@ const ClientsTable = (props) => {
               <FormatTimestamp date={item.dob} />
             </td>
           ),
+          view:
+            (item) => (
+              <td>
+                <CLink disabled href='#/view-client'>
+                  <CButton
+                    size="sm"
+                    color='primary'
+                    variant="ghost"
+                    onClick={() => {
+                      history.push({
+                        pathname: "/view-client",
+                        state: item
+                      })
+                    }}
+
+                  ><CIcon icon={cilEye} /></CButton>
+                </CLink>
+              </td>
+            ),
           edit:
             (item) => (
               <td>
@@ -53,7 +69,7 @@ const ClientsTable = (props) => {
                   <CButton
                     size="sm"
                     color='success'
-                    variant="outline"
+                    variant="ghost"
                     onClick={() => {
                       history.push({
                         pathname: "/edit-client",
@@ -71,7 +87,7 @@ const ClientsTable = (props) => {
                 <CButton
                   size="sm"
                   color='danger'
-                  variant="outline"
+                  variant="ghost"
                   onClick={() => {
                     Swal.fire({
                       text: 'Delete '.concat(item.name).concat(' from clients? '),
