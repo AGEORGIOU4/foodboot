@@ -1,9 +1,9 @@
 import Swal from 'sweetalert2';
 
-export const SwalMixin = (icon, text, position) => {
+export const SwalMixin = (icon, text) => {
   const Toast = Swal.mixin({
     toast: true,
-    position: position,
+    position: 'bottom-end',
     showConfirmButton: false,
     timer: 3000,
 
@@ -42,13 +42,13 @@ export const SwalBottomToast = props => {
   )
 }
 
-export function SwalBottomToast2(icon, text, setTimerProgressBar) {
+export function SwalBottomToast2(icon, text) {
   const Toast = Swal.mixin({
     toast: true,
     position: 'bottom-end',
     showConfirmButton: false,
     timer: 2000,
-    timerProgressBar: setTimerProgressBar,
+    timerProgressBar: true,
     didOpen: (toast) => {
       toast.addEventListener('mouseenter', Swal.stopTimer)
       toast.addEventListener('mouseleave', Swal.resumeTimer)

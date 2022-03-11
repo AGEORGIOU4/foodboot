@@ -21,3 +21,11 @@ export function FormatTimestampFunction(date) {
 
   return formattedDate;
 }
+
+export function FormatTimestampFunction2(date) {
+  var date = new Date(date);
+  var setMonth = date.getMonth() + 1;
+  var formattedDate = date.getDate() + '/' + setMonth + '/' + date.getFullYear();
+
+  return formattedDate;
+}
