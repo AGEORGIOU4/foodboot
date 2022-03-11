@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { withAuthenticationRequired } from '@auth0/auth0-react'
-import { CButton, CCard, CCardBody, CCardFooter, CCardHeader, CLink, CCol } from '@coreui/react-pro'
+import { CButton, CCard, CCardBody, CCardHeader } from '@coreui/react-pro'
 import ClientsTable from './ClientsTable';
 import { cilUserPlus } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';

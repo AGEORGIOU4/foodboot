@@ -9,7 +9,7 @@ import CIcon from '@coreui/icons-react';
 import { cilPrint } from '@coreui/icons-pro';
 import { cilPencil } from '@coreui/icons';
 import { Route } from 'react-router-dom';
-import { MedicalHistoriesTable } from './medical-histories/MedicalHistoriesTable';
+import { MedicalHistoriesViewTable } from './medical-histories/MedicalHistoriesViewTable';
 
 const print = (e) => {
   e.preventDefault()
@@ -132,7 +132,7 @@ const ViewClient = (props) => {
 
       <CCard>
         <CCardBody style={{ display: (loading) ? "none" : "block" }}>
-          <MedicalHistoriesTable data={medical_history} loading={loading} />
+          <MedicalHistoriesViewTable data={medical_history} loading={loading} />
         </CCardBody>
 
         <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>

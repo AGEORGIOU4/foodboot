@@ -7,11 +7,11 @@ import Swal from 'sweetalert2'
 import { Route } from 'react-router-dom'
 import { FormatTimestamp } from 'src/components/Common'
 
-export const MedicalHistoriesTable = (props) => {
+export const MedicalHistoriesViewTable = (props) => {
   const columns = [
     { key: 'date' },
-    { key: 'weight' },
     { key: 'height' },
+    { key: 'weight' },
     { key: 'edit', label: '', _style: { width: '0%' }, sorter: false, filter: false },
     { key: 'remove', label: '', _style: { width: '0%' }, sorter: false, filter: false },
   ]
@@ -44,7 +44,8 @@ export const MedicalHistoriesTable = (props) => {
                   size="sm"
                   color='success'
                   variant="ghost"
-                  onClick={() => { history.push({ pathname: "/edit-client", search: '?id=' + item.id, state: item }) }}
+                  onClick={() => { history.push({ pathname: "/edit-client", search: '?id=' + item.client_id, state: item }) }
+                  }
                 >
                   <CIcon icon={cilPencil} />
                 </CButton>

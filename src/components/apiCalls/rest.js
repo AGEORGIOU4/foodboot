@@ -42,13 +42,13 @@ export async function restApiPost(url, object, alertMessage) {
   return data;
 }
 
-export async function restApiPut(url, object, showAlert) {
+export async function restApiPut(url, object, showAlert, alertMessage) {
   var data = "";
 
   await axios.put(url, object).then(function (response) {
     console.log(response.data)
     data = response.data;
-    (showAlert) ? (SwalMixin('success', 'Client updated!')) : 0;
+    (showAlert) ? (SwalMixin('success', alertMessage)) : 0;
     return data;
   }).catch(function (error) {
     if (error.response) {
