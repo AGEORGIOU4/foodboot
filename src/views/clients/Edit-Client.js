@@ -277,7 +277,7 @@ const EditClient = (props) => {
                   color='success'
                   variant="ghost"
                   onClick={handleSubmitMedicalHistory}
-                ><CIcon icon={cilSave} /> Save
+                ><CIcon icon={cilSave} /> Save All Records
                 </CButton>
               </CForm>
 

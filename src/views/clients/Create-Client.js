@@ -88,7 +88,7 @@ const CreateClient = (props) => {
   const handleCreateMedicalRecord = () => {
     let today = new Date();
     today.getDate();
-    let newMedicalRecord = { client_id: client_id, date: today, height: "", weight: "" }
+    let newMedicalRecord = { id: record_id, client_id: client_id, date: today, height: "", weight: "" }
     let newArray = []
     newArray.push(newMedicalRecord, ...medical_history);
 
@@ -217,13 +217,13 @@ const CreateClient = (props) => {
                 )}
 
                 <CButton
-                  disabled={loading}
+                  disabled={(client_id) ? false : true}
                   className="me-1"
                   size="sm"
                   color='success'
                   variant="ghost"
                   onClick={(e) => handleSubmitMedicalHistory(e)}
-                ><CIcon icon={cilSave} /> Save
+                ><CIcon icon={cilSave} /> Save All Records
                 </CButton>
 
               </CForm>
