@@ -38,6 +38,8 @@ export const CMedicalRecord = (props) => {
           onChange={e => props.handleUpdateMedicalHistory(props.index, e)} />
         <CFormFeedback valid>Looks good!</CFormFeedback>
       </CCol>
+
+      {/* // Save */}
       <CCol lg={12} md={12} style={{ color: "black", textAlign: "end" }}>
         <CButton
           size="lg"
@@ -45,7 +47,7 @@ export const CMedicalRecord = (props) => {
           variant="ghost"
           onClick={() => {
             Promise.resolve(
-              restApiPut(mainUrl + '/clients/medical-histories/update/' + props.item.id, props.item, true, 'Medical Record updated!')
+              restApiPut(mainUrl + '/clients/medical-histories/update/' + props.item.id, props.item, true)
                 .then(function (value) {
                 })
             )
@@ -53,13 +55,15 @@ export const CMedicalRecord = (props) => {
 
         ><CIcon icon={cidSave} /></CButton>
 
+        {/* // Delete */}
         <CButton
+          disabled={(props.item.id === 'undefinced' ? true : false)}
           size="lg"
           color='danger'
           variant="ghost"
           onClick={() => {
             Swal.fire({
-              text: 'Delete record?',
+              text: 'Delete medical record?',
               showCancelButton: true,
               icon: 'error',
               iconColor: '#e55353',
@@ -70,12 +74,12 @@ export const CMedicalRecord = (props) => {
                 Promise.resolve(
                   restApiDelete(mainUrl + '/clients/medical-histories/delete/' + props.item.id, props.item)
                     .then(function (value) {
-                      window.location.reload(false);
+                      props.resetData();
                     }));
               }
             })
           }}
-        ><CIcon icon={cidTrash} /></CButton>
+        > <CIcon icon={cidTrash} /></CButton>
       </CCol>
     </CRow>
   )

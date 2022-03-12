@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import reactDom from 'react-dom';
-
 import { withAuthenticationRequired } from '@auth0/auth0-react'
 import {
   CButton,
@@ -19,7 +17,6 @@ import { FormatTimestampFunction, mainUrl } from 'src/components/Common';
 import { restApiGet, restApiPut } from 'src/components/apiCalls/rest';
 import CIcon from '@coreui/icons-react';
 import { cilSave } from '@coreui/icons';
-import { SwalMixin } from 'src/components/SweetAlerts/Swal';
 import { cidFileAdd, cilEye } from '@coreui/icons-pro';
 import { CMedicalRecord } from './medical-histories/CMedicalRecord';
 import { Route } from 'react-router-dom';
@@ -28,16 +25,26 @@ const EditClient = (props) => {
   const [validated, setValidated] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const [medical_history, setMedicalHistory] = useState([])
-
   // Cannot USE SET BECAUSE TWO API CALLS ARE INVOKED!!!
   var updatedBasicInfo = "";
   var updatedMedicalRecords = "";
 
+  const [first_name, setFirstName] = useState(updatedBasicInfo.first_name);
+  const [last_name, setLastName] = useState(updatedBasicInfo.last_name);
+  const [dob, setDob] = useState(FormatTimestampFunction(updatedBasicInfo.dob));
+  const [email, setEmail] = useState(updatedBasicInfo.email);
+  const [phone, setPhone] = useState(updatedBasicInfo.phone);
+  const [address, setAddress] = useState(updatedBasicInfo.address);
+  const [food_allergies, setFoodAllergies] = useState(updatedBasicInfo.food_allergies);
+
+  const [medical_history, setMedicalHistory] = useState([])
+
   const parameters = new URLSearchParams(props.location.search);
   const client_id = parameters.get('id');
 
-  // Get Client/Medical History
+  var record_id = Math.floor(Math.random() * 99999);
+
+  // Get-Set Client
   React.useEffect(() => {
     setLoading(true);
     Promise.resolve(
@@ -48,6 +55,7 @@ const EditClient = (props) => {
         }));
   }, []);
 
+  // Get-Set Medical History
   React.useEffect(() => {
     setLoading(true);
     Promise.resolve(
@@ -58,13 +66,16 @@ const EditClient = (props) => {
         }));
   }, []);
 
-  const [first_name, setFirstName] = useState(updatedBasicInfo.first_name);
-  const [last_name, setLastName] = useState(updatedBasicInfo.last_name);
-  const [dob, setDob] = useState(FormatTimestampFunction(updatedBasicInfo.dob));
-  const [email, setEmail] = useState(updatedBasicInfo.email);
-  const [phone, setPhone] = useState(updatedBasicInfo.phone);
-  const [address, setAddress] = useState(updatedBasicInfo.address);
-  const [food_allergies, setFoodAllergies] = useState(updatedBasicInfo.food_allergies);
+  // Reset Medical Histories on Delete
+  const resetData = () => {
+    setLoading(true);
+    Promise.resolve(
+      restApiGet(mainUrl + '/clients/medical-histories/' + client_id)
+        .then(function (value) {
+          setMedicalHistory(value);
+          setLoading(false);
+        }));
+  }
 
   const setBasicInfo = (data) => {
     setFirstName(data.first_name);
@@ -98,7 +109,7 @@ const EditClient = (props) => {
 
       // Update client
       Promise.resolve(
-        restApiPut(mainUrl + '/clients/update/' + client_id, updatedBasicInfo, true, 'Basic Information updated!')
+        restApiPut(mainUrl + '/clients/update/' + client_id, updatedBasicInfo, true)
           .then(function (value) {
             setLoading(false);
           }).catch(function () {
@@ -111,7 +122,7 @@ const EditClient = (props) => {
   const handleCreateMedicalRecord = () => {
     let today = new Date();
     today.getDate();
-    let newMedicalRecord = { client_id: client_id, date: today, height: "", weight: "" }
+    let newMedicalRecord = { id: record_id, client_id: client_id, date: today, height: "", weight: "" }
     let newArray = []
     newArray.push(newMedicalRecord, ...medical_history);
 
@@ -140,16 +151,12 @@ const EditClient = (props) => {
       {
         updatedMedicalRecords.map((record, index) => {
           Promise.resolve(
-            restApiPut(mainUrl + '/clients/medical-histories/update/' + parseInt(record.id), record, true, 'Medical Records updated!')
+            restApiPut(mainUrl + '/clients/medical-histories/update/' + parseInt(record.id), record, true)
               .then(function (value) {
-                if (index === (updatedMedicalRecords.length - 1)) {
-                  //SwalMixin('success', 'Medical Records updated!')
-                }
                 setLoading(false);
               }));
         })
       }
-
     }
     setValidated(true)
   }
@@ -258,6 +265,7 @@ const EditClient = (props) => {
                     <CMedicalRecord item={item} index={index}
                       handleUpdateMedicalHistory={handleUpdateMedicalHistory}
                       handleSubmitMedicalHistory={handleSubmitMedicalHistory}
+                      resetData={resetData}
                     />
                   </div>
                 )}

@@ -25,6 +25,7 @@ const ViewClient = (props) => {
   const parameters = new URLSearchParams(props.location.search);
   const client_id = parameters.get('id');
 
+  // Set Clients
   React.useEffect(() => {
     setLoading(true);
     Promise.resolve(
@@ -36,6 +37,7 @@ const ViewClient = (props) => {
         }));
   }, []);
 
+  // Set Medical Histories
   React.useEffect(() => {
     setLoading(true);
     Promise.resolve(
@@ -46,6 +48,18 @@ const ViewClient = (props) => {
           setLoading(false);
         }));
   }, []);
+
+  // Reset Medical Histories
+  const resetData = () => {
+    setLoading(true);
+    Promise.resolve(
+      restApiGet(mainUrl + '/clients/medical-histories/' + client_id)
+        .then(function (value) {
+          setMedicalHistory(value);
+
+          setLoading(false);
+        }));
+  }
 
   return (
     <>
@@ -149,7 +163,7 @@ const ViewClient = (props) => {
               </CButton>
             </div>
           )} />
-          <MedicalHistoriesViewTable data={medical_history} loading={loading} />
+          <MedicalHistoriesViewTable data={medical_history} loading={loading} resetData={resetData} />
         </CCardBody>
 
         <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>

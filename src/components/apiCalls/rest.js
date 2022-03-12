@@ -21,13 +21,13 @@ export async function restApiGet(url) {
   return data;
 }
 
-export async function restApiPost(url, object, alertMessage) {
+export async function restApiPost(url, object, showAlert) {
   var data = "";
 
   await axios.post(url, object).then(function (response) {
     console.log(response.data)
     data = response.data;
-    SwalMixin('success', 'Client added!');
+    (showAlert) ? (SwalMixin('success', response.data.message)) : 0;
     return data;
   }).catch(function (error) {
     if (error.response) {
@@ -42,13 +42,13 @@ export async function restApiPost(url, object, alertMessage) {
   return data;
 }
 
-export async function restApiPut(url, object, showAlert, alertMessage) {
+export async function restApiPut(url, object, showAlert) {
   var data = "";
 
   await axios.put(url, object).then(function (response) {
     console.log(response.data)
     data = response.data;
-    (showAlert) ? (SwalMixin('success', alertMessage)) : 0;
+    (showAlert) ? (SwalMixin('success', response.data.message)) : 0;
     return data;
   }).catch(function (error) {
     if (error.response) {
@@ -63,13 +63,13 @@ export async function restApiPut(url, object, showAlert, alertMessage) {
   return data;
 }
 
-export async function restApiDelete(url, item) {
+export async function restApiDelete(url) {
   var data = "";
 
   await axios.delete(url).then(function (response) {
     console.log(response.data)
     data = response.data;
-    SwalMixin('success', 'Deleted!');
+    SwalMixin('success', response.data.message);
     return data;
   }).catch(function (error) {
     if (error.response) {
