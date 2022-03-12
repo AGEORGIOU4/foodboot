@@ -10,10 +10,7 @@ import {
   CDropdownToggle,
 } from '@coreui/react-pro'
 import {
-  cilEnvelopeOpen,
-  cilLockLocked,
   cilSettings,
-  cilTask,
   cilUser,
   cilArrowCircleLeft,
   cilArrowCircleRight,

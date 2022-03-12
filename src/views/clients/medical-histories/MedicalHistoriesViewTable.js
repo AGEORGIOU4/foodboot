@@ -1,23 +1,18 @@
-
 import React from 'react'
-import { CButton, CLink, CSmartTable } from '@coreui/react-pro'
-import { FormatTimestamp, mainUrl } from 'src/components/Common'
+
+import { CSmartTable, CButton, CLink } from '@coreui/react-pro'
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
-import { Route } from 'react-router-dom'
-import { restApiDelete } from 'src/components/apiCalls/rest'
 import Swal from 'sweetalert2'
-import { cilEye } from '@coreui/icons-pro'
+import { Route } from 'react-router-dom'
+import { FormatTimestamp, mainUrl } from 'src/components/Common'
+import { restApiDelete } from 'src/components/apiCalls/rest'
 
-const ClientsTable = (props) => {
+export const MedicalHistoriesViewTable = (props) => {
   const columns = [
-    { key: 'view', label: '', _style: { width: '0%' }, sorter: false, filter: false },
-    { key: 'last_name' },
-    { key: 'first_name' },
-    { key: 'dob', label: 'DOB' },
-    { key: 'email' },
-    { key: 'phone' },
-    { key: 'address' },
+    { key: 'date' },
+    { key: 'height' },
+    { key: 'weight' },
     { key: 'edit', label: '', _style: { width: '0%' }, sorter: false, filter: false },
     { key: 'remove', label: '', _style: { width: '0%' }, sorter: false, filter: false },
   ]
@@ -25,7 +20,7 @@ const ClientsTable = (props) => {
   return (
     <Route render={({ history }) => (
       <CSmartTable
-        sorterValue={{ column: 'last_name', state: 'asc' }}
+        sorterValue={{ column: 'date', state: 'desc' }}
         tableProps={{ striped: true, responsive: true }}
         activePage={1}
         items={props.data}
@@ -38,23 +33,11 @@ const ClientsTable = (props) => {
         columnSorter
         pagination
         scopedColumns={{
-          dob: (item) => (
+          date: (item) => (
             <td>
-              <FormatTimestamp date={item.dob} />
+              <FormatTimestamp date={item.date} />
             </td>
           ),
-          view:
-            (item) => (
-              <td>
-                <CButton
-                  size="sm"
-                  color='primary'
-                  variant="ghost"
-                  onClick={() => { history.push({ pathname: "/view-client", search: '?id=' + item.id }) }}
-
-                ><CIcon icon={cilEye} /></CButton>
-              </td>
-            ),
           edit:
             (item) => (
               <td>
@@ -62,7 +45,8 @@ const ClientsTable = (props) => {
                   size="sm"
                   color='success'
                   variant="ghost"
-                  onClick={() => { history.push({ pathname: "/edit-client", search: '?id=' + item.id }) }}
+                  onClick={() => { history.push({ pathname: "/edit-client", search: '?id=' + item.client_id }) }
+                  }
                 >
                   <CIcon icon={cilPencil} />
                 </CButton>
@@ -77,7 +61,7 @@ const ClientsTable = (props) => {
                   variant="ghost"
                   onClick={() => {
                     Swal.fire({
-                      text: 'Delete '.concat(item.name).concat(' from clients? '),
+                      text: 'Delete record?',
                       showCancelButton: true,
                       icon: 'error',
                       iconColor: '#e55353',
@@ -86,7 +70,7 @@ const ClientsTable = (props) => {
                     }).then((result) => {
                       if (result.isConfirmed) {
                         Promise.resolve(
-                          restApiDelete(mainUrl + '/clients/delete/' + item.id, item)
+                          restApiDelete(mainUrl + '/clients/medical-histories/delete/' + item.id, item)
                             .then(function (value) {
                               window.location.reload(false);
                             }));
@@ -101,5 +85,3 @@ const ClientsTable = (props) => {
     )} />
   )
 }
-
-export default ClientsTable
