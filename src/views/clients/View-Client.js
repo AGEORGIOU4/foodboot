@@ -6,7 +6,7 @@ import avatar from './../../assets/images/avatars/avatar.png'
 import { FormatTimestamp, mainUrl } from 'src/components/Common';
 import { restApiGet } from 'src/components/apiCalls/rest';
 import CIcon from '@coreui/icons-react';
-import { cilPrint } from '@coreui/icons-pro';
+import { cidFileAdd, cilPrint } from '@coreui/icons-pro';
 import { cilPencil } from '@coreui/icons';
 import { Route } from 'react-router-dom';
 import { MedicalHistoriesViewTable } from './medical-histories/MedicalHistoriesViewTable';
@@ -67,7 +67,7 @@ const ViewClient = (props) => {
               size="sm"
               color='success'
               variant="ghost"
-              onClick={() => { history.push({ pathname: "/edit-client", search: '?id=' + client_id, state: client }) }}
+              onClick={() => { history.push({ pathname: "/edit-client", search: '?id=' + client_id }) }}
             ><CIcon icon={cilPencil} /> Edit
             </CButton>
           )} />
@@ -75,12 +75,14 @@ const ViewClient = (props) => {
         </CCardHeader>
         <CCardBody style={{ display: (loading) ? "none" : "block" }}>
           <CRow>
-            <CCol md={2} style={{ textAlign: 'center', margin: '0px 10px 25px 0' }}>
-              <CImage width={100} src={avatar} />
+            <CCol md={3} style={{ margin: '0px 0px 30px 0px' }}>
+              <CImage width={80} src={avatar} />
             </CCol>
 
 
-            <CCol md={4} style={{ marginTop: '45px' }}>
+
+
+            <CCol md={5} style={{ marginTop: '45px' }}>
               <CFormLabel><strong>First name:</strong> {client.first_name}</CFormLabel>
 
             </CCol>
@@ -130,8 +132,23 @@ const ViewClient = (props) => {
         Medical History
       </div>
 
+
       <CCard>
         <CCardBody style={{ display: (loading) ? "none" : "block" }}>
+
+          <Route render={({ history }) => (
+            <div>
+              <CButton
+                disabled={loading}
+                className="me-1 float-end"
+                size="sm"
+                color='info'
+                variant="ghost"
+                onClick={() => { history.push({ pathname: "/edit-client", search: '?id=' + client_id }) }}
+              ><CIcon icon={cidFileAdd} /> Edit Medical Records
+              </CButton>
+            </div>
+          )} />
           <MedicalHistoriesViewTable data={medical_history} loading={loading} />
         </CCardBody>
 

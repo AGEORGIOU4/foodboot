@@ -6,6 +6,7 @@ import { cilUserPlus } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import { mainUrl } from 'src/components/Common';
 import { restApiGet } from 'src/components/apiCalls/rest';
+import { cidUserPlus } from '@coreui/icons-pro';
 
 const Clients = () => {
   const [data, setData] = useState([]);
@@ -31,9 +32,9 @@ const Clients = () => {
             href='#/create-client'
             className="me-1 float-end"
             size="sm"
-            color='success'
+            color='info'
             variant="ghost"
-          ><CIcon icon={cilUserPlus} /> Create
+          ><CIcon icon={cidUserPlus} /> Create Client
           </CButton>
 
         </CCardHeader>

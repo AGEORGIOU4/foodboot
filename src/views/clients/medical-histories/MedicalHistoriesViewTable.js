@@ -5,7 +5,8 @@ import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
 import Swal from 'sweetalert2'
 import { Route } from 'react-router-dom'
-import { FormatTimestamp } from 'src/components/Common'
+import { FormatTimestamp, mainUrl } from 'src/components/Common'
+import { restApiDelete } from 'src/components/apiCalls/rest'
 
 export const MedicalHistoriesViewTable = (props) => {
   const columns = [
@@ -44,7 +45,7 @@ export const MedicalHistoriesViewTable = (props) => {
                   size="sm"
                   color='success'
                   variant="ghost"
-                  onClick={() => { history.push({ pathname: "/edit-client", search: '?id=' + item.client_id, state: item }) }
+                  onClick={() => { history.push({ pathname: "/edit-client", search: '?id=' + item.client_id }) }
                   }
                 >
                   <CIcon icon={cilPencil} />
@@ -60,7 +61,7 @@ export const MedicalHistoriesViewTable = (props) => {
                   variant="ghost"
                   onClick={() => {
                     Swal.fire({
-                      text: 'Delete '.concat(item.name).concat(' from clients? '),
+                      text: 'Delete record?',
                       showCancelButton: true,
                       icon: 'error',
                       iconColor: '#e55353',
@@ -68,11 +69,11 @@ export const MedicalHistoriesViewTable = (props) => {
                       confirmButtonColor: '#e55353'
                     }).then((result) => {
                       if (result.isConfirmed) {
-                        // Promise.resolve(
-                        //   // restApiDelete(mainUrl + '/clients/delete/' + item.id, item)
-                        //     .then(function (value) {
-                        //       window.location.reload(false);
-                        //     }));
+                        Promise.resolve(
+                          restApiDelete(mainUrl + '/clients/medical-histories/delete/' + item.id, item)
+                            .then(function (value) {
+                              window.location.reload(false);
+                            }));
                       }
                     })
                   }}

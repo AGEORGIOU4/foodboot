@@ -50,7 +50,7 @@ const ClientsTable = (props) => {
                   size="sm"
                   color='primary'
                   variant="ghost"
-                  onClick={() => { history.push({ pathname: "/view-client", search: '?id=' + item.id, state: item }) }}
+                  onClick={() => { history.push({ pathname: "/view-client", search: '?id=' + item.id }) }}
 
                 ><CIcon icon={cilEye} /></CButton>
               </td>
@@ -62,7 +62,7 @@ const ClientsTable = (props) => {
                   size="sm"
                   color='success'
                   variant="ghost"
-                  onClick={() => { history.push({ pathname: "/edit-client", search: '?id=' + item.id, state: item }) }}
+                  onClick={() => { history.push({ pathname: "/edit-client", search: '?id=' + item.id }) }}
                 >
                   <CIcon icon={cilPencil} />
                 </CButton>
