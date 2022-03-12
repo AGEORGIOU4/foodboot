@@ -61,7 +61,7 @@ export const MedicalHistoriesViewTable = (props) => {
                   variant="ghost"
                   onClick={() => {
                     Swal.fire({
-                      text: 'Delete record?',
+                      text: 'Delete medical record?',
                       showCancelButton: true,
                       icon: 'error',
                       iconColor: '#e55353',
@@ -72,7 +72,7 @@ export const MedicalHistoriesViewTable = (props) => {
                         Promise.resolve(
                           restApiDelete(mainUrl + '/clients/medical-histories/delete/' + item.id, item)
                             .then(function (value) {
-                              window.location.reload(false);
+                              props.resetData();
                             }));
                       }
                     })

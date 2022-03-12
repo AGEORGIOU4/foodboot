@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { CButton, CLink, CSmartTable } from '@coreui/react-pro'
+import { CButton, CSmartTable } from '@coreui/react-pro'
 import { FormatTimestamp, mainUrl } from 'src/components/Common'
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
@@ -88,7 +88,7 @@ const ClientsTable = (props) => {
                         Promise.resolve(
                           restApiDelete(mainUrl + '/clients/delete/' + item.id, item)
                             .then(function (value) {
-                              window.location.reload(false);
+                              props.resetData();
                             }));
                       }
                     })

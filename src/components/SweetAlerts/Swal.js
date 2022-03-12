@@ -5,7 +5,8 @@ export const SwalMixin = (icon, text) => {
     toast: true,
     position: 'bottom-end',
     showConfirmButton: false,
-    timer: 3000,
+    timer: 1500,
+    timerProgressBar: true,
 
     didOpen: (toast) => {
       toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -24,8 +25,8 @@ export const SwalBottomToast = props => {
     toast: true,
     position: 'bottom-end',
     showConfirmButton: false,
-    timer: 2000,
-    timerProgressBar: false,
+    timer: 1500,
+    timerProgressBar: true,
     didOpen: (toast) => {
       toast.addEventListener('mouseenter', Swal.stopTimer)
       toast.addEventListener('mouseleave', Swal.resumeTimer)
@@ -47,7 +48,7 @@ export function SwalBottomToast2(icon, text) {
     toast: true,
     position: 'bottom-end',
     showConfirmButton: false,
-    timer: 2000,
+    timer: 1500,
     timerProgressBar: true,
     didOpen: (toast) => {
       toast.addEventListener('mouseenter', Swal.stopTimer)

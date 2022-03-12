@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { withAuthenticationRequired } from '@auth0/auth0-react'
 import { CButton, CCard, CCardBody, CCardHeader } from '@coreui/react-pro'
 import ClientsTable from './ClientsTable';
-import { cilUserPlus } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import { mainUrl } from 'src/components/Common';
 import { restApiGet } from 'src/components/apiCalls/rest';
@@ -12,6 +11,7 @@ const Clients = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  // Set Clients
   React.useEffect(() => {
     setLoading(true);
     Promise.resolve(
@@ -21,6 +21,16 @@ const Clients = () => {
           setLoading(false);
         }));
   }, []);
+
+  const resetData = () => {
+    setLoading(true);
+    Promise.resolve(
+      restApiGet(mainUrl + '/clients')
+        .then(function (value) {
+          setData(value);
+          setLoading(false);
+        }));
+  }
 
   return (
     <>
@@ -39,7 +49,7 @@ const Clients = () => {
 
         </CCardHeader>
         <CCardBody>
-          <ClientsTable data={data} loading={loading} />
+          <ClientsTable data={data} loading={loading} resetData={resetData} />
         </CCardBody>
       </CCard >
     </>

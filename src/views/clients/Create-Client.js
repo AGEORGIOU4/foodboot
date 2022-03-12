@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { withAuthenticationRequired } from '@auth0/auth0-react'
-
 import {
   CButton,
   CCol,
@@ -15,16 +14,18 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import { mainUrl } from 'src/components/Common';
-import { restApiPost } from 'src/components/apiCalls/rest';
+import { restApiGet, restApiPost, restApiPut } from 'src/components/apiCalls/rest';
 import CIcon from '@coreui/icons-react';
 import { cilSave } from '@coreui/icons';
+import { cidFileAdd } from '@coreui/icons-pro';
+import { CMedicalRecord } from './medical-histories/CMedicalRecord';
 
-const CreateClient = () => {
-
+const CreateClient = (props) => {
   const [validated, setValidated] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  var basic_info = "";
+  var createdBasicInfo = "";
+  var createdMedicalRecords = "";
 
   const [first_name, setFirstName] = useState();
   const [last_name, setLastName] = useState();
@@ -34,15 +35,32 @@ const CreateClient = () => {
   const [address, setAddress] = useState();
   const [food_allergies, setFoodAllergies] = useState();
 
-  const handleSubmit = (event) => {
+  const [medical_history, setMedicalHistory] = useState([])
 
+  // Obtsained after creation
+  const [client_id, setClientID] = useState()
+
+  var record_id = Math.floor(Math.random() * 99999);
+
+  // Reset Medical Histories on Delete
+  const resetData = () => {
+    setLoading(true);
+    Promise.resolve(
+      restApiGet(mainUrl + '/clients/medical-histories/' + client_id)
+        .then(function (value) {
+          setMedicalHistory(value);
+          setLoading(false);
+        }));
+  }
+
+  const handleSubmitBasicInfo = (event) => {
     const form = event.currentTarget
 
     if (form.checkValidity() === false) {
       event.preventDefault()
       event.stopPropagation()
     } else {
-      basic_info = {
+      createdBasicInfo = {
         first_name: first_name,
         last_name: last_name,
         dob: dob,
@@ -50,14 +68,61 @@ const CreateClient = () => {
         phone: phone,
         address: address,
         food_allergies: food_allergies
-      }
+      };
+
       setLoading(true);
 
+      // Create client
       Promise.resolve(
-        restApiPost(mainUrl + '/clients/create/', basic_info, 'Client added!')
+        restApiPost(mainUrl + '/clients/create/', createdBasicInfo, true)
           .then(function (value) {
             setLoading(false);
+            setClientID(value.client.id);
+          }).catch(function () {
+            setLoading(false);
           }));
+    }
+    setValidated(true)
+  }
+
+  const handleCreateMedicalRecord = () => {
+    let today = new Date();
+    today.getDate();
+    let newMedicalRecord = { client_id: client_id, date: today, height: "", weight: "" }
+    let newArray = []
+    newArray.push(newMedicalRecord, ...medical_history);
+
+    setMedicalHistory(newArray);
+  }
+
+  const handleUpdateMedicalHistory = (i, e) => {
+    let newFormValues = [...medical_history];
+    newFormValues[i][e.target.name] = e.target.value;
+    setMedicalHistory(newFormValues);
+  }
+
+  const handleSubmitMedicalHistory = (event) => {
+    const form = event.currentTarget
+
+    if (form.checkValidity() === false) {
+      event.preventDefault()
+      event.stopPropagation()
+    } else {
+
+      createdMedicalRecords = medical_history;
+
+      setLoading(true);
+
+      // Update medical records
+      {
+        createdMedicalRecords.map((record, index) => {
+          Promise.resolve(
+            restApiPut(mainUrl + '/clients/medical-histories/update/' + parseInt(record.id), record, true)
+              .then(function (value) {
+                setLoading(false);
+              }));
+        })
+      }
     }
     setValidated(true)
   }
@@ -70,15 +135,6 @@ const CreateClient = () => {
             <CCardHeader>
               <CSpinner className="me-1 float-end" style={{ display: (loading) ? "block" : "none" }} color='primary' variant='grow' />
               <strong>Create Client</strong>
-              <CButton
-                disabled={loading}
-                className="me-1 float-end"
-                size="sm"
-                color='success'
-                variant="ghost"
-                onClick={handleSubmit}
-              ><CIcon icon={cilSave} /> Save
-              </CButton>
             </CCardHeader>
             <CCardBody>
               <CForm
@@ -122,33 +178,61 @@ const CreateClient = () => {
                   <CFormFeedback valid>Looks good!</CFormFeedback>
                 </CCol>
 
-                {/* <div style={{ margin: '20px 0px', fontWeight: '900' }}>
+                <CButton
+                  disabled={loading}
+                  className="me-1 float-end"
+                  size="sm"
+                  color='success'
+                  variant="ghost"
+                  onClick={handleSubmitBasicInfo}
+                ><CIcon icon={cilSave} /> Save
+                </CButton>
+
+                <hr />
+
+                <div style={{ margin: '20px 0px', fontWeight: '900' }}>
                   Medical History
                 </div>
 
-                <CCol md={4}>
-                  <CFormLabel htmlFor="validationCustom08">Date Updated</CFormLabel>
-                  <CFormInput type="date" id="validationCustom08" value={date} required onChange={e => setDate(e.target.value)} />
-                  <CFormFeedback valid>Looks good!</CFormFeedback>
-                </CCol>
-                <CCol md={4}>
-                  <CFormLabel htmlFor="validationCustom09">Height</CFormLabel>
-                  <CFormInput type="text" id="validationCustom09" value={height} required onChange={e => setHeight(e.target.value)} />
-                  <CFormFeedback valid>Looks good!</CFormFeedback>
-                </CCol>
-                <CCol md={4}>
-                  <CFormLabel htmlFor="validationCustom10">Weight</CFormLabel>
-                  <CFormInput type="text" id="validationCustom10" value={weight} required onChange={e => setWeight(e.target.value)} />
-                  <CFormFeedback valid>Looks good!</CFormFeedback>
-                </CCol> */}
+                <div>
+                  <CButton
+                    disabled={(client_id) ? false : true}
+                    className="me-1 float-end"
+                    size="sm"
+                    color='info'
+                    variant="ghost"
+                    onClick={handleCreateMedicalRecord}
+                  ><CIcon icon={cidFileAdd} /> Create Medical Record
+                  </CButton>
+                </div>
+
+                {medical_history.map((item, index) =>
+                  <div key={index}>
+                    <CMedicalRecord item={item} index={index}
+                      handleUpdateMedicalHistory={handleUpdateMedicalHistory}
+                      handleSubmitMedicalHistory={handleSubmitMedicalHistory}
+                      resetData={resetData}
+                    />
+                  </div>
+                )}
+
+                <CButton
+                  disabled={loading}
+                  className="me-1"
+                  size="sm"
+                  color='success'
+                  variant="ghost"
+                  onClick={(e) => handleSubmitMedicalHistory(e)}
+                ><CIcon icon={cilSave} /> Save
+                </CButton>
 
               </CForm>
 
             </CCardBody>
 
-            {/* <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
+            <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
               <CSpinner color='primary' variant='grow' />
-            </CCardBody> */}
+            </CCardBody>
 
           </CCard>
         </CCol>
