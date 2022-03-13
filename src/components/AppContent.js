@@ -1,14 +1,15 @@
 import React, { Suspense } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import { CContainer, CSpinner } from '@coreui/react-pro'
+import { CContainer } from '@coreui/react-pro'
 
 // routes config
 import routes from '../routes'
+import { CLoading } from 'src/views/pages/loading/CLoading'
 
 const AppContent = () => {
   return (
     <CContainer lg>
-      <Suspense fallback={<CSpinner color="primary" variant='grow' />}>
+      <Suspense fallback={<CLoading image_source='transparent.png' />}>
         <Switch>
           {routes.map((route, idx) => {
             return (

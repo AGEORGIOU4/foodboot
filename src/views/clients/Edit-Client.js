@@ -167,7 +167,7 @@ const EditClient = (props) => {
         <CCol>
           <CCard>
             <CCardHeader>
-              <CSpinner className="me-1 float-end" style={{ display: (loading) ? "block" : "none" }} color='primary' variant='grow' />
+              <CSpinner color='dark' className="me-1 float-end" style={{ display: (loading) ? "block" : "none" }} variant='grow' />
               <strong>Edit Client</strong>
 
               <Route render={({ history }) => (
@@ -284,7 +284,7 @@ const EditClient = (props) => {
             </CCardBody>
 
             <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
-              <CSpinner color='primary' variant='grow' />
+              <CSpinner color='dark' variant='grow' />
             </CCardBody>
 
           </CCard>

@@ -133,7 +133,7 @@ const CreateClient = (props) => {
         <CCol>
           <CCard>
             <CCardHeader>
-              <CSpinner className="me-1 float-end" style={{ display: (loading) ? "block" : "none" }} color='primary' variant='grow' />
+              <CSpinner color='dark' className="me-1 float-end" style={{ display: (loading) ? "block" : "none" }} variant='grow' />
               <strong>Create Client</strong>
             </CCardHeader>
             <CCardBody>
@@ -231,7 +231,7 @@ const CreateClient = (props) => {
             </CCardBody>
 
             <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
-              <CSpinner color='primary' variant='grow' />
+              <CSpinner color='dark' variant='grow' />
             </CCardBody>
 
           </CCard>

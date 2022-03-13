@@ -8,6 +8,7 @@ import {
   CHeaderToggler,
   CNavLink,
   CNavItem,
+  CImage,
 } from '@coreui/react-pro'
 import CIcon from '@coreui/icons-react'
 import { cilMenu } from '@coreui/icons'
@@ -39,11 +40,8 @@ const AppHeader = () => {
           <CIcon icon={cilMenu} size="lg" />
         </CHeaderToggler>
         <CHeaderBrand className="mx-auto d-md-none" to="/">
-          <img
-            alt='SMN-logo-minimized'
-            className="sidebar-brand-narrow"
-            src='foodboot-logo.png'
-            height={60} />
+
+
         </CHeaderBrand>
         <CHeaderNav className="d-none d-md-flex me-auto">
           <CNavItem>
@@ -53,6 +51,17 @@ const AppHeader = () => {
             <CNavLink href="#/clients">Clients</CNavLink>
           </CNavItem>
         </CHeaderNav>
+
+        <div style={{ textAlign: 'end' }} >
+          <CNavLink href='#/'>
+            <CHeaderBrand className="sm-none">
+              <CImage
+                alt='foodboot-logo'
+                src='foodboot-logo-landscape.png'
+                height={40} />
+            </CHeaderBrand>
+          </CNavLink>
+        </div>
 
         <CHeaderNav className="ms-3 me-4">
           <AppHeaderDropdown />

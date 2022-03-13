@@ -137,7 +137,7 @@ const ViewClient = (props) => {
         </CCardBody>
 
         <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
-          <CSpinner color='primary' variant='grow' />
+          <CSpinner color='dark' variant='grow' />
         </CCardBody>
 
       </CCard>
@@ -167,7 +167,7 @@ const ViewClient = (props) => {
         </CCardBody>
 
         <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
-          <CSpinner color='primary' variant='grow' />
+          <CSpinner color='dark' variant='grow' />
         </CCardBody>
       </CCard>
     </>
