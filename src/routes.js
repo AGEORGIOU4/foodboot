@@ -1,14 +1,19 @@
 import React from 'react'
 
+// foodboot
 const Users = React.lazy(() => import('./views/users/Users'))
 
 const Clients = React.lazy(() => import('./views/clients/Clients'))
-const CreateClient = React.lazy(() => import('./views/clients/Create-Client'))
-const EditClient = React.lazy(() => import('./views/clients/Edit-Client'))
-const ViewClient = React.lazy(() => import('./views/clients/View-Client'))
+const CreateClient = React.lazy(() => import('./views/clients/client/Create-Client'))
+const EditClient = React.lazy(() => import('./views/clients/client/Edit-Client'))
+const ViewClient = React.lazy(() => import('./views/clients/client/View-Client'))
 
 const Profile = React.lazy(() => import('./views/profile/Profile'))
 const EditProfile = React.lazy(() => import('./views/profile/Edit-Profile'))
+
+const NutritionFacts = React.lazy(() => import('./views/nutrition-facts/Nutrition-Facts'))
+
+
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -75,6 +80,7 @@ const routes = [
   { path: '/theme', name: 'Theme', component: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', component: Colors },
   { path: '/theme/typography', name: 'Typography', component: Typography },
+
   { path: '/base', name: 'Base', component: Cards, exact: true },
   { path: '/base/accordion', name: 'Accordion', component: Accordion },
   { path: '/base/breadcrumbs', name: 'Breadcrumbs', component: Breadcrumbs },
@@ -130,13 +136,15 @@ const routes = [
 
   { path: '/users', name: 'Users', component: Users },
 
-  { path: '/clients', name: 'Clients', component: Clients },
-  { path: '/create-client', name: 'Create Client', component: CreateClient },
+  { path: '/profile', name: 'Profile', component: Profile },
+  { path: '/edit-profile', name: 'Edit Profile', component: EditProfile },
+
+  { path: '/clients', name: 'Clients', component: Clients, exact: true },
+  { path: '/create-client', name: 'Client', component: CreateClient },
   { path: '/edit-client', name: 'Edit Client', component: EditClient },
   { path: '/view-client', name: 'View Client', component: ViewClient },
 
-  { path: '/profile', name: 'Profile', component: Profile },
-  { path: '/edit-profile', name: 'Edit Profile', component: EditProfile },
+  { path: '/nutrition-facts', name: 'Nutrition Facts', component: NutritionFacts },
 ]
 
 export default routes

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SwalMixin } from "../SweetAlerts/Swal";
+import { SwalMixin } from "../components/SweetAlerts/Swal";
 
 export async function restApiGet(url) {
   var data = "";

@@ -21,21 +21,18 @@ import {
   cilUser,
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react-pro'
+import { cilFastfood, cilNote } from '@coreui/icons-pro'
 
 const _nav = [
   {
     component: CNavTitle,
-    name: 'Project',
+    name: 'foodboot',
   },
   {
     component: CNavItem,
     name: 'Dashboard',
     to: '/dashboard',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
-    badge: {
-      color: 'success-gradient',
-      text: 'NEW',
-    },
   },
   {
     component: CNavItem,
@@ -49,7 +46,22 @@ const _nav = [
     to: '/clients',
     icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
   },
-
+  {
+    component: CNavItem,
+    name: 'Nutrition Facts',
+    to: '/nutrition-facts',
+    icon: <CIcon icon={cilFastfood} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Meal Planning',
+    to: '/meal-planning',
+    icon: <CIcon icon={cilNote} customClassName="nav-icon" />,
+    badge: {
+      color: 'success-gradient',
+      text: 'NEW',
+    },
+  },
   {
     component: CNavTitle,
     name: 'Theme',

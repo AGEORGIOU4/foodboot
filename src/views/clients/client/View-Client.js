@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import { withAuthenticationRequired } from '@auth0/auth0-react'
 
 import { CCol, CFormLabel, CSpinner, CCard, CCardBody, CRow, CImage, CCardHeader, CButton } from '@coreui/react-pro'
-import avatar from './../../assets/images/avatars/avatar.png'
+import avatar from '../../../assets/images/avatars/avatar.png'
 import { FormatTimestamp, mainUrl } from 'src/components/Common';
-import { restApiGet } from 'src/components/apiCalls/rest';
+import { restApiGet } from 'src/api_calls/rest';
 import CIcon from '@coreui/icons-react';
 import { cidFileAdd, cilPrint } from '@coreui/icons-pro';
 import { cilPencil } from '@coreui/icons';
 import { Route } from 'react-router-dom';
-import { MedicalHistoriesViewTable } from './medical-histories/MedicalHistoriesViewTable';
+import { MedicalHistoriesViewTable } from '../medical-histories/MedicalHistoriesViewTable';
 
 const print = (e) => {
   e.preventDefault()

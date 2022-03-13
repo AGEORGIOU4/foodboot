@@ -19,7 +19,7 @@ class App extends Component {
   render() {
     return (
       <HashRouter>
-        <Suspense fallback={<CLoading image_source='foodboot-logo-square.png' />}>
+        <Suspense fallback={<CLoading image_source='foodboot-logo-square-min.png' />}>
           <Switch>
             <Route exact path="/login" name="Login Page" render={(props) => <Login {...props} />} />
             <Route exact path="/register" name="Register Page" render={(props) => <Register {...props} />} />

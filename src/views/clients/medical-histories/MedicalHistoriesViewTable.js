@@ -1,20 +1,20 @@
 import React from 'react'
 
-import { CSmartTable, CButton, CLink } from '@coreui/react-pro'
+import { CSmartTable, CButton } from '@coreui/react-pro'
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
 import Swal from 'sweetalert2'
 import { Route } from 'react-router-dom'
 import { FormatTimestamp, mainUrl } from 'src/components/Common'
-import { restApiDelete } from 'src/components/apiCalls/rest'
+import { restApiDelete } from 'src/api_calls/rest'
 
 export const MedicalHistoriesViewTable = (props) => {
   const columns = [
-    { key: 'date' },
-    { key: 'height' },
-    { key: 'weight' },
-    { key: 'edit', label: '', _style: { width: '0%' }, sorter: false, filter: false },
-    { key: 'remove', label: '', _style: { width: '0%' }, sorter: false, filter: false },
+    { key: 'date', _props: { color: 'info' } },
+    { key: 'height', _props: { color: 'info' } },
+    { key: 'weight', _props: { color: 'info' } },
+    { key: 'edit', label: '', _style: { width: '0%' }, sorter: false, filter: false, _props: { color: 'info' } },
+    { key: 'remove', label: '', _style: { width: '0%' }, sorter: false, filter: false, _props: { color: 'info' } },
   ]
 
   return (

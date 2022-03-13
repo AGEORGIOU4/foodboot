@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import {
   CCol,
@@ -11,7 +11,7 @@ import {
 import { FormatTimestampFunction, mainUrl } from 'src/components/Common';
 import CIcon from '@coreui/icons-react';
 import { cidSave, cidTrash } from '@coreui/icons-pro';
-import { restApiDelete, restApiPut } from 'src/components/apiCalls/rest';
+import { restApiDelete, restApiPut } from 'src/api_calls/rest';
 import Swal from 'sweetalert2';
 
 export const CMedicalRecord = (props) => {

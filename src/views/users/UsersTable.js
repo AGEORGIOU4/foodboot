@@ -5,13 +5,15 @@ import { cilPencil, cilTrash } from '@coreui/icons'
 
 const UsersTable = (props) => {
   const columns = [
-    { key: 'picture', label: '', filter: false, sorter: false, },
-    { key: 'given_name' },
-    { key: 'family_name' },
-    { key: 'email' },
-    { key: 'user_metadata', 'label': 'Role' },
-    { key: 'edit', label: '', _style: { width: '0%' }, sorter: false, filter: false },
-    { key: 'remove', label: '', _style: { width: '0%' }, sorter: false, filter: false },
+    {
+      key: 'picture', label: '', filter: false, sorter: false, _props: { color: 'primary' }
+    },
+    { key: 'given_name', _props: { color: 'primary' } },
+    { key: 'family_name', _props: { color: 'primary' } },
+    { key: 'email', _props: { color: 'primary' } },
+    { key: 'user_metadata', 'label': 'Role', _props: { color: 'primary' } },
+    { key: 'edit', label: '', _style: { width: '0%' }, sorter: false, filter: false, _props: { color: 'primary' } },
+    { key: 'remove', label: '', _style: { width: '0%' }, sorter: false, filter: false, _props: { color: 'primary' } },
   ]
 
   return (

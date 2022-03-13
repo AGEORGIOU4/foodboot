@@ -4,7 +4,7 @@ import { CButton, CCard, CCardBody, CCardHeader } from '@coreui/react-pro'
 import ClientsTable from './ClientsTable';
 import CIcon from '@coreui/icons-react';
 import { mainUrl } from 'src/components/Common';
-import { restApiGet } from 'src/components/apiCalls/rest';
+import { restApiGet } from 'src/api_calls/rest';
 import { cidUserPlus } from '@coreui/icons-pro';
 
 const Clients = () => {
