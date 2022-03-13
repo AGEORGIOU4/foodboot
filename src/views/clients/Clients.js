@@ -39,7 +39,7 @@ const Clients = () => {
           <strong>Clients</strong>
 
           <CButton
-            href='#/create-client'
+            href='#/clients/create-client'
             className="me-1 float-end"
             size="sm"
             color='info'

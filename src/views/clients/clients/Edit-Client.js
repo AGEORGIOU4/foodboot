@@ -176,7 +176,7 @@ const EditClient = (props) => {
                   size="sm"
                   color='primary'
                   variant="ghost"
-                  onClick={() => { history.push({ pathname: "/view-client", search: '?id=' + client_id }) }}
+                  onClick={() => { history.push({ pathname: "/clients/view-client", search: '?id=' + client_id }) }}
                 ><CIcon icon={cilEye} /> View
                 </CButton>
               )} />
@@ -239,7 +239,7 @@ const EditClient = (props) => {
                   color='success'
                   variant="ghost"
                   onClick={handleSubmitBasicInfo}
-                ><CIcon icon={cilSave} /> Save
+                ><CIcon icon={cilSave} /> Save Client
                 </CButton>
 
                 <hr />

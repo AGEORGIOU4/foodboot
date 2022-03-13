@@ -81,7 +81,7 @@ const ViewClient = (props) => {
               size="sm"
               color='success'
               variant="ghost"
-              onClick={() => { history.push({ pathname: "/edit-client", search: '?id=' + client_id }) }}
+              onClick={() => { history.push({ pathname: "/clients/edit-client", search: '?id=' + client_id }) }}
             ><CIcon icon={cilPencil} /> Edit
             </CButton>
           )} />
