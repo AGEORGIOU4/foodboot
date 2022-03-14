@@ -10,7 +10,7 @@ import { restApiDelete, restApiPost, restApiPut } from 'src/api_calls/rest'
 import { mainUrl } from 'src/components/Common'
 import { SwalMixin } from 'src/components/SweetAlerts/Swal'
 import uuid from 'react-uuid'
-import { CALENDAR_EVENTS } from './CalendarValues'
+import { CALENDAR_EVENTS } from './Load-Calendar'
 
 export const PersonalCalendar = (props) => {
   const { user } = useAuth0();
@@ -59,9 +59,8 @@ export const PersonalCalendar = (props) => {
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           headerToolbar={{
-            left: 'prev,next today',
-            center: 'title',
-            right: ''
+            left: 'title',
+            right: 'prev,next today'
           }}
           footerToolbar={{
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
