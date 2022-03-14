@@ -5,21 +5,25 @@ import { FormatTimestamp, mainUrl } from 'src/components/Common'
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
 import { Route } from 'react-router-dom'
-import { restApiDelete } from 'src/components/apiCalls/rest'
+import { restApiDelete } from 'src/api_calls/rest'
 import Swal from 'sweetalert2'
 import { cilEye } from '@coreui/icons-pro'
 
 const ClientsTable = (props) => {
   const columns = [
-    { key: 'view', label: '', _style: { width: '0%' }, sorter: false, filter: false },
-    { key: 'last_name' },
-    { key: 'first_name' },
-    { key: 'dob', label: 'DOB' },
-    { key: 'email' },
-    { key: 'phone' },
-    { key: 'address' },
-    { key: 'edit', label: '', _style: { width: '0%' }, sorter: false, filter: false },
-    { key: 'remove', label: '', _style: { width: '0%' }, sorter: false, filter: false },
+    {
+      key: 'view', label: '',
+      _style: { width: '0%' }, sorter: false, filter: false,
+      _props: { color: 'success' }
+    },
+    { key: 'last_name', _props: { color: 'success' } },
+    { key: 'first_name', _props: { color: 'success' } },
+    { key: 'dob', label: 'DOB', _props: { color: 'success' } },
+    { key: 'email', _props: { color: 'success' } },
+    { key: 'phone', _props: { color: 'success' } },
+    { key: 'address', _props: { color: 'success' } },
+    { key: 'edit', label: '', _style: { width: '0%' }, sorter: false, filter: false, _props: { color: 'success' } },
+    { key: 'remove', label: '', _style: { width: '0%' }, sorter: false, filter: false, _props: { color: 'success' } },
   ]
 
   return (
@@ -33,6 +37,7 @@ const ClientsTable = (props) => {
         tableFilter
         cleaner
         loading={props.loading}
+
         itemsPerPageSelect
         itemsPerPage={5}
         columnSorter
@@ -50,7 +55,7 @@ const ClientsTable = (props) => {
                   size="sm"
                   color='primary'
                   variant="ghost"
-                  onClick={() => { history.push({ pathname: "/view-client", search: '?id=' + item.id }) }}
+                  onClick={() => { history.push({ pathname: "/clients/view-client", search: '?id=' + item.id }) }}
 
                 ><CIcon icon={cilEye} /></CButton>
               </td>
@@ -62,7 +67,7 @@ const ClientsTable = (props) => {
                   size="sm"
                   color='success'
                   variant="ghost"
-                  onClick={() => { history.push({ pathname: "/edit-client", search: '?id=' + item.id }) }}
+                  onClick={() => { history.push({ pathname: "/clients/edit-client", search: '?id=' + item.id }) }}
                 >
                   <CIcon icon={cilPencil} />
                 </CButton>

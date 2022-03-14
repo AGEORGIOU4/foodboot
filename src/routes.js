@@ -1,16 +1,27 @@
 import React from 'react'
 
+// foodboot
 const Users = React.lazy(() => import('./views/users/Users'))
 
 const Clients = React.lazy(() => import('./views/clients/Clients'))
-const CreateClient = React.lazy(() => import('./views/clients/Create-Client'))
-const EditClient = React.lazy(() => import('./views/clients/Edit-Client'))
-const ViewClient = React.lazy(() => import('./views/clients/View-Client'))
+const CreateClient = React.lazy(() => import('./views/clients/clients/Create-Client'))
+const EditClient = React.lazy(() => import('./views/clients/clients/Edit-Client'))
+const ViewClient = React.lazy(() => import('./views/clients/clients/View-Client'))
 
 const Profile = React.lazy(() => import('./views/profile/Profile'))
 const EditProfile = React.lazy(() => import('./views/profile/Edit-Profile'))
 
+const NutritionFacts = React.lazy(() => import('./views/nutrition-facts/Nutrition-Facts'))
+const MealPlanning = React.lazy(() => import('./views/meal-planning/Meal-Planning'))
+const Analytics = React.lazy(() => import('./views/analytics/Analytics'))
+
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
+const LoadCalendar = React.lazy(() => import('./views/calendar/Load-Calendar'))
+const PersonalCalendar = React.lazy(() => import('./views/calendar/Personal-Calendar'))
+
+
+
+
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 
@@ -61,7 +72,6 @@ const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 const SmartTable = React.lazy(() => import('./views/smart-table/SmartTable'))
 
 // Plugins
-const Calendar = React.lazy(() => import('./views/plugins/calendar/Calendar'))
 const Charts = React.lazy(() => import('./views/plugins/charts/Charts'))
 const GoogleMaps = React.lazy(() => import('./views/plugins/google-maps/GoogleMaps'))
 
@@ -75,6 +85,7 @@ const routes = [
   { path: '/theme', name: 'Theme', component: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', component: Colors },
   { path: '/theme/typography', name: 'Typography', component: Typography },
+
   { path: '/base', name: 'Base', component: Cards, exact: true },
   { path: '/base/accordion', name: 'Accordion', component: Accordion },
   { path: '/base/breadcrumbs', name: 'Breadcrumbs', component: Breadcrumbs },
@@ -114,8 +125,6 @@ const routes = [
   { path: '/notifications/badges', name: 'Badges', component: Badges },
   { path: '/notifications/modals', name: 'Modals', component: Modals },
   { path: '/notifications/toasts', name: 'Toasts', component: Toasts },
-  { path: '/plugins', name: 'Plugins', component: Calendar, exact: true },
-  { path: '/plugins/calendar', name: 'Calendar', component: Calendar },
   { path: '/plugins/charts', name: 'Charts', component: Charts },
   { path: '/plugins/google-maps', name: 'GoogleMaps', component: GoogleMaps },
   { path: '/smart-table', name: 'Smart Table', component: SmartTable },
@@ -130,13 +139,21 @@ const routes = [
 
   { path: '/users', name: 'Users', component: Users },
 
-  { path: '/clients', name: 'Clients', component: Clients },
-  { path: '/create-client', name: 'Create Client', component: CreateClient },
-  { path: '/edit-client', name: 'Edit Client', component: EditClient },
-  { path: '/view-client', name: 'View Client', component: ViewClient },
-
   { path: '/profile', name: 'Profile', component: Profile },
   { path: '/edit-profile', name: 'Edit Profile', component: EditProfile },
+
+
+  { path: '/clients', name: 'Clients', component: Clients, exact: true },
+  { path: '/clients/create-client', name: 'Create Client', component: CreateClient },
+  { path: '/clients/edit-client', name: 'Edit Client', component: EditClient },
+  { path: '/clients/view-client', name: 'View Client', component: ViewClient },
+
+  { path: '/nutrition-facts', name: 'Nutrition Facts', component: NutritionFacts },
+  { path: '/analytics', name: 'Analytics', component: Analytics },
+  { path: '/meal-planning', name: 'Meal Planning', component: MealPlanning },
+
+  { path: '/calendar', name: 'Calendar', component: LoadCalendar },
+  { path: '/personal-calendar', name: 'Calendar', component: PersonalCalendar },
 ]
 
 export default routes

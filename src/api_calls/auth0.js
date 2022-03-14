@@ -1,7 +1,7 @@
 import Swal from "sweetalert2";
 import axios from "axios";
-import { SwalBottomToast2, SwalMixin } from "../SweetAlerts/Swal";
-import { auth0APItoken } from "../Common";
+import { SwalBottomToast2, SwalMixin } from "../components/SweetAlerts/Swal";
+import { auth0APItoken } from "../components/Common";
 
 export async function auth0ApiCall(method, url, params, atomic) {
   var data = "";

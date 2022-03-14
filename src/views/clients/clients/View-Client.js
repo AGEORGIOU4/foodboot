@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import { withAuthenticationRequired } from '@auth0/auth0-react'
 
 import { CCol, CFormLabel, CSpinner, CCard, CCardBody, CRow, CImage, CCardHeader, CButton } from '@coreui/react-pro'
-import avatar from './../../assets/images/avatars/avatar.png'
+import avatar from '../../../assets/images/avatars/avatar.png'
 import { FormatTimestamp, mainUrl } from 'src/components/Common';
-import { restApiGet } from 'src/components/apiCalls/rest';
+import { restApiGet } from 'src/api_calls/rest';
 import CIcon from '@coreui/icons-react';
 import { cidFileAdd, cilPrint } from '@coreui/icons-pro';
 import { cilPencil } from '@coreui/icons';
 import { Route } from 'react-router-dom';
-import { MedicalHistoriesViewTable } from './medical-histories/MedicalHistoriesViewTable';
+import { MedicalHistoriesViewTable } from '../medical-histories/MedicalHistoriesViewTable';
 
 const print = (e) => {
   e.preventDefault()
@@ -81,13 +81,13 @@ const ViewClient = (props) => {
               size="sm"
               color='success'
               variant="ghost"
-              onClick={() => { history.push({ pathname: "/edit-client", search: '?id=' + client_id }) }}
+              onClick={() => { history.push({ pathname: "/clients/edit-client", search: '?id=' + client_id }) }}
             ><CIcon icon={cilPencil} /> Edit
             </CButton>
           )} />
 
         </CCardHeader>
-        <CCardBody style={{ display: (loading) ? "none" : "block" }}>
+        <CCardBody>
           <CRow>
             <CCol md={3} style={{ margin: '0px 0px 30px 0px' }}>
               <CImage width={80} src={avatar} />
@@ -136,10 +136,6 @@ const ViewClient = (props) => {
 
         </CCardBody>
 
-        <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
-          <CSpinner color='primary' variant='grow' />
-        </CCardBody>
-
       </CCard>
 
       <div style={{ margin: '20px 0px', fontWeight: '900' }}>
@@ -148,7 +144,7 @@ const ViewClient = (props) => {
 
 
       <CCard>
-        <CCardBody style={{ display: (loading) ? "none" : "block" }}>
+        <CCardBody>
 
           <Route render={({ history }) => (
             <div>
@@ -158,16 +154,12 @@ const ViewClient = (props) => {
                 size="sm"
                 color='info'
                 variant="ghost"
-                onClick={() => { history.push({ pathname: "/edit-client", search: '?id=' + client_id }) }}
+                onClick={() => { history.push({ pathname: "/clients/edit-client", search: '?id=' + client_id }) }}
               ><CIcon icon={cidFileAdd} /> Edit Medical Records
               </CButton>
             </div>
           )} />
           <MedicalHistoriesViewTable data={medical_history} loading={loading} resetData={resetData} />
-        </CCardBody>
-
-        <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
-          <CSpinner color='primary' variant='grow' />
         </CCardBody>
       </CCard>
     </>

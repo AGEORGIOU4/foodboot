@@ -6,7 +6,7 @@ import CIcon from "@coreui/icons-react";
 import { cilPencil } from "@coreui/icons";
 import { CSpinner } from "@coreui/react-pro";
 import { Link } from "react-router-dom";
-import { auth0ApiCall, removeUser } from "src/components/apiCalls/auth0";
+import { auth0ApiCall, removeUser } from "src/api_calls/auth0";
 import { Route } from "react-router-dom";
 
 const Profile = props => {
@@ -89,7 +89,7 @@ const Profile = props => {
             </CCardBody>
 
             <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
-              <CSpinner color='primary' variant='grow' />
+              <CSpinner color='dark' variant='grow' />
             </CCardBody>
 
           </CCard>

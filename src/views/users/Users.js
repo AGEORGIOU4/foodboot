@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { withAuthenticationRequired } from "@auth0/auth0-react";
 import { CCard, CCardBody, CCardHeader } from '@coreui/react-pro'
 import UsersTable from './UsersTable';
-import { auth0ApiCall } from 'src/components/apiCalls/auth0';
+import { auth0ApiCall } from 'src/api_calls/auth0';
 
 const Users = () => {
   const [data, setUsers] = useState([]);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import {
   CCol,
@@ -11,7 +11,7 @@ import {
 import { FormatTimestampFunction, mainUrl } from 'src/components/Common';
 import CIcon from '@coreui/icons-react';
 import { cidSave, cidTrash } from '@coreui/icons-pro';
-import { restApiDelete, restApiPut } from 'src/components/apiCalls/rest';
+import { restApiDelete, restApiPut } from 'src/api_calls/rest';
 import Swal from 'sweetalert2';
 
 export const CMedicalRecord = (props) => {
@@ -26,14 +26,14 @@ export const CMedicalRecord = (props) => {
       </CCol>
       <CCol md={4}>
         <CFormLabel htmlFor="validationCustom09">Height</CFormLabel>
-        <CFormInput type="text" name="height" id="validationCustom09" required
+        <CFormInput type="number" name="height" id="validationCustom09" required
           value={props.item.height}
           onChange={e => props.handleUpdateMedicalHistory(props.index, e)} />
         <CFormFeedback valid>Looks good!</CFormFeedback>
       </CCol>
       <CCol md={4}>
         <CFormLabel htmlFor="validationCustom10">Weight</CFormLabel>
-        <CFormInput type="text" name="weight" id="validationCustom10" required
+        <CFormInput type="number" name="weight" id="validationCustom10" required
           value={props.item.weight}
           onChange={e => props.handleUpdateMedicalHistory(props.index, e)} />
         <CFormFeedback valid>Looks good!</CFormFeedback>

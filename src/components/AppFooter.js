@@ -1,21 +1,8 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { CButtonGroup, CFooter, CFormCheck, CHeaderNav } from '@coreui/react-pro'
-import CIcon from '@coreui/icons-react'
-import { cilMoon, cilSun } from '@coreui/icons'
+import { } from 'react-redux'
+import { CFooter, } from '@coreui/react-pro'
 
 const AppFooter = () => {
-  const dispatch = useDispatch()
-
-  const theme = useSelector((state) => state.theme)
-
-  theme === 'dark'
-    ? document.body.classList.add('dark-theme')
-    : document.body.classList.remove('dark-theme')
-
-  const sidebarShow = useSelector((state) => state.sidebarShow)
-  const asideShow = useSelector((state) => state.asideShow)
-
   return (
     <CFooter>
       <div>
@@ -31,30 +18,6 @@ const AppFooter = () => {
         </a>
       </div>
       <div>
-        <CHeaderNav className="ms-auto me-4">
-          <CButtonGroup aria-label="Theme switch">
-            <CFormCheck
-              type="radio"
-              button={{ color: 'primary' }}
-              name="theme-switch"
-              id="btn-light-theme"
-              autoComplete="off"
-              label={<CIcon icon={cilSun} />}
-              checked={theme === 'default'}
-              onChange={() => dispatch({ type: 'set', theme: 'light' })}
-            />
-            <CFormCheck
-              type="radio"
-              button={{ color: 'primary' }}
-              name="theme-switch"
-              id="btn-dark-theme"
-              autoComplete="off"
-              label={<CIcon icon={cilMoon} />}
-              checked={theme === 'dark'}
-              onChange={() => dispatch({ type: 'set', theme: 'dark' })}
-            />
-          </CButtonGroup>
-        </CHeaderNav>
       </div>
     </CFooter>
   )

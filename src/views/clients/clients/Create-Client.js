@@ -8,63 +8,39 @@ import {
   CFormFeedback,
   CFormLabel,
   CSpinner,
+  CCardBody,
   CCard,
   CCardHeader,
-  CCardBody,
-  CRow
+  CRow,
 } from '@coreui/react-pro'
-import { FormatTimestampFunction, mainUrl } from 'src/components/Common';
-import { restApiGet, restApiPut } from 'src/components/apiCalls/rest';
+import { mainUrl } from 'src/components/Common';
+import { restApiGet, restApiPost, restApiPut } from 'src/api_calls/rest';
 import CIcon from '@coreui/icons-react';
 import { cilSave } from '@coreui/icons';
-import { cidFileAdd, cilEye } from '@coreui/icons-pro';
-import { CMedicalRecord } from './medical-histories/CMedicalRecord';
-import { Route } from 'react-router-dom';
+import { cidFileAdd } from '@coreui/icons-pro';
+import { CMedicalRecord } from '../medical-histories/CMedicalRecord';
 
-const EditClient = (props) => {
+const CreateClient = (props) => {
   const [validated, setValidated] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  // Cannot USE SET BECAUSE TWO API CALLS ARE INVOKED!!!
-  var updatedBasicInfo = "";
-  var updatedMedicalRecords = "";
+  var createdBasicInfo = "";
+  var createdMedicalRecords = "";
 
-  const [first_name, setFirstName] = useState(updatedBasicInfo.first_name);
-  const [last_name, setLastName] = useState(updatedBasicInfo.last_name);
-  const [dob, setDob] = useState(FormatTimestampFunction(updatedBasicInfo.dob));
-  const [email, setEmail] = useState(updatedBasicInfo.email);
-  const [phone, setPhone] = useState(updatedBasicInfo.phone);
-  const [address, setAddress] = useState(updatedBasicInfo.address);
-  const [food_allergies, setFoodAllergies] = useState(updatedBasicInfo.food_allergies);
+  const [first_name, setFirstName] = useState();
+  const [last_name, setLastName] = useState();
+  const [dob, setDob] = useState();
+  const [email, setEmail] = useState();
+  const [phone, setPhone] = useState();
+  const [address, setAddress] = useState();
+  const [food_allergies, setFoodAllergies] = useState();
 
   const [medical_history, setMedicalHistory] = useState([])
 
-  const parameters = new URLSearchParams(props.location.search);
-  const client_id = parameters.get('id');
+  // Obtsained after creation
+  const [client_id, setClientID] = useState()
 
   var record_id = Math.floor(Math.random() * 99999);
-
-  // Get-Set Client
-  React.useEffect(() => {
-    setLoading(true);
-    Promise.resolve(
-      restApiGet(mainUrl + '/clients/' + client_id)
-        .then(function (value) {
-          setBasicInfo(value);
-          setLoading(false);
-        }));
-  }, []);
-
-  // Get-Set Medical History
-  React.useEffect(() => {
-    setLoading(true);
-    Promise.resolve(
-      restApiGet(mainUrl + '/clients/medical-histories/' + client_id)
-        .then(function (value) {
-          setMedicalHistory(value);
-          setLoading(false);
-        }));
-  }, []);
 
   // Reset Medical Histories on Delete
   const resetData = () => {
@@ -77,16 +53,6 @@ const EditClient = (props) => {
         }));
   }
 
-  const setBasicInfo = (data) => {
-    setFirstName(data.first_name);
-    setLastName(data.last_name);
-    setDob(FormatTimestampFunction(data.dob));
-    setEmail(data.email);
-    setPhone(data.phone);
-    setAddress(data.address);
-    setFoodAllergies(data.food_allergies);
-  }
-
   const handleSubmitBasicInfo = (event) => {
     const form = event.currentTarget
 
@@ -94,8 +60,7 @@ const EditClient = (props) => {
       event.preventDefault()
       event.stopPropagation()
     } else {
-
-      updatedBasicInfo = {
+      createdBasicInfo = {
         first_name: first_name,
         last_name: last_name,
         dob: dob,
@@ -107,11 +72,12 @@ const EditClient = (props) => {
 
       setLoading(true);
 
-      // Update client
+      // Create client
       Promise.resolve(
-        restApiPut(mainUrl + '/clients/update/' + client_id, updatedBasicInfo, true)
+        restApiPost(mainUrl + '/clients/create/', createdBasicInfo, true)
           .then(function (value) {
             setLoading(false);
+            setClientID(value.client.id);
           }).catch(function () {
             setLoading(false);
           }));
@@ -143,13 +109,13 @@ const EditClient = (props) => {
       event.stopPropagation()
     } else {
 
-      updatedMedicalRecords = medical_history;
+      createdMedicalRecords = medical_history;
 
       setLoading(true);
 
       // Update medical records
       {
-        updatedMedicalRecords.map((record, index) => {
+        createdMedicalRecords.map((record, index) => {
           Promise.resolve(
             restApiPut(mainUrl + '/clients/medical-histories/update/' + parseInt(record.id), record, true)
               .then(function (value) {
@@ -167,22 +133,19 @@ const EditClient = (props) => {
         <CCol>
           <CCard>
             <CCardHeader>
-              <CSpinner className="me-1 float-end" style={{ display: (loading) ? "block" : "none" }} color='primary' variant='grow' />
-              <strong>Edit Client</strong>
-
-              <Route render={({ history }) => (
-                <CButton
-                  className="me-1 float-end"
-                  size="sm"
-                  color='primary'
-                  variant="ghost"
-                  onClick={() => { history.push({ pathname: "/view-client", search: '?id=' + client_id }) }}
-                ><CIcon icon={cilEye} /> View
-                </CButton>
-              )} />
-
+              <CSpinner color='dark' className="me-1 float-end" style={{ display: (loading) ? "block" : "none" }} variant='grow' />
+              <strong>Create Client</strong>
+              <CButton
+                disabled={loading}
+                className="me-1 float-end"
+                size="sm"
+                color='success'
+                variant="ghost"
+                onClick={(e) => handleSubmitBasicInfo(e)}
+              ><CIcon icon={cilSave} /> Save
+              </CButton>
             </CCardHeader>
-            <CCardBody style={{ display: (loading) ? "none" : "block" }}>
+            <CCardBody>
               <CForm
                 className="row g-3 needs-validation"
                 noValidate
@@ -190,45 +153,37 @@ const EditClient = (props) => {
               >
                 <CCol md={4}>
                   <CFormLabel htmlFor="validationCustom01">First name</CFormLabel>
-                  <CFormInput type="text" id="validationCustom01" value={first_name} required
-                    onChange={e => setFirstName(e.target.value)} />
+                  <CFormInput type="text" id="validationCustom01" required onChange={e => setFirstName(e.target.value)} />
                   <CFormFeedback valid>Looks good!</CFormFeedback>
                 </CCol>
                 <CCol md={4}>
                   <CFormLabel htmlFor="validationCustom02">Last name</CFormLabel>
-                  <CFormInput type="text" id="validationCustom02" value={last_name} required
-                    onChange={e => setLastName(e.target.value)} />
+                  <CFormInput type="text" id="validationCustom02" required onChange={e => setLastName(e.target.value)} />
                   <CFormFeedback valid>Looks good!</CFormFeedback>
                 </CCol>
                 <CCol md={4}>
                   <CFormLabel htmlFor="validationCustom03">DOB</CFormLabel>
-                  <CFormInput type="date" id="validationCustom03" value={(dob)} required
-                    onChange={e => setDob(e.target.value)}
-                  />
+                  <CFormInput type="date" id="validationCustom03" required onChange={e => setDob(e.target.value)} />
                   <CFormFeedback valid>Looks good!</CFormFeedback>
                 </CCol>
                 <CCol md={4}>
                   <CFormLabel htmlFor="validationCustom04">Email</CFormLabel>
-                  <CFormInput type="text" id="validationCustom04" value={email} required
-                    onChange={e => setEmail(e.target.value)} />
+                  <CFormInput type="text" id="validationCustom04" required onChange={e => setEmail(e.target.value)} />
                   <CFormFeedback valid>Looks good!</CFormFeedback>
                 </CCol>
                 <CCol md={4}>
                   <CFormLabel htmlFor="validationCustom05">Phone</CFormLabel>
-                  <CFormInput type="text" id="validationCustom05" value={phone} required
-                    onChange={e => setPhone(e.target.value)} />
+                  <CFormInput type="text" id="validationCustom05" required onChange={e => setPhone(e.target.value)} />
                   <CFormFeedback valid>Looks good!</CFormFeedback>
                 </CCol>
                 <CCol md={4}>
                   <CFormLabel htmlFor="validationCustom06">Address</CFormLabel>
-                  <CFormInput type="text" id="validationCustom06" value={address} required
-                    onChange={e => setAddress(e.target.value)} />
+                  <CFormInput type="text" id="validationCustom06" required onChange={e => setAddress(e.target.value)} />
                   <CFormFeedback valid>Looks good!</CFormFeedback>
                 </CCol>
                 <CCol md={4}>
                   <CFormLabel htmlFor="validationCustom07">Food allergies</CFormLabel>
-                  <CFormInput type="text" id="validationCustom07" value={food_allergies} required
-                    onChange={e => setFoodAllergies(e.target.value)} />
+                  <CFormInput type="text" id="validationCustom07" required onChange={e => setFoodAllergies(e.target.value)} />
                   <CFormFeedback valid>Looks good!</CFormFeedback>
                 </CCol>
 
@@ -239,7 +194,7 @@ const EditClient = (props) => {
                   color='success'
                   variant="ghost"
                   onClick={handleSubmitBasicInfo}
-                ><CIcon icon={cilSave} /> Save
+                ><CIcon icon={cilSave} /> Save Client
                 </CButton>
 
                 <hr />
@@ -250,7 +205,7 @@ const EditClient = (props) => {
 
                 <div>
                   <CButton
-                    disabled={loading}
+                    disabled={(client_id) ? false : true}
                     className="me-1 float-end"
                     size="sm"
                     color='info'
@@ -271,20 +226,21 @@ const EditClient = (props) => {
                 )}
 
                 <CButton
-                  disabled={loading}
+                  disabled={(client_id) ? false : true}
                   className="me-1"
                   size="sm"
                   color='success'
                   variant="ghost"
-                  onClick={handleSubmitMedicalHistory}
+                  onClick={(e) => handleSubmitMedicalHistory(e)}
                 ><CIcon icon={cilSave} /> Save All Records
                 </CButton>
+
               </CForm>
 
             </CCardBody>
 
             <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
-              <CSpinner color='primary' variant='grow' />
+              <CSpinner color='dark' variant='grow' />
             </CCardBody>
 
           </CCard>
@@ -294,4 +250,4 @@ const EditClient = (props) => {
   )
 }
 
-export default withAuthenticationRequired(EditClient)
+export default withAuthenticationRequired(CreateClient)

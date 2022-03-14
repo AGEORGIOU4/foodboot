@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import { CButton, CRow, CCol, CImage, CCard, CCardBody, CInputGroupText, CInputGroup, CFormInput, CFormSelect, CForm, CFormFeedback, CCardHeader } from "@coreui/react-pro";
 import { CSpinner } from "@coreui/react-pro";
-import { auth0ApiCall, EditUser } from "src/components/apiCalls/auth0";
+import { auth0ApiCall, EditUser } from "src/api_calls/auth0";
 import { cilSave } from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
 import { SwalMixin } from "src/components/SweetAlerts/Swal";
@@ -84,8 +84,8 @@ const EditProfile = () => {
             <CCard>
 
               <CCardHeader>
-                <CSpinner className="me-1 float-end" style={{ display: (loading) ? "block" : "none" }} color='primary' variant='grow' />
-                <strong>Create Client</strong>
+                <CSpinner color='dark' className="me-1 float-end" style={{ display: (loading) ? "block" : "none" }} variant='grow' />
+                <strong>Edit Profile</strong>
                 <CButton
                   disabled={loading}
                   className="me-1 float-end"
@@ -148,7 +148,7 @@ const EditProfile = () => {
               </CCardBody>
 
               <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
-                <CSpinner color='primary' variant='grow' />
+                <CSpinner color='dark' variant='grow' />
               </CCardBody>
 
             </CCard>

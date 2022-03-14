@@ -1,33 +1,26 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   CContainer,
   CHeader,
   CHeaderBrand,
+  CHeaderDivider,
   CHeaderNav,
   CHeaderToggler,
   CNavLink,
   CNavItem,
+  CImage,
 } from '@coreui/react-pro'
 import CIcon from '@coreui/icons-react'
 import { cilMenu } from '@coreui/icons'
 
-
-import {
-  AppHeaderDropdown,
-} from './header/index'
+import AppBreadcrumb from './AppBreadcrumb'
+import AppHeaderDropdown from './header/AppHeaderDropdown'
 
 const AppHeader = () => {
   const dispatch = useDispatch()
-
-  const theme = useSelector((state) => state.theme)
-
-  theme === 'dark'
-    ? document.body.classList.add('dark-theme')
-    : document.body.classList.remove('dark-theme')
-
   const sidebarShow = useSelector((state) => state.sidebarShow)
-  const asideShow = useSelector((state) => state.asideShow)
 
   return (
     <CHeader position="sticky" className="mb-4">
@@ -38,25 +31,31 @@ const AppHeader = () => {
         >
           <CIcon icon={cilMenu} size="lg" />
         </CHeaderToggler>
-        <CHeaderBrand className="mx-auto d-md-none" to="/">
-          <img
-            alt='SMN-logo-minimized'
-            className="sidebar-brand-narrow"
-            src='foodboot-logo.png'
-            height={60} />
-        </CHeaderBrand>
         <CHeaderNav className="d-none d-md-flex me-auto">
           <CNavItem>
-            <CNavLink href="#/dashboard">Dashboard</CNavLink>
+            <CNavLink to="/dashboard" component={NavLink}>
+              Dashboard
+            </CNavLink>
           </CNavItem>
           <CNavItem>
             <CNavLink href="#/clients">Clients</CNavLink>
           </CNavItem>
         </CHeaderNav>
 
-        <CHeaderNav className="ms-3 me-4">
+        <CHeaderNav>
+          <CHeaderBrand>
+            <CImage
+              alt='foodboot-logo'
+              src='foodboot-logo-landscape.png'
+              height={30} />
+          </CHeaderBrand>
           <AppHeaderDropdown />
         </CHeaderNav>
+
+      </CContainer>
+      <CHeaderDivider />
+      <CContainer fluid>
+        <AppBreadcrumb />
       </CContainer>
     </CHeader>
   )

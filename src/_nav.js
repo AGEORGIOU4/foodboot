@@ -21,17 +21,42 @@ import {
   cilUser,
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react-pro'
+import { cilFastfood, cilKey, cilNote, cilUserSecret } from '@coreui/icons-pro'
 
 const _nav = [
   {
     component: CNavTitle,
-    name: 'Project',
+    name: 'Nutritionist Panel',
   },
   {
     component: CNavItem,
     name: 'Dashboard',
     to: '/dashboard',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Calendar',
+    icon: <CIcon icon={cilCalendar} customClassName="nav-icon" />,
+    to: '/calendar',
+  },
+  {
+    component: CNavItem,
+    name: 'Clients',
+    to: '/clients',
+    icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Nutrition Facts',
+    to: '/nutrition-facts',
+    icon: <CIcon icon={cilFastfood} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Meal Planning',
+    to: '/meal-planning',
+    icon: <CIcon icon={cilNote} customClassName="nav-icon" />,
     badge: {
       color: 'success-gradient',
       text: 'NEW',
@@ -39,16 +64,23 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Users',
-    to: '/users',
-    icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
+    name: 'Analytics',
+    to: '/analytics',
+    icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavTitle,
+    name: 'Admin Panel',
   },
   {
     component: CNavItem,
-    name: 'Clients',
-    to: '/clients',
-    icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+    name: 'Users',
+    to: '/users',
+    icon: <CIcon icon={cilKey} customClassName="nav-icon" />,
   },
+
+
+
 
   {
     component: CNavTitle,
@@ -312,16 +344,6 @@ const _nav = [
   {
     component: CNavTitle,
     name: 'Plugins',
-  },
-  {
-    component: CNavItem,
-    name: 'Calendar',
-    icon: <CIcon icon={cilCalendar} customClassName="nav-icon" />,
-    badge: {
-      color: 'danger-gradient',
-      text: 'PRO',
-    },
-    to: '/plugins/calendar',
   },
   {
     component: CNavItem,
