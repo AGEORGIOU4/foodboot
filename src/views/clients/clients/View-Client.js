@@ -87,7 +87,7 @@ const ViewClient = (props) => {
           )} />
 
         </CCardHeader>
-        <CCardBody style={{ display: (loading) ? "none" : "block" }}>
+        <CCardBody>
           <CRow>
             <CCol md={3} style={{ margin: '0px 0px 30px 0px' }}>
               <CImage width={80} src={avatar} />
@@ -136,10 +136,6 @@ const ViewClient = (props) => {
 
         </CCardBody>
 
-        <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
-          <CSpinner color='dark' variant='grow' />
-        </CCardBody>
-
       </CCard>
 
       <div style={{ margin: '20px 0px', fontWeight: '900' }}>
@@ -148,7 +144,7 @@ const ViewClient = (props) => {
 
 
       <CCard>
-        <CCardBody style={{ display: (loading) ? "none" : "block" }}>
+        <CCardBody>
 
           <Route render={({ history }) => (
             <div>
@@ -164,10 +160,6 @@ const ViewClient = (props) => {
             </div>
           )} />
           <MedicalHistoriesViewTable data={medical_history} loading={loading} resetData={resetData} />
-        </CCardBody>
-
-        <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
-          <CSpinner color='dark' variant='grow' />
         </CCardBody>
       </CCard>
     </>

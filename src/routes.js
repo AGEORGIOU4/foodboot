@@ -16,6 +16,12 @@ const MealPlanning = React.lazy(() => import('./views/meal-planning/Meal-Plannin
 const Analytics = React.lazy(() => import('./views/analytics/Analytics'))
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
+const LoadCalendar = React.lazy(() => import('./views/calendar/Load-Calendar'))
+const PersonalCalendar = React.lazy(() => import('./views/calendar/Personal-Calendar'))
+
+
+
+
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 
@@ -66,7 +72,6 @@ const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 const SmartTable = React.lazy(() => import('./views/smart-table/SmartTable'))
 
 // Plugins
-const Calendar = React.lazy(() => import('./views/calendar/Calendar'))
 const Charts = React.lazy(() => import('./views/plugins/charts/Charts'))
 const GoogleMaps = React.lazy(() => import('./views/plugins/google-maps/GoogleMaps'))
 
@@ -147,7 +152,8 @@ const routes = [
   { path: '/analytics', name: 'Analytics', component: Analytics },
   { path: '/meal-planning', name: 'Meal Planning', component: MealPlanning },
 
-  { path: '/calendar', name: 'Calendar', component: Calendar },
+  { path: '/calendar', name: 'Calendar', component: LoadCalendar },
+  { path: '/personal-calendar', name: 'Calendar', component: PersonalCalendar },
 ]
 
 export default routes

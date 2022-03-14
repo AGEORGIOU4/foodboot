@@ -1,11 +1,10 @@
-import React, { lazy } from 'react'
+import React from 'react'
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react'
 
 import {
   CCard,
   CCardBody,
 } from '@coreui/react-pro'
-
 
 import { auth0ApiCall, SetUserInfo } from 'src/api_calls/auth0.js'
 
@@ -24,7 +23,6 @@ const Dashboard = () => {
           }
         }))
   });
-
 
   return (
     <>

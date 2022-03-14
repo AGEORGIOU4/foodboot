@@ -4,46 +4,19 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import { INITIAL_EVENTS, createEventId } from './event-utils'
-import { CCard, CCardBody, CCardHeader } from '@coreui/react-pro'
+import { CCard, CCardBody, CCardHeader, CSpinner } from '@coreui/react-pro'
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react'
-import { restApiGet, restApiPost } from 'src/api_calls/rest'
+import { restApiPost } from 'src/api_calls/rest'
 import { mainUrl } from 'src/components/Common'
+import { SwalMixin } from 'src/components/SweetAlerts/Swal'
 
+import { CALENDAR_EVENTS } from './CalendarValues'
 
-export const Calendar = () => {
+export const PersonalCalendar = (props) => {
   const { user } = useAuth0();
   const [loading, setLoading] = useState(false)
   const [weekendsVisible, setWeekendsVisible] = useState(true);
-  const [currentEvents, setCurrentEvents] = useState([]);
-
-  // Retrieve calendar
-  React.useEffect(() => {
-    setLoading(true);
-    Promise.resolve(
-      restApiGet(mainUrl + '/calendars/', { params: { user_email: user.email } })
-        // retrieve events
-        .then(function (value) {
-          if (value.length > 0) {
-            console.log("retrieving events...");
-          } else {
-            let calendar = {
-              user_email: user.email,
-            }
-            // Create calendar
-            Promise.resolve(
-              restApiPost(mainUrl + '/calendars/create', calendar, true)
-                .then(function (value) {
-                  setLoading(false);
-                  setClientID(value.client.id);
-                }).catch(function () {
-                  setLoading(false);
-                }));
-          }
-        }));
-  }, []);
-
-
-
+  const [currentEvents, setCurrentEvents] = useState(INITIAL_EVENTS);
 
   const handleWeekendsToggle = () => {
     setWeekendsVisible(!weekendsVisible)
@@ -52,7 +25,6 @@ export const Calendar = () => {
   const handleDateSelect = (selectInfo) => {
     let title = prompt('Please enter a new title for your event')
     let calendarApi = selectInfo.view.calendar
-
     calendarApi.unselect() // clear date selection
 
     if (title) {
@@ -63,6 +35,7 @@ export const Calendar = () => {
         end: selectInfo.endStr,
         allDay: selectInfo.allDay,
       })
+
     }
   }
 
@@ -88,7 +61,10 @@ export const Calendar = () => {
           headerToolbar={{
             left: 'prev,next today',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay',
+            right: ''
+          }}
+          footerToolbar={{
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
           }}
           initialView="dayGridMonth"
           editable={true}
@@ -96,17 +72,43 @@ export const Calendar = () => {
           selectMirror={true}
           dayMaxEvents={true}
           weekends={weekendsVisible}
-          initialEvents={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
+          initialEvents={CALENDAR_EVENTS} // alternatively, use the `events` setting to fetch from a feed
           select={handleDateSelect}
           eventContent={renderEventContent} // custom render function
           eventClick={handleEventClick}
           eventsSet={handleEvents} // called after events are initialized/added/changed/removed
-        /* you can update a remote database when these fire: */
-        // eventAdd={function () { }}
+
+          /* you can update a remote database when these fire: */
+          eventAdd={function (selectInfo) {
+            if (selectInfo.event.title) {
+              let event = {
+                id: createEventId(),
+                user_email: user.email,
+                title: selectInfo.event.title,
+                start: selectInfo.event.start,
+                end: selectInfo.event.end,
+                allDay: selectInfo.event._def.allDay,
+              }
+              Promise.resolve(
+                restApiPost(mainUrl + '/calendars/calendar-events/create', event, false)
+                  .then(function (value) {
+                    SwalMixin('success', 'Event Added!')
+                    setCurrentEvents(...currentEvents, value);
+                    setLoading(false);
+                  }).catch(function () {
+                    setLoading(false);
+                  }));
+            }
+          }}
+
         // eventChange={function () { }}
         // eventRemove={function () { }}
 
         />
+      </CCardBody>
+
+      <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
+        <CSpinner color='dark' variant='grow' />
       </CCardBody>
     </CCard>
   )
@@ -122,4 +124,4 @@ const renderEventContent = (eventInfo) => {
   )
 }
 
-export default withAuthenticationRequired(Calendar)
+export default withAuthenticationRequired(PersonalCalendar)

@@ -26,14 +26,14 @@ export const CMedicalRecord = (props) => {
       </CCol>
       <CCol md={4}>
         <CFormLabel htmlFor="validationCustom09">Height</CFormLabel>
-        <CFormInput type="text" name="height" id="validationCustom09" required
+        <CFormInput type="number" name="height" id="validationCustom09" required
           value={props.item.height}
           onChange={e => props.handleUpdateMedicalHistory(props.index, e)} />
         <CFormFeedback valid>Looks good!</CFormFeedback>
       </CCol>
       <CCol md={4}>
         <CFormLabel htmlFor="validationCustom10">Weight</CFormLabel>
-        <CFormInput type="text" name="weight" id="validationCustom10" required
+        <CFormInput type="number" name="weight" id="validationCustom10" required
           value={props.item.weight}
           onChange={e => props.handleUpdateMedicalHistory(props.index, e)} />
         <CFormFeedback valid>Looks good!</CFormFeedback>
