@@ -21,12 +21,12 @@ import {
   cilUser,
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react-pro'
-import { cilFastfood, cilNote } from '@coreui/icons-pro'
+import { cilFastfood, cilKey, cilNote, cilUserSecret } from '@coreui/icons-pro'
 
 const _nav = [
   {
     component: CNavTitle,
-    name: 'foodboot',
+    name: 'Nutritionist Panel',
   },
   {
     component: CNavItem,
@@ -36,15 +36,15 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Users',
-    to: '/users',
-    icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
+    name: 'Calendar',
+    icon: <CIcon icon={cilCalendar} customClassName="nav-icon" />,
+    to: '/calendar',
   },
   {
     component: CNavItem,
     name: 'Clients',
     to: '/clients',
-    icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
@@ -62,6 +62,26 @@ const _nav = [
       text: 'NEW',
     },
   },
+  {
+    component: CNavItem,
+    name: 'Analytics',
+    to: '/analytics',
+    icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavTitle,
+    name: 'Admin Panel',
+  },
+  {
+    component: CNavItem,
+    name: 'Users',
+    to: '/users',
+    icon: <CIcon icon={cilKey} customClassName="nav-icon" />,
+  },
+
+
+
+
   {
     component: CNavTitle,
     name: 'Theme',
@@ -324,16 +344,6 @@ const _nav = [
   {
     component: CNavTitle,
     name: 'Plugins',
-  },
-  {
-    component: CNavItem,
-    name: 'Calendar',
-    icon: <CIcon icon={cilCalendar} customClassName="nav-icon" />,
-    badge: {
-      color: 'danger-gradient',
-      text: 'PRO',
-    },
-    to: '/plugins/calendar',
   },
   {
     component: CNavItem,

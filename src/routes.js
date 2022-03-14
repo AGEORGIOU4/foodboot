@@ -12,6 +12,8 @@ const Profile = React.lazy(() => import('./views/profile/Profile'))
 const EditProfile = React.lazy(() => import('./views/profile/Edit-Profile'))
 
 const NutritionFacts = React.lazy(() => import('./views/nutrition-facts/Nutrition-Facts'))
+const MealPlanning = React.lazy(() => import('./views/meal-planning/Meal-Planning'))
+const Analytics = React.lazy(() => import('./views/analytics/Analytics'))
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -64,7 +66,7 @@ const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 const SmartTable = React.lazy(() => import('./views/smart-table/SmartTable'))
 
 // Plugins
-const Calendar = React.lazy(() => import('./views/plugins/calendar/Calendar'))
+const Calendar = React.lazy(() => import('./views/calendar/Calendar'))
 const Charts = React.lazy(() => import('./views/plugins/charts/Charts'))
 const GoogleMaps = React.lazy(() => import('./views/plugins/google-maps/GoogleMaps'))
 
@@ -118,8 +120,6 @@ const routes = [
   { path: '/notifications/badges', name: 'Badges', component: Badges },
   { path: '/notifications/modals', name: 'Modals', component: Modals },
   { path: '/notifications/toasts', name: 'Toasts', component: Toasts },
-  { path: '/plugins', name: 'Plugins', component: Calendar, exact: true },
-  { path: '/plugins/calendar', name: 'Calendar', component: Calendar },
   { path: '/plugins/charts', name: 'Charts', component: Charts },
   { path: '/plugins/google-maps', name: 'GoogleMaps', component: GoogleMaps },
   { path: '/smart-table', name: 'Smart Table', component: SmartTable },
@@ -144,6 +144,10 @@ const routes = [
   { path: '/clients/view-client', name: 'View Client', component: ViewClient },
 
   { path: '/nutrition-facts', name: 'Nutrition Facts', component: NutritionFacts },
+  { path: '/analytics', name: 'Analytics', component: Analytics },
+  { path: '/meal-planning', name: 'Meal Planning', component: MealPlanning },
+
+  { path: '/calendar', name: 'Calendar', component: Calendar },
 ]
 
 export default routes

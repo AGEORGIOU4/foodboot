@@ -45,7 +45,7 @@ export const MedicalHistoriesViewTable = (props) => {
                   size="sm"
                   color='success'
                   variant="ghost"
-                  onClick={() => { history.push({ pathname: "/edit-client", search: '?id=' + item.client_id }) }
+                  onClick={() => { history.push({ pathname: "/clients/edit-client", search: '?id=' + item.client_id }) }
                   }
                 >
                   <CIcon icon={cilPencil} />
