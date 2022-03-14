@@ -24,9 +24,7 @@ const LoadCalendar = () => {
             href='#/personal-calendar'
             size="sm"
             color='info'
-            variant=""
-          // onClick={() => { history.push({ pathname: "/personal-calendar" }) }}
-
+            variant="ghost"
           ><CIcon icon={cilCloudDownload} /> Fetch my Cloud Calendar!</CButton>
         </CCardHeader>
         <CCardBody style={{ opacity: '0.2' }}>
