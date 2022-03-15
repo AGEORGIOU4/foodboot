@@ -11,7 +11,8 @@ import {
   CCard,
   CCardHeader,
   CCardBody,
-  CRow
+  CRow,
+  CFormSelect
 } from '@coreui/react-pro'
 import { FormatTimestampFunction, mainUrl } from 'src/components/Common';
 import { restApiGet, restApiPut } from 'src/api_calls/rest';
@@ -32,6 +33,7 @@ const EditClient = (props) => {
   const [first_name, setFirstName] = useState(updatedBasicInfo.first_name);
   const [last_name, setLastName] = useState(updatedBasicInfo.last_name);
   const [dob, setDob] = useState(FormatTimestampFunction(updatedBasicInfo.dob));
+  const [gender, setGender] = useState(updatedBasicInfo.gender);
   const [email, setEmail] = useState(updatedBasicInfo.email);
   const [phone, setPhone] = useState(updatedBasicInfo.phone);
   const [address, setAddress] = useState(updatedBasicInfo.address);
@@ -81,6 +83,7 @@ const EditClient = (props) => {
     setFirstName(data.first_name);
     setLastName(data.last_name);
     setDob(FormatTimestampFunction(data.dob));
+    setGender(data.gender);
     setEmail(data.email);
     setPhone(data.phone);
     setAddress(data.address);
@@ -99,6 +102,7 @@ const EditClient = (props) => {
         first_name: first_name,
         last_name: last_name,
         dob: dob,
+        gender: gender,
         email: email,
         phone: phone,
         address: address,
@@ -160,138 +164,152 @@ const EditClient = (props) => {
     }
     setValidated(true)
   }
+  try {
+    return (
 
-  return (
-    <>
-      <CRow>
-        <CCol>
-          <CCard>
-            <CCardHeader>
-              <CSpinner color='dark' className="me-1 float-end" style={{ display: (loading) ? "block" : "none" }} variant='grow' />
-              <strong>Edit Client</strong>
+      <>
 
-              <Route render={({ history }) => (
-                <CButton
-                  className="me-1 float-end"
-                  size="sm"
-                  color='primary'
-                  variant="ghost"
-                  onClick={() => { history.push({ pathname: "/clients/view-client", search: '?id=' + client_id }) }}
-                ><CIcon icon={cilEye} /> View
-                </CButton>
-              )} />
+        <CRow>
+          <CCol>
+            <CCard>
+              <CCardHeader>
+                <CSpinner color='dark' className="me-1 float-end" style={{ display: (loading) ? "block" : "none" }} variant='grow' />
+                <strong>Edit Client</strong>
 
-            </CCardHeader>
-            <CCardBody style={{ display: (loading) ? "none" : "block" }}>
-              <CForm
-                className="row g-3 needs-validation"
-                noValidate
-                validated={validated}
-              >
-                <CCol md={4}>
-                  <CFormLabel htmlFor="validationCustom01">First name</CFormLabel>
-                  <CFormInput type="text" id="validationCustom01" value={first_name} required
-                    onChange={e => setFirstName(e.target.value)} />
-                  <CFormFeedback valid>Looks good!</CFormFeedback>
-                </CCol>
-                <CCol md={4}>
-                  <CFormLabel htmlFor="validationCustom02">Last name</CFormLabel>
-                  <CFormInput type="text" id="validationCustom02" value={last_name} required
-                    onChange={e => setLastName(e.target.value)} />
-                  <CFormFeedback valid>Looks good!</CFormFeedback>
-                </CCol>
-                <CCol md={4}>
-                  <CFormLabel htmlFor="validationCustom03">DOB</CFormLabel>
-                  <CFormInput type="date" id="validationCustom03" value={(dob)} required
-                    onChange={e => setDob(e.target.value)}
-                  />
-                  <CFormFeedback valid>Looks good!</CFormFeedback>
-                </CCol>
-                <CCol md={4}>
-                  <CFormLabel htmlFor="validationCustom04">Email</CFormLabel>
-                  <CFormInput type="text" id="validationCustom04" value={email} required
-                    onChange={e => setEmail(e.target.value)} />
-                  <CFormFeedback valid>Looks good!</CFormFeedback>
-                </CCol>
-                <CCol md={4}>
-                  <CFormLabel htmlFor="validationCustom05">Phone</CFormLabel>
-                  <CFormInput type="text" id="validationCustom05" value={phone} required
-                    onChange={e => setPhone(e.target.value)} />
-                  <CFormFeedback valid>Looks good!</CFormFeedback>
-                </CCol>
-                <CCol md={4}>
-                  <CFormLabel htmlFor="validationCustom06">Address</CFormLabel>
-                  <CFormInput type="text" id="validationCustom06" value={address} required
-                    onChange={e => setAddress(e.target.value)} />
-                  <CFormFeedback valid>Looks good!</CFormFeedback>
-                </CCol>
-                <CCol md={4}>
-                  <CFormLabel htmlFor="validationCustom07">Food allergies</CFormLabel>
-                  <CFormInput type="text" id="validationCustom07" value={food_allergies} required
-                    onChange={e => setFoodAllergies(e.target.value)} />
-                  <CFormFeedback valid>Looks good!</CFormFeedback>
-                </CCol>
+                <Route render={({ history }) => (
+                  <CButton
+                    className="me-1 float-end"
+                    size="sm"
+                    color='primary'
+                    variant="ghost"
+                    onClick={() => { history.push({ pathname: "/clients/view-client", search: '?id=' + client_id }) }}
+                  ><CIcon icon={cilEye} /> View
+                  </CButton>
+                )} />
 
-                <CButton
-                  disabled={loading}
-                  className="me-1 float-end"
-                  size="sm"
-                  color='success'
-                  variant="ghost"
-                  onClick={handleSubmitBasicInfo}
-                ><CIcon icon={cilSave} /> Save Client
-                </CButton>
+              </CCardHeader>
+              <CCardBody style={{ display: (loading) ? "none" : "block" }}>
+                <CForm
+                  className="row g-3 needs-validation"
+                  noValidate
+                  validated={validated}
+                >
+                  <CCol md={4}>
+                    <CFormLabel htmlFor="validationCustom01">First name</CFormLabel>
+                    <CFormInput type="text" id="validationCustom01" value={first_name} required
+                      onChange={e => setFirstName(e.target.value)} />
+                    <CFormFeedback valid>Looks good!</CFormFeedback>
+                  </CCol>
+                  <CCol md={4}>
+                    <CFormLabel htmlFor="validationCustom02">Last name</CFormLabel>
+                    <CFormInput type="text" id="validationCustom02" value={last_name} required
+                      onChange={e => setLastName(e.target.value)} />
+                    <CFormFeedback valid>Looks good!</CFormFeedback>
+                  </CCol>
+                  <CCol md={4}>
+                    <CFormLabel htmlFor="validationCustom03">DOB</CFormLabel>
+                    <CFormInput type="date" id="validationCustom03" value={(dob)} required
+                      onChange={e => setDob(e.target.value)}
+                    />
+                    <CFormFeedback valid>Looks good!</CFormFeedback>
+                  </CCol>
+                  <CCol md={4}>
+                    <CFormLabel htmlFor="validationCustom04">Gender</CFormLabel>
+                    <CFormSelect value={gender} options={['Male', 'Female']} id="validationCustom04" required
+                      onChange={e => setGender(e.target.value)}
+                    />
+                    <CFormFeedback valid>Looks good!</CFormFeedback>
+                  </CCol>
+                  <CCol md={4}>
+                    <CFormLabel htmlFor="validationCustom05">Email</CFormLabel>
+                    <CFormInput type="text" id="validationCustom05" value={email} required
+                      onChange={e => setEmail(e.target.value)} />
+                    <CFormFeedback valid>Looks good!</CFormFeedback>
+                  </CCol>
+                  <CCol md={4}>
+                    <CFormLabel htmlFor="validationCustom06">Phone</CFormLabel>
+                    <CFormInput type="text" id="validationCustom06" value={phone} required
+                      onChange={e => setPhone(e.target.value)} />
+                    <CFormFeedback valid>Looks good!</CFormFeedback>
+                  </CCol>
+                  <CCol md={4}>
+                    <CFormLabel htmlFor="validationCustom07">Address</CFormLabel>
+                    <CFormInput type="text" id="validationCustom07" value={address} required
+                      onChange={e => setAddress(e.target.value)} />
+                    <CFormFeedback valid>Looks good!</CFormFeedback>
+                  </CCol>
+                  <CCol md={4}>
+                    <CFormLabel htmlFor="validationCustom08">Food allergies</CFormLabel>
+                    <CFormInput type="text" id="validationCustom08" value={food_allergies} required
+                      onChange={e => setFoodAllergies(e.target.value)} />
+                    <CFormFeedback valid>Looks good!</CFormFeedback>
+                  </CCol>
 
-                <hr />
-
-                <div style={{ margin: '20px 0px', fontWeight: '900' }}>
-                  Medical History
-                </div>
-
-                <div>
                   <CButton
                     disabled={loading}
                     className="me-1 float-end"
                     size="sm"
-                    color='info'
+                    color='success'
                     variant="ghost"
-                    onClick={handleCreateMedicalRecord}
-                  ><CIcon icon={cidFileAdd} /> Create Medical Record
+                    onClick={handleSubmitBasicInfo}
+                  ><CIcon icon={cilSave} /> Save Client
                   </CButton>
-                </div>
 
-                {medical_history.map((item, index) =>
-                  <div key={index}>
-                    <CMedicalRecord item={item} index={index}
-                      handleUpdateMedicalHistory={handleUpdateMedicalHistory}
-                      handleSubmitMedicalHistory={handleSubmitMedicalHistory}
-                      resetData={resetData}
-                    />
+                  <hr />
+
+                  <div style={{ margin: '20px 0px', fontWeight: '900' }}>
+                    Medical History
                   </div>
-                )}
 
-                <CButton
-                  disabled={loading}
-                  className="me-1"
-                  size="sm"
-                  color='success'
-                  variant="ghost"
-                  onClick={handleSubmitMedicalHistory}
-                ><CIcon icon={cilSave} /> Save All Records
-                </CButton>
-              </CForm>
+                  <div>
+                    <CButton
+                      disabled={loading}
+                      className="me-1 float-end"
+                      size="sm"
+                      color='info'
+                      variant="ghost"
+                      onClick={handleCreateMedicalRecord}
+                    ><CIcon icon={cidFileAdd} /> Create Medical Record
+                    </CButton>
+                  </div>
 
-            </CCardBody>
+                  {medical_history.map((item, index) =>
+                    <div key={index}>
+                      <CMedicalRecord item={item} index={index}
+                        handleUpdateMedicalHistory={handleUpdateMedicalHistory}
+                        handleSubmitMedicalHistory={handleSubmitMedicalHistory}
+                        resetData={resetData}
+                      />
+                    </div>
+                  )}
 
-            <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
-              <CSpinner color='dark' variant='grow' />
-            </CCardBody>
+                  <CButton
+                    disabled={loading}
+                    className="me-1"
+                    size="sm"
+                    color='success'
+                    variant="ghost"
+                    onClick={handleSubmitMedicalHistory}
+                  ><CIcon icon={cilSave} /> Save All Records
+                  </CButton>
+                </CForm>
 
-          </CCard>
-        </CCol>
-      </CRow >
-    </>
-  )
+              </CCardBody>
+
+              <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
+                <CSpinner color='dark' variant='grow' />
+              </CCardBody>
+
+            </CCard>
+          </CCol>
+        </CRow >
+      </>
+    )
+  } catch (e) {
+    console.error(e);
+    return ("");
+
+  }
 }
 
 export default withAuthenticationRequired(EditClient)

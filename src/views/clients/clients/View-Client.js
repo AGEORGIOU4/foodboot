@@ -89,18 +89,15 @@ const ViewClient = (props) => {
         </CCardHeader>
         <CCardBody>
           <CRow>
-            <CCol md={3} style={{ margin: '0px 0px 30px 0px' }}>
-              <CImage width={80} src={avatar} />
+            <CCol md={3} style={{ margin: '0px 0px 20px 0px' }}>
+              <CImage width={70} src={avatar} />
             </CCol>
 
-
-
-
-            <CCol md={5} style={{ marginTop: '45px' }}>
+            <CCol md={5} style={{ marginTop: '30px' }}>
               <CFormLabel><strong>First name:</strong> {client.first_name}</CFormLabel>
 
             </CCol>
-            <CCol md={4} style={{ marginTop: '45px' }}>
+            <CCol md={4} style={{ marginTop: '30px' }}>
               <CFormLabel ><strong>Last name:</strong> {client.last_name}</CFormLabel>
 
             </CCol>
@@ -116,21 +113,29 @@ const ViewClient = (props) => {
               <CFormLabel style={{ fontWeight: 'bold' }}>Email</CFormLabel>
               <p>{client.email}</p>
             </CCol>
+
             <CCol md={4}>
               <CFormLabel style={{ fontWeight: 'bold' }}>Phone</CFormLabel>
               <p>{client.phone}</p>
             </CCol>
+
           </CRow>
 
           <CRow>
+
             <CCol md={3}>
-              <CFormLabel style={{ fontWeight: 'bold' }}>Address</CFormLabel>
-              <p>{client.address}</p>
+              <CFormLabel style={{ fontWeight: 'bold' }}>Gender</CFormLabel>
+              <p>{client.gender}</p>
             </CCol>
 
-            <CCol md={9}>
+            <CCol md={5}>
               <CFormLabel style={{ fontWeight: 'bold' }}>Food allergies</CFormLabel>
               <p>{client.food_allergies}</p>
+            </CCol>
+
+            <CCol md={4}>
+              <CFormLabel style={{ fontWeight: 'bold' }}>Address</CFormLabel>
+              <p>{client.address}</p>
             </CCol>
           </CRow>
 

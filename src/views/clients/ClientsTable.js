@@ -19,6 +19,7 @@ const ClientsTable = (props) => {
     { key: 'last_name', _props: { color: 'success' } },
     { key: 'first_name', _props: { color: 'success' } },
     { key: 'dob', label: 'DOB', _props: { color: 'success' } },
+    { key: 'gender', _props: { color: 'success' } },
     { key: 'email', _props: { color: 'success' } },
     { key: 'phone', _props: { color: 'success' } },
     { key: 'address', _props: { color: 'success' } },

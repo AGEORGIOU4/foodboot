@@ -6,11 +6,11 @@ import interactionPlugin from '@fullcalendar/interaction'
 import { INITIAL_EVENTS, createEventId } from './event-utils'
 import { CCard, CCardBody, CCardHeader, CSpinner } from '@coreui/react-pro'
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react'
-import { restApiPost } from 'src/api_calls/rest'
+import { restApiDelete, restApiPost, restApiPut } from 'src/api_calls/rest'
 import { mainUrl } from 'src/components/Common'
 import { SwalMixin } from 'src/components/SweetAlerts/Swal'
-
-import { CALENDAR_EVENTS } from './CalendarValues'
+import uuid from 'react-uuid'
+import { CALENDAR_EVENTS } from './Load-Calendar'
 
 export const PersonalCalendar = (props) => {
   const { user } = useAuth0();
@@ -59,9 +59,8 @@ export const PersonalCalendar = (props) => {
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           headerToolbar={{
-            left: 'prev,next today',
-            center: 'title',
-            right: ''
+            left: 'title',
+            right: 'prev,next today'
           }}
           footerToolbar={{
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
@@ -82,7 +81,7 @@ export const PersonalCalendar = (props) => {
           eventAdd={function (selectInfo) {
             if (selectInfo.event.title) {
               let event = {
-                id: createEventId(),
+                id: uuid(),
                 user_email: user.email,
                 title: selectInfo.event.title,
                 start: selectInfo.event.start,
@@ -101,8 +100,41 @@ export const PersonalCalendar = (props) => {
             }
           }}
 
-        // eventChange={function () { }}
-        // eventRemove={function () { }}
+          eventChange={function (selectInfo) {
+
+            if (selectInfo.event.id) {
+              let updated_event = {
+                id: selectInfo.event.id,
+                user_email: user.email,
+                title: selectInfo.event.title,
+                start: selectInfo.event.start,
+                end: selectInfo.event.end,
+                allDay: selectInfo.event._def.allDay,
+              }
+
+              Promise.resolve(
+                restApiPut(mainUrl + '/calendars/calendar-events/update/' + selectInfo.event.id, updated_event, true)
+                  .then(function (value) {
+                    setCurrentEvents(...currentEvents, value);
+                    setLoading(false);
+                  }).catch(function () {
+                    setLoading(false);
+                  }));
+            }
+          }}
+
+          eventRemove={function (selectInfo) {
+            if (selectInfo.event.id) {
+              Promise.resolve(
+                restApiDelete(mainUrl + '/calendars/calendar-events/delete/' + selectInfo.event.id)
+                  .then(function (value) {
+                    setCurrentEvents(...currentEvents, value);
+                    setLoading(false);
+                  }).catch(function () {
+                    setLoading(false);
+                  }));
+            }
+          }}
 
         />
       </CCardBody>

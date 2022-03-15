@@ -12,6 +12,7 @@ import {
   CCard,
   CCardHeader,
   CRow,
+  CFormSelect,
 } from '@coreui/react-pro'
 import { mainUrl } from 'src/components/Common';
 import { restApiGet, restApiPost, restApiPut } from 'src/api_calls/rest';
@@ -30,10 +31,11 @@ const CreateClient = (props) => {
   const [first_name, setFirstName] = useState();
   const [last_name, setLastName] = useState();
   const [dob, setDob] = useState();
+  const [gender, setGender] = useState('Male');
   const [email, setEmail] = useState();
   const [phone, setPhone] = useState();
   const [address, setAddress] = useState();
-  const [food_allergies, setFoodAllergies] = useState();
+  const [food_allergies, setFoodAllergies] = useState('N/A');
 
   const [medical_history, setMedicalHistory] = useState([])
 
@@ -64,6 +66,7 @@ const CreateClient = (props) => {
         first_name: first_name,
         last_name: last_name,
         dob: dob,
+        gender: gender,
         email: email,
         phone: phone,
         address: address,
@@ -167,23 +170,28 @@ const CreateClient = (props) => {
                   <CFormFeedback valid>Looks good!</CFormFeedback>
                 </CCol>
                 <CCol md={4}>
-                  <CFormLabel htmlFor="validationCustom04">Email</CFormLabel>
-                  <CFormInput type="text" id="validationCustom04" required onChange={e => setEmail(e.target.value)} />
+                  <CFormLabel htmlFor="validationCustom04">Gender</CFormLabel>
+                  <CFormSelect defaultValue={'Male'} options={['Male', 'Female']} id="validationCustom04" required onChange={e => setGender(e.target.value)} />
                   <CFormFeedback valid>Looks good!</CFormFeedback>
                 </CCol>
                 <CCol md={4}>
-                  <CFormLabel htmlFor="validationCustom05">Phone</CFormLabel>
-                  <CFormInput type="text" id="validationCustom05" required onChange={e => setPhone(e.target.value)} />
+                  <CFormLabel htmlFor="validationCustom05">Email</CFormLabel>
+                  <CFormInput type="text" id="validationCustom05" required onChange={e => setEmail(e.target.value)} />
                   <CFormFeedback valid>Looks good!</CFormFeedback>
                 </CCol>
                 <CCol md={4}>
-                  <CFormLabel htmlFor="validationCustom06">Address</CFormLabel>
-                  <CFormInput type="text" id="validationCustom06" required onChange={e => setAddress(e.target.value)} />
+                  <CFormLabel htmlFor="validationCustom06">Phone</CFormLabel>
+                  <CFormInput type="text" id="validationCustom06" required onChange={e => setPhone(e.target.value)} />
                   <CFormFeedback valid>Looks good!</CFormFeedback>
                 </CCol>
                 <CCol md={4}>
-                  <CFormLabel htmlFor="validationCustom07">Food allergies</CFormLabel>
-                  <CFormInput type="text" id="validationCustom07" required onChange={e => setFoodAllergies(e.target.value)} />
+                  <CFormLabel htmlFor="validationCustom07">Address</CFormLabel>
+                  <CFormInput type="text" id="validationCustom07" required onChange={e => setAddress(e.target.value)} />
+                  <CFormFeedback valid>Looks good!</CFormFeedback>
+                </CCol>
+                <CCol md={4}>
+                  <CFormLabel htmlFor="validationCustom08">Food allergies</CFormLabel>
+                  <CFormInput defaultValue={'N/A'} type="text" id="validationCustom08" required onChange={e => setFoodAllergies(e.target.value)} />
                   <CFormFeedback valid>Looks good!</CFormFeedback>
                 </CCol>
 

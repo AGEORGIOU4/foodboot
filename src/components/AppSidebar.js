@@ -25,6 +25,8 @@ const AppSidebar = () => {
   return (
     <CSidebar
       position="fixed"
+      size='md'
+      //narrow={true}
       visible={sidebarShow}
     >
       <CSidebarNav>
