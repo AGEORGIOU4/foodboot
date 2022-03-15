@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react'
 
 import {
   CCard,
   CCardBody,
+  CCol,
+  CRow,
 } from '@coreui/react-pro'
-
 import { auth0ApiCall, SetUserInfo } from 'src/api_calls/auth0.js'
+import { CCalculator } from './tools'
 
 const Dashboard = () => {
   const { user } = useAuth0();
@@ -28,9 +30,21 @@ const Dashboard = () => {
     <>
       <CCard className="mb-4">
         <CCardBody>
+          <CRow>
 
+            <CCol md={7}>
+
+            </CCol>
+
+            <CCol md={5} style={{ borderLeft: '2px solid' }}>
+              <CCalculator />
+            </CCol>
+
+            <hr style={{ margin: '40px 0px 20px' }} />
+
+          </CRow>
         </CCardBody>
-      </CCard>
+      </CCard >
     </>
   )
 }
