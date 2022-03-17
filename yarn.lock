@@ -1336,11 +1336,29 @@
     "minimatch" "^3.0.4"
     "strip-json-comments" "^3.1.1"
 
+"@fullcalendar/adaptive@^5.10.1":
+  "integrity" "sha512-Dg+v+nYZKqQ9vhn+z46VhIZ5+OujHBj7ufkZv2Tj0Q1DIdt2sMxMvF/u9WKBru1GCqXuTtGtjiMXLMpL/ZpSRA=="
+  "resolved" "https://registry.npmjs.org/@fullcalendar/adaptive/-/adaptive-5.10.1.tgz"
+  "version" "5.10.1"
+  dependencies:
+    "@fullcalendar/common" "~5.10.1"
+    "@fullcalendar/premium-common" "~5.10.1"
+    "tslib" "^2.1.0"
+
 "@fullcalendar/common@~5.10.1":
   "integrity" "sha512-EumKIJcQTvQdTs75/9dmeREFgjcRVWzqHJS1Xvlz5mNsmB+w9EINCHETRjChtAQg1WD/lTQyVj4sHsKO7vCMSw=="
   "resolved" "https://registry.npmjs.org/@fullcalendar/common/-/common-5.10.1.tgz"
   "version" "5.10.1"
   dependencies:
+    "tslib" "^2.1.0"
+
+"@fullcalendar/core@^5.10.1":
+  "integrity" "sha512-8sVuC6ywXV+cxqsqTZaR1hgUqeyjVed20NyZ7lGW9AY0kma1GIEwLgqPS5Q6uVhHyin68lmgecKfJCwhxENE8w=="
+  "resolved" "https://registry.npmjs.org/@fullcalendar/core/-/core-5.10.1.tgz"
+  "version" "5.10.1"
+  dependencies:
+    "@fullcalendar/common" "~5.10.1"
+    "preact" "^10.0.5"
     "tslib" "^2.1.0"
 
 "@fullcalendar/daygrid@^5.10.1", "@fullcalendar/daygrid@~5.10.1":
@@ -1359,12 +1377,58 @@
     "@fullcalendar/common" "~5.10.1"
     "tslib" "^2.1.0"
 
+"@fullcalendar/list@^5.10.1":
+  "integrity" "sha512-sB+AzM9P1nzGIzwVFNN8Zbocg5lkVQftyuJAZtULgu9o9e1rH/Aqsxt9Itf00N3WmMOh8H1LlnRpZF5kGu/j2w=="
+  "resolved" "https://registry.npmjs.org/@fullcalendar/list/-/list-5.10.1.tgz"
+  "version" "5.10.1"
+  dependencies:
+    "@fullcalendar/common" "~5.10.1"
+    "tslib" "^2.1.0"
+
+"@fullcalendar/premium-common@~5.10.1":
+  "integrity" "sha512-yOZgtVI/7tt1oeQABLQqTNLEv2YpxbE0ywvQ+VwtrKc5LksmUA2czO4peom1KIAwH6JsZnytpvwQ4k4cP8Ivaw=="
+  "resolved" "https://registry.npmjs.org/@fullcalendar/premium-common/-/premium-common-5.10.1.tgz"
+  "version" "5.10.1"
+  dependencies:
+    "@fullcalendar/common" "~5.10.1"
+    "tslib" "^2.1.0"
+
 "@fullcalendar/react@^5.10.1":
   "integrity" "sha512-+kV5+o9qGjkoO5j0r3oawhig+hP3inE68bHKBl6dtGQ8mi3GkEGsTL12MY2n5N0hXon6+2psIQLnAjMyRYZbmg=="
   "resolved" "https://registry.npmjs.org/@fullcalendar/react/-/react-5.10.1.tgz"
   "version" "5.10.1"
   dependencies:
     "@fullcalendar/common" "~5.10.1"
+    "tslib" "^2.1.0"
+
+"@fullcalendar/resource-common@~5.10.1":
+  "integrity" "sha512-20JR8cucAeJEXSbWVSj9USwsPGKb3dVQr8CBiXuHPbD0OLK93j7jhKjBlp/pRldtcJW9mIXC8ENQvw/aNZJ9Cw=="
+  "resolved" "https://registry.npmjs.org/@fullcalendar/resource-common/-/resource-common-5.10.1.tgz"
+  "version" "5.10.1"
+  dependencies:
+    "@fullcalendar/common" "~5.10.1"
+    "@fullcalendar/premium-common" "~5.10.1"
+    "tslib" "^2.1.0"
+
+"@fullcalendar/resource-timeline@^5.10.1":
+  "integrity" "sha512-gsqjr6Z+LQcNbQlHgaTtg/kF8l6yDRtIuMQbhFlTy71RJI//x2mHhLXgV40FJeEE+srp48xJPd89+rIhlyJ5Tw=="
+  "resolved" "https://registry.npmjs.org/@fullcalendar/resource-timeline/-/resource-timeline-5.10.1.tgz"
+  "version" "5.10.1"
+  dependencies:
+    "@fullcalendar/common" "~5.10.1"
+    "@fullcalendar/premium-common" "~5.10.1"
+    "@fullcalendar/resource-common" "~5.10.1"
+    "@fullcalendar/scrollgrid" "~5.10.1"
+    "@fullcalendar/timeline" "~5.10.1"
+    "tslib" "^2.1.0"
+
+"@fullcalendar/scrollgrid@~5.10.1":
+  "integrity" "sha512-Hj6gzj2/sUUnozIMC0GBK60/ZTeDchp/Gc2S4F+05W6V4BoUXbIwav+EdAerfNFOv7EXWa9vM9Lq3A53iVWFVg=="
+  "resolved" "https://registry.npmjs.org/@fullcalendar/scrollgrid/-/scrollgrid-5.10.1.tgz"
+  "version" "5.10.1"
+  dependencies:
+    "@fullcalendar/common" "~5.10.1"
+    "@fullcalendar/premium-common" "~5.10.1"
     "tslib" "^2.1.0"
 
 "@fullcalendar/timegrid@^5.10.1":
@@ -1374,6 +1438,16 @@
   dependencies:
     "@fullcalendar/common" "~5.10.1"
     "@fullcalendar/daygrid" "~5.10.1"
+    "tslib" "^2.1.0"
+
+"@fullcalendar/timeline@~5.10.1":
+  "integrity" "sha512-pFMhK4nsCvpsA63GPJQtT1RSS2OLlT9a2+fvsf2oQregBLcottJSlCjIsIuKP7hpQLimaSdLr2kNjh5hs8jKlw=="
+  "resolved" "https://registry.npmjs.org/@fullcalendar/timeline/-/timeline-5.10.1.tgz"
+  "version" "5.10.1"
+  dependencies:
+    "@fullcalendar/common" "~5.10.1"
+    "@fullcalendar/premium-common" "~5.10.1"
+    "@fullcalendar/scrollgrid" "~5.10.1"
     "tslib" "^2.1.0"
 
 "@googlemaps/js-api-loader@1.12.8":
@@ -3085,6 +3159,11 @@
   "integrity" "sha1-aN/1++YMUes3cl6p4+0xDcwed24="
   "resolved" "https://registry.npmjs.org/boolbase/-/boolbase-1.0.0.tgz"
   "version" "1.0.0"
+
+"bootstrap@^4.6.1":
+  "integrity" "sha512-0dj+VgI9Ecom+rvvpNZ4MUZJz8dcX7WCX+eTID9+/8HgOkv3dsRzi8BGeZJCQU6flWQVYxwTQnEZFrmJSEO7og=="
+  "resolved" "https://registry.npmjs.org/bootstrap/-/bootstrap-4.6.1.tgz"
+  "version" "4.6.1"
 
 "brace-expansion@^1.1.7":
   "integrity" "sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA=="
@@ -6201,6 +6280,11 @@
     "import-local" "^3.0.2"
     "jest-cli" "^27.5.1"
 
+"jquery@1.9.1 - 3":
+  "integrity" "sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw=="
+  "resolved" "https://registry.npmjs.org/jquery/-/jquery-3.6.0.tgz"
+  "version" "3.6.0"
+
 "js-tokens@^3.0.0 || ^4.0.0", "js-tokens@^4.0.0":
   "integrity" "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ=="
   "resolved" "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz"
@@ -7168,6 +7252,11 @@
   dependencies:
     "find-up" "^3.0.0"
 
+"popper.js@^1.16.1":
+  "integrity" "sha512-Wb4p1J4zyFTbM+u6WuO4XstYx4Ky9Cewe4DWrel7B0w6VVICvPwdOpotjzcf6eD8TsckVnIMNONQyPIUFOUbCQ=="
+  "resolved" "https://registry.npmjs.org/popper.js/-/popper.js-1.16.1.tgz"
+  "version" "1.16.1"
+
 "portfinder@^1.0.28":
   "integrity" "sha512-Se+2isanIcEqf2XMHjyUKskczxbPH7dQnlMjXX6+dybayyHvAf/TCgyMRlzf/B6QDhAEFOGes0pzRo3by4AbMA=="
   "resolved" "https://registry.npmjs.org/portfinder/-/portfinder-1.0.28.tgz"
@@ -7699,6 +7788,11 @@
   dependencies:
     "picocolors" "^0.2.1"
     "source-map" "^0.6.1"
+
+"preact@^10.0.5":
+  "integrity" "sha512-dgxpTFV2vs4vizwKohYKkk7g7rmp1wOOcfd4Tz3IB3Wi+ivZzsn/SpeKJhRENSE+n8sUfsAl4S3HiCVT923ABw=="
+  "resolved" "https://registry.npmjs.org/preact/-/preact-10.6.6.tgz"
+  "version" "10.6.6"
 
 "prelude-ls@^1.2.1":
   "integrity" "sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g=="
