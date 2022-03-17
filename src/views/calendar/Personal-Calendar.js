@@ -3,6 +3,9 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
+import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
+import listPlugin from '@fullcalendar/list';
+import adaptivePlugin from '@fullcalendar/adaptive'
 import { CCard, CCardBody, CCardHeader, CSpinner } from '@coreui/react-pro'
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react'
 import { restApiDelete, restApiPost, restApiPut } from 'src/api_calls/rest'
@@ -10,6 +13,7 @@ import { mainUrl } from 'src/components/Common'
 import { SwalMixin } from 'src/components/SweetAlerts/Swal'
 import uuid from 'react-uuid'
 import { CALENDAR_EVENTS } from './Load-Calendar'
+
 
 let eventGuid = 0
 
@@ -56,98 +60,108 @@ export const PersonalCalendar = (props) => {
   }
 
   return (
-    <CCard className="mb-4">
-      <CCardHeader>
-        Personal Calendar of <strong>{user.email}</strong>
-      </CCardHeader>
-      <CCardBody>
-        <FullCalendar
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-          headerToolbar={{
-            left: 'title',
-            right: 'prev,next today'
-          }}
-          footerToolbar={{
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
-          }}
-          initialView="dayGridMonth"
-          editable={true}
-          selectable={true}
-          selectMirror={true}
-          dayMaxEvents={true}
-          weekends={weekendsVisible}
-          initialEvents={CALENDAR_EVENTS} // alternatively, use the `events` setting to fetch from a feed
-          select={handleDateSelect}
-          eventContent={renderEventContent} // custom render function
-          eventClick={handleEventClick}
-          eventsSet={handleEvents} // called after events are initialized/added/changed/removed
+    <>
+      <CCard className="mb-4">
+        <CCardHeader>
+          Personal Calendar of <strong>{user.email}</strong>
+        </CCardHeader>
+        <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
+          <CSpinner color='dark' variant='grow' />
+        </CCardBody>
+      </CCard>
+      <FullCalendar
+        schedulerLicenseKey='CC-Attribution-NonCommercial-NoDerivatives'
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin, resourceTimelinePlugin, adaptivePlugin]}
+        aspectRatio='1.5'
+        headerToolbar={{
+          left: 'title',
+          right: 'prev,next,listMonth'
+        }}
+        footerToolbar={{
+          right: 'today,dayGridMonth,timeGridWeek,timeGridDay,timeline'
+        }}
+        resourceAreaHeaderContent='Meals'
+        resources={[{ "id": "a", "title": "Breakfast" }, { "id": "b", "title": "Lunch", "eventColor": "green" }, { "id": "c", "title": "Afternoon", "eventColor": "orange" }, { "id": "d", "title": "Dinner", "children": [{ "id": "d1", "title": "Room D1" }] }
+          // your resource list
+        ]}
+        height={650}
+        initialView="dayGridMonth"
+        editable={true}
+        selectable={true}
+        selectMirror={true}
+        dayMaxEvents={true}
+        weekends={weekendsVisible}
+        initialEvents={CALENDAR_EVENTS} // alternatively, use the `events` setting to fetch from a feed
+        select={handleDateSelect}
+        eventContent={renderEventContent} // custom render function
+        eventClick={handleEventClick}
+        eventsSet={handleEvents} // called after events are initialized/added/changed/removed
 
-          /* you can update a remote database when these fire: */
-          eventAdd={function (selectInfo) {
-            if (selectInfo.event.title) {
-              let event = {
-                id: uuid(),
-                user_email: user.email,
-                title: selectInfo.event.title,
-                start: selectInfo.event.start,
-                end: selectInfo.event.end,
-                allDay: selectInfo.event._def.allDay,
-              }
-              Promise.resolve(
-                restApiPost(mainUrl + '/calendars/calendar-events/create', event, false)
-                  .then(function (value) {
-                    SwalMixin('success', 'Event Added!')
-                    setCurrentEvents(...currentEvents, value);
-                    setLoading(false);
-                  }).catch(function () {
-                    setLoading(false);
-                  }));
+        /* you can update a remote database when these fire: */
+        eventAdd={function (selectInfo) {
+          if (selectInfo.event.title) {
+            let event = {
+              id: uuid(),
+              user_email: user.email,
+              title: selectInfo.event.title,
+              start: selectInfo.event.start,
+              end: selectInfo.event.end,
+              allDay: selectInfo.event._def.allDay,
             }
-          }}
+            Promise.resolve(
+              restApiPost(mainUrl + '/calendars/calendar-events/create', event, false)
+                .then(function (value) {
+                  SwalMixin('success', 'Event Added!')
+                  setCurrentEvents(...currentEvents, value);
+                  setLoading(false);
+                }).catch(function () {
+                  setLoading(false);
+                }));
+          }
+        }}
 
-          eventChange={function (selectInfo) {
+        eventChange={function (selectInfo) {
 
-            if (selectInfo.event.id) {
-              let updated_event = {
-                id: selectInfo.event.id,
-                user_email: user.email,
-                title: selectInfo.event.title,
-                start: selectInfo.event.start,
-                end: selectInfo.event.end,
-                allDay: selectInfo.event._def.allDay,
-              }
-
-              Promise.resolve(
-                restApiPut(mainUrl + '/calendars/calendar-events/update/' + selectInfo.event.id, updated_event, true)
-                  .then(function (value) {
-                    setCurrentEvents(...currentEvents, value);
-                    setLoading(false);
-                  }).catch(function () {
-                    setLoading(false);
-                  }));
+          if (selectInfo.event.id) {
+            let updated_event = {
+              id: selectInfo.event.id,
+              user_email: user.email,
+              title: selectInfo.event.title,
+              start: selectInfo.event.start,
+              end: selectInfo.event.end,
+              allDay: selectInfo.event._def.allDay,
             }
-          }}
 
-          eventRemove={function (selectInfo) {
-            if (selectInfo.event.id) {
-              Promise.resolve(
-                restApiDelete(mainUrl + '/calendars/calendar-events/delete/' + selectInfo.event.id)
-                  .then(function (value) {
-                    setCurrentEvents(...currentEvents, value);
-                    setLoading(false);
-                  }).catch(function () {
-                    setLoading(false);
-                  }));
-            }
-          }}
+            Promise.resolve(
+              restApiPut(mainUrl + '/calendars/calendar-events/update/' + selectInfo.event.id, updated_event, true)
+                .then(function (value) {
+                  setCurrentEvents(...currentEvents, value);
+                  setLoading(false);
+                }).catch(function () {
+                  setLoading(false);
+                }));
+          }
+        }}
 
-        />
-      </CCardBody>
+        eventRemove={function (selectInfo) {
+          if (selectInfo.event.id) {
+            Promise.resolve(
+              restApiDelete(mainUrl + '/calendars/calendar-events/delete/' + selectInfo.event.id)
+                .then(function (value) {
+                  setCurrentEvents(...currentEvents, value);
+                  setLoading(false);
+                }).catch(function () {
+                  setLoading(false);
+                }));
+          }
+        }}
+
+      />
 
       <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
         <CSpinner color='dark' variant='grow' />
       </CCardBody>
-    </CCard>
+    </>
   )
 }
 

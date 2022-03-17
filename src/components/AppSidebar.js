@@ -24,9 +24,8 @@ const AppSidebar = () => {
   return (
     <CSidebar
       position="fixed"
-      //narrow={true}
-      unfoldable={!unfoldable}
-      visible={!sidebarShow}
+      unfoldable={unfoldable}
+      visible={sidebarShow}
       onVisibleChange={(visible) => {
         dispatch({ type: 'set', sidebarShow: visible })
       }}
@@ -37,7 +36,7 @@ const AppSidebar = () => {
           <CButtonGroup aria-label="Theme switch">
             <CFormCheck
               type="radio"
-              button={{ color: 'primary' }}
+              button={{ color: 'light' }}
               name="theme-switch"
               id="btn-light-theme"
               autoComplete="off"
@@ -47,7 +46,7 @@ const AppSidebar = () => {
             />
             <CFormCheck
               type="radio"
-              button={{ color: 'primary' }}
+              button={{ color: 'dark' }}
               name="theme-switch"
               id="btn-dark-theme"
               autoComplete="off"

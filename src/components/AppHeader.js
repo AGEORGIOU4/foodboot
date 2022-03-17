@@ -27,7 +27,6 @@ const AppHeader = () => {
   const sidebarShow = useSelector((state) => state.sidebarShow)
 
   const online_connection = navigator.onLine;
-  const history = useHistory();
 
   if (!online_connection) {
     SwalMixin('error', 'Network failed')
