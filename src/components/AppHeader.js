@@ -11,16 +11,27 @@ import {
   CNavLink,
   CNavItem,
   CImage,
+  CCol,
 } from '@coreui/react-pro'
 import CIcon from '@coreui/icons-react'
 import { cilMenu } from '@coreui/icons'
 
 import AppBreadcrumb from './AppBreadcrumb'
 import AppHeaderDropdown from './header/AppHeaderDropdown'
+import { cidSignalCellularNoInternet0, cisSignal } from '@coreui/icons-pro'
+import { SwalMixin } from './SweetAlerts/Swal'
+import { useHistory } from 'react-router-dom';
 
 const AppHeader = () => {
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)
+
+  const online_connection = navigator.onLine;
+  const history = useHistory();
+
+  if (!online_connection) {
+    SwalMixin('error', 'Network failed')
+  }
 
   return (
     <CHeader position="sticky" className="mb-4">
@@ -49,6 +60,13 @@ const AppHeader = () => {
               src='foodboot-logo-landscape.png'
               height={30} />
           </CHeaderBrand>
+
+          <CHeaderNav>
+            <CHeaderBrand>
+              <CIcon height={20} icon={(online_connection) ? cisSignal : cidSignalCellularNoInternet0} />
+            </CHeaderBrand>
+          </CHeaderNav>
+
           <AppHeaderDropdown />
         </CHeaderNav>
 

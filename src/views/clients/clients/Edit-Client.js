@@ -21,6 +21,7 @@ import { cilSave } from '@coreui/icons';
 import { cidFileAdd, cilEye } from '@coreui/icons-pro';
 import { CMedicalRecord } from '../medical-histories/CMedicalRecord';
 import { Route } from 'react-router-dom';
+import { CFoodPreference } from './food-preferences/CFoodPreference';
 
 const EditClient = (props) => {
   const [validated, setValidated] = useState(false)
@@ -255,7 +256,11 @@ const EditClient = (props) => {
                   ><CIcon icon={cilSave} /> Save Client
                   </CButton>
 
-                  <hr />
+                  <div style={{ margin: '20px 0px', fontWeight: '900' }}>
+                    Food Preferences
+                  </div>
+
+                  <CFoodPreference client_id={client_id} />
 
                   <div style={{ margin: '20px 0px', fontWeight: '900' }}>
                     Medical History

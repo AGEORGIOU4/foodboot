@@ -3,7 +3,6 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
-import { INITIAL_EVENTS, createEventId } from './event-utils'
 import { CCard, CCardBody, CCardHeader, CSpinner } from '@coreui/react-pro'
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react'
 import { restApiDelete, restApiPost, restApiPut } from 'src/api_calls/rest'
@@ -12,11 +11,17 @@ import { SwalMixin } from 'src/components/SweetAlerts/Swal'
 import uuid from 'react-uuid'
 import { CALENDAR_EVENTS } from './Load-Calendar'
 
+let eventGuid = 0
+
+function createEventId() {
+  return String(eventGuid++)
+}
+
 export const PersonalCalendar = (props) => {
   const { user } = useAuth0();
   const [loading, setLoading] = useState(false)
   const [weekendsVisible, setWeekendsVisible] = useState(true);
-  const [currentEvents, setCurrentEvents] = useState(INITIAL_EVENTS);
+  const [currentEvents, setCurrentEvents] = useState([]);
 
   const handleWeekendsToggle = () => {
     setWeekendsVisible(!weekendsVisible)

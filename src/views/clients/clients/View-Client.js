@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { withAuthenticationRequired } from '@auth0/auth0-react'
 
-import { CCol, CFormLabel, CSpinner, CCard, CCardBody, CRow, CImage, CCardHeader, CButton } from '@coreui/react-pro'
+import { CCol, CFormLabel, CSpinner, CCard, CCardBody, CRow, CImage, CCardHeader, CButton, CMultiSelect } from '@coreui/react-pro'
 import avatar from '../../../assets/images/avatars/avatar.png'
 import { FormatTimestamp, mainUrl } from 'src/components/Common';
 import { restApiGet } from 'src/api_calls/rest';
@@ -10,6 +10,7 @@ import { cidFileAdd, cilPrint } from '@coreui/icons-pro';
 import { cilPencil } from '@coreui/icons';
 import { Route } from 'react-router-dom';
 import { MedicalHistoriesViewTable } from '../medical-histories/MedicalHistoriesViewTable';
+import { CFoodPreference } from './food-preferences/CFoodPreference';
 
 const print = (e) => {
   e.preventDefault()
@@ -87,7 +88,7 @@ const ViewClient = (props) => {
           )} />
 
         </CCardHeader>
-        <CCardBody>
+        <CCardBody style={{ display: (loading) ? 'none' : 'block' }}>
           <CRow>
             <CCol md={3} style={{ margin: '0px 0px 20px 0px' }}>
               <CImage width={70} src={avatar} />
@@ -140,17 +141,30 @@ const ViewClient = (props) => {
           </CRow>
 
         </CCardBody>
+        <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
+          <CSpinner color='dark' variant='grow' />
+        </CCardBody>
+      </CCard>
 
+      <div style={{ margin: '20px 0px', fontWeight: '900' }}>
+        Food Preferences
+      </div>
+
+      <CCard>
+        <CCardBody style={{ display: (loading) ? 'none' : 'block' }}>
+          <CFoodPreference client_id={client_id} />
+        </CCardBody>
+        <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
+          <CSpinner color='dark' variant='grow' />
+        </CCardBody>
       </CCard>
 
       <div style={{ margin: '20px 0px', fontWeight: '900' }}>
         Medical History
       </div>
 
-
       <CCard>
-        <CCardBody>
-
+        <CCardBody style={{ display: (loading) ? 'none' : 'block' }}>
           <Route render={({ history }) => (
             <div>
               <CButton
@@ -165,6 +179,9 @@ const ViewClient = (props) => {
             </div>
           )} />
           <MedicalHistoriesViewTable data={medical_history} loading={loading} resetData={resetData} />
+        </CCardBody>
+        <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
+          <CSpinner color='dark' variant='grow' />
         </CCardBody>
       </CCard>
     </>

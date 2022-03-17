@@ -33,9 +33,11 @@ export const CCalculator = () => {
       </CCol>
 
       <CRow>
-        <CCol style={{ padding: '12px 12px 0 0', textAlign: 'end' }}>
-          <CButton style={{ marginRight: '12px' }} color='success' variant='outline'
+        <CCol md={6} xs={12} style={{ textAlign: 'end', margin: '20px 0 0 0' }}>
+          <CButton color='success' variant='outline'
             onClick={() => setCalculatorResult(CalculateBMI(weight, height))}><small>Calculate BMI</small></CButton>
+        </CCol>
+        <CCol md={6} xs={12} style={{ textAlign: 'end', margin: '20px 0 0 0' }}>
           <CButton color='info' variant='outline'
             onClick={() => setCalculatorResult(CalculateWaterIntake(weight, height))}><small>Calculate Daily Water Intake</small></CButton>
         </CCol>

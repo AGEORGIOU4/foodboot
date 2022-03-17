@@ -109,7 +109,7 @@ const WidgetsDropdown = () => {
           color="info-gradient"
           value={
             <>
-              $6.200{' '}
+              $62{' '}
               <span className="fs-6 fw-normal">
                 (40.9% <CIcon icon={cilArrowTop} />)
               </span>

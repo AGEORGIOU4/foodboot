@@ -9,6 +9,7 @@ import {
 } from '@coreui/react-pro'
 import { auth0ApiCall, SetUserInfo } from 'src/api_calls/auth0.js'
 import { CCalculator } from './tools'
+import WidgetsDropdown from '../widgets/WidgetsDropdown'
 
 const Dashboard = () => {
   const { user } = useAuth0();
@@ -32,11 +33,11 @@ const Dashboard = () => {
         <CCardBody>
           <CRow>
 
-            <CCol md={7}>
-
+            <CCol md={12}>
+              <WidgetsDropdown />
             </CCol>
 
-            <CCol md={5} style={{ borderLeft: '2px solid' }}>
+            <CCol md={5}>
               <CCalculator />
             </CCol>
 
