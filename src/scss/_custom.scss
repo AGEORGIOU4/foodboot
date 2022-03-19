@@ -3,7 +3,7 @@
   font-size: smaller;
 }
 
-/* width */
+/* Scrollbars */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -16,21 +16,23 @@
  
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #35445d; 
+  background: #293444; 
   border-radius: 6px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #35445d; 
+  background: #293444; 
 }
 
+/* Select Input */
 .css-1pahdxg-control:hover {
   border-color:  #6557e4 !important;
   border-color: var(--cui-form-multi-select-focus-border-color, #6557e4) !important;
   box-shadow: 0 0 0 0.25rem rgb(50 31 219 / 25%);
 }
 
+/* Select Input */
 .css-1pahdxg-control {
   border-color: #6557e4 !important;
   box-shadow: 0 0 0 0.25rem rgb(50 31 219 / 25%) !important;

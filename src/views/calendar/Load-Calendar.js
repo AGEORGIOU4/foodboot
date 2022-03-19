@@ -5,7 +5,7 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list';
 import { withAuthenticationRequired, useAuth0 } from '@auth0/auth0-react'
-import { CCard, CCardBody, CCardHeader, CCol, CRow, CSpinner } from '@coreui/react-pro'
+import { CCard, CCardBody, CCardHeader, CSpinner } from '@coreui/react-pro'
 import { restApiGet, restApiPost } from 'src/api_calls/rest'
 import { mainUrl } from 'src/components/Common'
 import { useHistory } from 'react-router-dom';
@@ -62,25 +62,22 @@ const LoadCalendar = () => {
   return (
     <>
       <CCard className="mb-4" >
-        <CCardHeader inline>
+        <CCardHeader>
           <CSpinner color='dark' className="me-1 float-end" style={{ display: (loading) ? "block" : "none" }} variant='grow' />
           Personal Calendar of <strong>{user.email}</strong>
         </CCardHeader>
+
+        <CCardBody style={{ opacity: '0.1' }}>
+          <FullCalendar
+            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
+            height={650}
+            headerToolbar={{ left: 'title', right: 'prev,next,listMonth' }}
+            footerToolbar={{ right: 'today,dayGridMonth,timeGridWeek,timeGridDay' }}
+            initialView="dayGridMonth"
+
+          />
+        </CCardBody>
       </CCard>
-      <div style={{ opacity: '0.1' }}>
-        <FullCalendar
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
-          headerToolbar={{
-            left: 'title',
-            right: 'prev,next,listMonth'
-          }}
-          footerToolbar={{
-            center: 'today,dayGridMonth,timeGridWeek,timeGridDay'
-          }}
-          right={650}
-          initialView="dayGridMonth"
-        />
-      </div>
     </>
   )
 }

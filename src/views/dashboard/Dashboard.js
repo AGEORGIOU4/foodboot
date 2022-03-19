@@ -4,7 +4,9 @@ import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react'
 import {
   CCard,
   CCardBody,
+  CCardHeader,
   CCol,
+  CImage,
   CRow,
 } from '@coreui/react-pro'
 import { auth0ApiCall, SetUserInfo } from 'src/api_calls/auth0.js'
@@ -30,6 +32,11 @@ const Dashboard = () => {
   return (
     <>
       <CCard className="mb-4">
+        <CCardHeader>
+          <CCol md={12}>
+            <CImage src='foodboot-logo-landscape.png' height={'50px'} />
+          </CCol>
+        </CCardHeader>
         <CCardBody>
           <CRow>
 
@@ -37,9 +44,11 @@ const Dashboard = () => {
               <WidgetsDropdown />
             </CCol>
 
-            <CCol md={5}>
+            <CCol md={6}>
               <CCalculator />
             </CCol>
+
+
 
             <hr style={{ margin: '40px 0px 20px' }} />
 
