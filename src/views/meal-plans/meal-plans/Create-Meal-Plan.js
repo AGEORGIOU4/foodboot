@@ -15,7 +15,7 @@ import {
   CFormSelect,
 } from '@coreui/react-pro'
 import { FormatTimestampFunction, mainUrl } from 'src/components/Common';
-import { restApiGet, restApiPost } from 'src/api_calls/rest';
+import { restApiGet, restApiPost, restApiPut } from 'src/api_calls/rest';
 import CIcon from '@coreui/icons-react';
 import { cilSave } from '@coreui/icons';
 
@@ -105,7 +105,7 @@ const CreateMealPlan = (props) => {
 
       // Create meal plan
       Promise.resolve(
-        restApiPost(mainUrl + '/meal-plans/create/', createdData, true)
+        restApiPut(mainUrl + '/meal-plans/update/', createdData, true)
           .then(function (value) {
             setLoading(false);
           }).catch(function () {
