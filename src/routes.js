@@ -11,15 +11,16 @@ const ViewClient = React.lazy(() => import('./views/clients/clients/View-Client'
 const Profile = React.lazy(() => import('./views/profile/Profile'))
 const EditProfile = React.lazy(() => import('./views/profile/Edit-Profile'))
 
+const MealPlans = React.lazy(() => import('./views/meal-plans/Meal-Plans'))
+const CreateMealPlan = React.lazy(() => import('./views/meal-plans/meal-plans/Create-Meal-Plan'))
+
 const NutritionFacts = React.lazy(() => import('./views/nutrition-facts/Nutrition-Facts'))
-const MealPlanning = React.lazy(() => import('./views/meal-planning/Meal-Planning'))
+
 const Analytics = React.lazy(() => import('./views/analytics/Analytics'))
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const LoadCalendar = React.lazy(() => import('./views/calendar/Load-Calendar'))
 const PersonalCalendar = React.lazy(() => import('./views/calendar/Personal-Calendar'))
-
-
 
 
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -148,9 +149,12 @@ const routes = [
   { path: '/clients/edit-client', name: 'Edit Client', component: EditClient },
   { path: '/clients/view-client', name: 'View Client', component: ViewClient },
 
+  { path: '/meal-plans', name: 'Meal Plans', component: MealPlans, exact: true },
+  { path: '/meal-plans/create-meal-plan', name: 'Create Meal Plan', component: CreateMealPlan },
+
   { path: '/nutrition-facts', name: 'Nutrition Facts', component: NutritionFacts },
   { path: '/analytics', name: 'Analytics', component: Analytics },
-  { path: '/meal-planning', name: 'Meal Planning', component: MealPlanning },
+
 
   { path: '/calendar', name: 'Calendar', component: LoadCalendar },
   { path: '/personal-calendar', name: 'Calendar', component: PersonalCalendar },

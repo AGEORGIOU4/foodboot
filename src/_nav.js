@@ -48,20 +48,21 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Nutrition Facts',
-    to: '/nutrition-facts',
-    icon: <CIcon icon={cilFastfood} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
-    name: 'Meal Planning',
-    to: '/meal-planning',
+    name: 'Meal Plans',
+    to: '/meal-plans',
     icon: <CIcon icon={cilNote} customClassName="nav-icon" />,
     badge: {
       color: 'success-gradient',
       text: 'NEW',
     },
   },
+  {
+    component: CNavItem,
+    name: 'Nutrition Facts',
+    to: '/nutrition-facts',
+    icon: <CIcon icon={cilFastfood} customClassName="nav-icon" />,
+  },
+
   {
     component: CNavItem,
     name: 'Analytics',
