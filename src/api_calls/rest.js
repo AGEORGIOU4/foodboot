@@ -1,7 +1,7 @@
 import axios from "axios";
 import { SwalMixin } from "../components/SweetAlerts/Swal";
 
-export async function restApiGet(url) {
+export async function restApiGet(url, showAlert) {
   var data = "";
 
   await axios.get(url).then((response) => {
@@ -11,9 +11,10 @@ export async function restApiGet(url) {
   }).catch(function (error) {
     if (error.response) {
       console.log(error.response.data);
-      SwalMixin('error', error.response.data.error);
+      (showAlert) ? (SwalMixin('error', error.response.data.error)) : 0;
     } else if (error.request) {
       console.log(error.request);
+      (showAlert) ? (SwalMixin('error', error)) : 0;
       SwalMixin('error', error);
     }
     console.log(error);
