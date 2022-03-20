@@ -1,6 +1,6 @@
 
-import React, { useState } from 'react'
-import { CBadge, CButton, CCard, CCardBody, CCol, CImage, CSmartTable, CSpinner } from '@coreui/react-pro'
+import React from 'react'
+import { CBadge, CButton, CCard, CCardBody, CCol, CSmartTable, CSpinner } from '@coreui/react-pro'
 import { FormatTimestamp, mainUrl } from 'src/components/Common'
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
@@ -8,7 +8,6 @@ import { Route } from 'react-router-dom'
 import { restApiDelete } from 'src/api_calls/rest'
 import Swal from 'sweetalert2'
 import { cilEye } from '@coreui/icons-pro'
-import { getWeightBadge } from 'src/components/ProBadge'
 
 const MealPlansTable = (props) => {
   const columns = [
@@ -53,7 +52,7 @@ const MealPlansTable = (props) => {
                     </div>
 
                     <div style={{ width: "30%", float: 'left', textAlign: 'end' }}>
-                      <FormatTimestamp date={item.date} />
+                      <CBadge color={'success'}><FormatTimestamp date={item.date} /></CBadge>
                     </div>
 
                     <div style={{ width: "100%", float: 'left' }}>
@@ -61,7 +60,7 @@ const MealPlansTable = (props) => {
                     </div>
 
                     <div style={{ width: "80%", float: 'left' }}>
-                      <small>Age:</small> <CBadge color={'success'}><strong>{item.age} kg</strong></CBadge>
+                      <small>Age:</small> <CBadge color={'warning'}><strong>{item.age}</strong></CBadge>
                     </div>
 
                     <CCol style={{ textAlign: 'end', paddingRight: '0' }}>
