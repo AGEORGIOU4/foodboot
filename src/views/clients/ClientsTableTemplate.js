@@ -7,7 +7,7 @@ const ClientsTableTemplate = (props) => {
   var items = [
     { last_name: 'Last Name' },
     { first_name: 'First Name' },
-    { dob: 'DOB' },
+    { dob: 'DOB (yyyy-mm-dd' },
     { gender: 'Gender' },
     { email: 'Email' },
     { phone: 'Phone' },
