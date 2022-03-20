@@ -19,11 +19,9 @@ import { restApiGet, restApiPut } from 'src/api_calls/rest';
 import CIcon from '@coreui/icons-react';
 import { cilSave } from '@coreui/icons';
 import { CFoodPreference } from 'src/views/clients/clients/food-preferences/CFoodPreference';
-import { MedicalHistoriesViewTable } from 'src/views/clients/medical-histories/MedicalHistoriesViewTable';
-import { cidFileAdd, cilEye, cilFileAdd, cilInfoCircle } from '@coreui/icons-pro';
+import { cidFileAdd, cilInfoCircle } from '@coreui/icons-pro';
 import { useSelector, useDispatch } from 'react-redux'
 import { AppAside } from 'src/components';
-import { CMedicalRecord } from 'src/views/clients/medical-histories/CMedicalRecord';
 
 const UpdateMealPlan = (props) => {
   const asideShow = useSelector(state => state.asideShow) // Display Clients Info
@@ -206,7 +204,7 @@ const UpdateMealPlan = (props) => {
                   color='success'
                   variant="ghost"
                   onClick={handleSubmit}
-                ><CIcon icon={cilSave} /> Save Meal Plan
+                ><CIcon icon={cilSave} /> Save Info
                 </CButton>
 
                 <hr />
