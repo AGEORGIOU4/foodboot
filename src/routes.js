@@ -12,7 +12,7 @@ const Profile = React.lazy(() => import('./views/profile/Profile'))
 const EditProfile = React.lazy(() => import('./views/profile/Edit-Profile'))
 
 const MealPlans = React.lazy(() => import('./views/meal-plans/Meal-Plans'))
-const CreateMealPlan = React.lazy(() => import('./views/meal-plans/meal-plans/Create-Meal-Plan'))
+const UpdateMealPlan = React.lazy(() => import('./views/meal-plans/meal-plans/Update-Meal-Plan'))
 
 const NutritionFacts = React.lazy(() => import('./views/nutrition-facts/Nutrition-Facts'))
 
@@ -150,7 +150,7 @@ const routes = [
   { path: '/clients/view-client', name: 'View Client', component: ViewClient },
 
   { path: '/meal-plans', name: 'Meal Plans', component: MealPlans, exact: true },
-  { path: '/meal-plans/create-meal-plan', name: 'Create Meal Plan', component: CreateMealPlan },
+  { path: '/meal-plans/update-meal-plan', name: 'Update Meal Plan', component: UpdateMealPlan },
 
   { path: '/nutrition-facts', name: 'Nutrition Facts', component: NutritionFacts },
   { path: '/analytics', name: 'Analytics', component: Analytics },

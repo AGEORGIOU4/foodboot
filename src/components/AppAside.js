@@ -11,34 +11,70 @@ import {
   CTabPane,
   CListGroup,
   CListGroupItem,
-  CProgress,
   CSidebar,
   CSidebarHeader,
+  CRow,
+  CCol,
+  CFormLabel,
 } from '@coreui/react-pro'
 import CIcon from '@coreui/icons-react'
 import {
-  cibSkype,
-  cilCalendar,
-  cilHome,
+  cilApple,
   cilList,
-  cilLocationPin,
-  cilSettings,
-  cilSpeech,
+  cilMedicalCross,
 } from '@coreui/icons'
 
-import avatar2 from './../assets/images/avatars/2.jpg'
-import avatar3 from './../assets/images/avatars/3.jpg'
-import avatar4 from './../assets/images/avatars/4.jpg'
-import avatar5 from './../assets/images/avatars/5.jpg'
-import avatar6 from './../assets/images/avatars/6.jpg'
-import avatar7 from './../assets/images/avatars/7.jpg'
-import avatar8 from './../assets/images/avatars/8.jpg'
+import avatar from './../assets/images/avatars/avatar.png'
+import { restApiGet } from 'src/api_calls/rest'
+import { FormatTimestamp, mainUrl } from './Common'
+import { CFoodPreference } from 'src/views/clients/clients/food-preferences/CFoodPreference'
+import { cidApple } from '@coreui/icons-pro'
+import { MedicalHistoriesViewTable } from 'src/views/clients/medical-histories/MedicalHistoriesViewTable'
 
-const AppAside = () => {
+const AppAside = (props) => {
+  const [loading, setLoading] = useState(false);
+  const [client, setClient] = useState("");
+  const [medical_history, setMedicalHistory] = useState("");
+
   const dispatch = useDispatch()
   const asideShow = useSelector((state) => state.asideShow)
 
   const [activeKey, setActiveKey] = useState(1)
+
+  // Set Clients
+  React.useEffect(() => {
+    setLoading(true);
+    Promise.resolve(
+      restApiGet(mainUrl + '/clients/' + props.client_id)
+        .then(function (value) {
+          setClient(value);
+
+          setLoading(false);
+        }));
+  }, []);
+
+  // Set Medical Histories
+  React.useEffect(() => {
+    setLoading(true);
+    Promise.resolve(
+      restApiGet(mainUrl + '/clients/medical-histories/' + props.client_id)
+        .then(function (value) {
+          setMedicalHistory(value);
+
+          setLoading(false);
+        }));
+  }, []);
+
+  // Reset Medical Histories
+  const resetData = () => {
+    setLoading(true);
+    Promise.resolve(
+      restApiGet(mainUrl + '/clients/medical-histories/' + props.client_id)
+        .then(function (value) {
+          setMedicalHistory(value);
+          setLoading(false);
+        }));
+  }
 
   return (
     <CSidebar
@@ -55,270 +91,117 @@ const AppAside = () => {
         <CNav variant="underline">
           <CNavItem>
             <CNavLink
-              href="#"
               active={activeKey === 1}
               onClick={(e) => {
                 e.preventDefault()
                 setActiveKey(1)
               }}
             >
-              <CIcon icon={cilList} alt="CoreUI Icons List" />
+              <CIcon icon={cilApple} />
             </CNavLink>
           </CNavItem>
           <CNavItem>
             <CNavLink
-              href="#"
               active={activeKey === 2}
               onClick={(e) => {
                 e.preventDefault()
                 setActiveKey(2)
               }}
             >
-              <CIcon icon={cilSpeech} alt="CoreUI Icons Speech" />
+              <CIcon icon={cilList} />
             </CNavLink>
           </CNavItem>
           <CNavItem>
             <CNavLink
-              href="#"
               active={activeKey === 3}
               onClick={(e) => {
                 e.preventDefault()
                 setActiveKey(3)
               }}
             >
-              <CIcon icon={cilSettings} alt="CoreUI Icons Settings" />
+              <CIcon icon={cilMedicalCross} />
             </CNavLink>
           </CNavItem>
+
           <CNavItem className="ms-auto me-2 d-flex align-items-center">
             <CCloseButton onClick={() => dispatch({ type: 'set', asideShow: false })} />
           </CNavItem>
         </CNav>
       </CSidebarHeader>
+
       <CTabContent>
+
         <CTabPane visible={activeKey === 1}>
           <CListGroup flush>
             <CListGroupItem className="list-group-item border-start-4 border-start-secondary bg-light text-center fw-bold text-medium-emphasis text-uppercase small">
-              Today
+              {client.first_name} {client.last_name}
             </CListGroupItem>
-            <CListGroupItem href="#" className="border-start-4 border-start-warning">
-              <CAvatar src={avatar7} size="lg" className="float-end" />
+            <CListGroupItem>
               <div>
-                Meeting with <strong>Lucas</strong>
+                <CFoodPreference client_id={props.client_id} />
               </div>
-              <small className="text-medium-emphasis me-3">
-                <CIcon icon={cilCalendar} /> 1 - 3pm
-              </small>
-              <small className="text-medium-emphasis">
-                <CIcon icon={cilLocationPin} /> Palo Alto, CA
-              </small>
             </CListGroupItem>
-            <CListGroupItem href="#" className="border-start-4 border-start-info">
-              <CAvatar src={avatar4} size="lg" className="float-end" />
+            <CListGroupItem>
               <div>
-                Skype with <strong>Megan</strong>
-              </div>
-              <small className="text-medium-emphasis me-3">
-                <CIcon icon={cilCalendar} /> 4 - 5pm
-              </small>
-              <small className="text-medium-emphasis">
-                <CIcon icon={cibSkype} /> On-line
-              </small>
-            </CListGroupItem>
-            <CListGroupItem className="border-start-4 border-start-secondary bg-light text-center fw-bold text-medium-emphasis text-uppercase small">
-              Tomorrow
-            </CListGroupItem>
-            <CListGroupItem accent="danger" href="#" className="border-start-4 border-start-danger">
-              <div>
-                New UI Project - <strong>deadline</strong>
-              </div>
-              <small className="text-medium-emphasis me-3">
-                <CIcon icon={cilCalendar} /> 10 - 11pm
-              </small>
-              <small className="text-medium-emphasis">
-                <CIcon icon={cilHome} /> creativeLabs HQ
-              </small>
-              <div className="/avatars-stack mt-2">
-                <CAvatar src={avatar2} size="sm" />
-                <CAvatar src={avatar3} size="sm" />
-                <CAvatar src={avatar4} size="sm" />
-                <CAvatar src={avatar5} size="sm" />
-                <CAvatar src={avatar6} size="sm" />
-              </div>
-            </CListGroupItem>
-            <CListGroupItem href="#" className="border-start-4 border-start-success">
-              <div>
-                <strong>#10 Startups.Garden</strong> Meetup
-              </div>
-              <small className="text-medium-emphasis me-3">
-                <CIcon icon={cilCalendar} /> 1 - 3pm
-              </small>
-              <small className="text-medium-emphasis">
-                <CIcon icon={cilLocationPin} /> Palo Alto, CA
-              </small>
-            </CListGroupItem>
-            <CListGroupItem href="#" className="border-start-4 border-start-primary border-bottom">
-              <div>
-                <strong>Team meeting</strong>
-              </div>
-              <small className="text-medium-emphasis me-3">
-                <CIcon icon={cilCalendar} /> 4 - 6pm
-              </small>
-              <small className="text-medium-emphasis">
-                <CIcon icon={cilHome} /> creativeLabs HQ
-              </small>
-              <div className="/avatars-stack mt-2">
-                <CAvatar src={avatar2} size="sm" />
-                <CAvatar src={avatar3} size="sm" />
-                <CAvatar src={avatar4} size="sm" />
-                <CAvatar src={avatar5} size="sm" />
-                <CAvatar src={avatar6} size="sm" />
-                <CAvatar src={avatar7} size="sm" />
-                <CAvatar src={avatar8} size="sm" />
+                <CCol md={12}>
+                  <CFormLabel style={{ fontWeight: 'bold' }}>Food allergies</CFormLabel>
+                  <p>{client.food_allergies}</p>
+                </CCol>
               </div>
             </CListGroupItem>
           </CListGroup>
         </CTabPane>
 
-        <CTabPane className="p-3" visible={activeKey === 2}>
-          <div className="message">
-            <div className="py-3 pb-5 me-3 float-start">
-              <CAvatar src={avatar7} status="success" size="md" />
-            </div>
-            <div>
-              <small className="text-medium-emphasis">Lukasz Holeczek</small>
-              <small className="text-medium-emphasis float-end mt-1">1:52 PM</small>
-            </div>
-            <div className="text-truncate fw-semibold">Lorem ipsum dolor sit amet</div>
-            <small className="text-medium-emphasis">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-              incididunt...
-            </small>
-          </div>
-          <hr />
-          <div className="message">
-            <div className="py-3 pb-5 me-3 float-start">
-              <CAvatar src={avatar7} status="success" size="md" />
-            </div>
-            <div>
-              <small className="text-medium-emphasis">Lukasz Holeczek</small>
-              <small className="text-medium-emphasis float-end mt-1">1:52 PM</small>
-            </div>
-            <div className="text-truncate fw-semibold">Lorem ipsum dolor sit amet</div>
-            <small className="text-medium-emphasis">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-              incididunt...
-            </small>
-          </div>
-          <hr />
-          <div className="message">
-            <div className="py-3 pb-5 me-3 float-start">
-              <CAvatar src={avatar7} status="success" size="md" />
-            </div>
-            <div>
-              <small className="text-medium-emphasis">Lukasz Holeczek</small>
-              <small className="text-medium-emphasis float-end mt-1">1:52 PM</small>
-            </div>
-            <div className="text-truncate fw-semibold">Lorem ipsum dolor sit amet</div>
-            <small className="text-medium-emphasis">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-              incididunt...
-            </small>
-          </div>
-          <hr />
-          <div className="message">
-            <div className="py-3 pb-5 me-3 float-start">
-              <CAvatar src={avatar7} status="success" size="md" />
-            </div>
-            <div>
-              <small className="text-medium-emphasis">Lukasz Holeczek</small>
-              <small className="text-medium-emphasis float-end mt-1">1:52 PM</small>
-            </div>
-            <div className="text-truncate fw-semibold">Lorem ipsum dolor sit amet</div>
-            <small className="text-medium-emphasis">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-              incididunt...
-            </small>
-          </div>
-          <hr />
-          <div className="message">
-            <div className="py-3 pb-5 me-3 float-start">
-              <CAvatar src={avatar7} status="success" size="md" />
-            </div>
-            <div>
-              <small className="text-medium-emphasis">Lukasz Holeczek</small>
-              <small className="text-medium-emphasis float-end mt-1">1:52 PM</small>
-            </div>
-            <div className="text-truncate fw-semibold">Lorem ipsum dolor sit amet</div>
-            <small className="text-medium-emphasis">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-              incididunt...
-            </small>
-          </div>
+        <CTabPane visible={activeKey === 2}>
+          <CListGroup flush>
+            <CListGroupItem className="list-group-item border-start-4 border-start-secondary bg-light text-center fw-bold text-medium-emphasis text-uppercase small">
+              {client.first_name} {client.last_name}
+            </CListGroupItem>
+            <CListGroupItem>
+              <CAvatar src={avatar} size="lg" className="float-end" />
+              <div>
+                <CRow>
+
+                  <CCol md={12}>
+                    <CFormLabel style={{ fontWeight: 'bold' }}>Date of birth</CFormLabel>
+                    <p><FormatTimestamp date={client.dob} /></p>
+                  </CCol>
+                  <CCol md={12}>
+                    <CFormLabel style={{ fontWeight: 'bold' }}>Email</CFormLabel>
+                    <p>{client.email}</p>
+                  </CCol>
+
+                  <CCol md={12}>
+                    <CFormLabel style={{ fontWeight: 'bold' }}>Phone</CFormLabel>
+                    <p>{client.phone}</p>
+                  </CCol>
+
+                  <CCol md={12}>
+                    <CFormLabel style={{ fontWeight: 'bold' }}>Gender</CFormLabel>
+                    <p>{client.gender}</p>
+                  </CCol>
+
+                  <CCol md={12}>
+                    <CFormLabel style={{ fontWeight: 'bold' }}>Address</CFormLabel>
+                    <p>{client.address}</p>
+                  </CCol>
+                </CRow>
+              </div>
+            </CListGroupItem>
+          </CListGroup>
         </CTabPane>
-        <CTabPane className="p-3" visible={activeKey === 3}>
-          <h6>Settings</h6>
-          <div>
-            <div className="clearfix mt-4">
-              <CFormSwitch size="lg" label="Option 1" id="Option1" defaultChecked />
-            </div>
-            <div>
-              <small className="text-medium-emphasis">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua.
-              </small>
-            </div>
-          </div>
-          <div>
-            <div className="clearfix mt-3">
-              <CFormSwitch size="lg" label="Option 2" id="fOption2" />
-            </div>
-            <div>
-              <small className="text-medium-emphasis">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua.
-              </small>
-            </div>
-          </div>
-          <div>
-            <div className="clearfix mt-3">
-              <CFormSwitch size="lg" label="Option 3" id="Option3" />
-            </div>
-          </div>
-          <div>
-            <div className="clearfix mt-3">
-              <CFormSwitch size="lg" label="Option 4" id="Option4" defaultChecked />
-            </div>
-          </div>
-          <hr />
-          <h6>System Utilization</h6>
-          <div className="text-uppercase mb-1 mt-4">
-            <small>
-              <b>CPU Usage</b>
-            </small>
-          </div>
-          <CProgress thin color="info-gradient" value={25} />
-          <small className="text-medium-emphasis">348 Processes. 1/4 Cores.</small>
-          <div className="text-uppercase mb-1 mt-2">
-            <small>
-              <b>Memory Usage</b>
-            </small>
-          </div>
-          <CProgress thin color="warning-gradient" value={70} />
-          <small className="text-medium-emphasis">11444GB/16384MB</small>
-          <div className="text-uppercase mb-1 mt-2">
-            <small>
-              <b>SSD 1 Usage</b>
-            </small>
-          </div>
-          <CProgress thin color="danger-gradient" value={95} />
-          <small className="text-medium-emphasis">243GB/256GB</small>
-          <div className="text-uppercase mb-1 mt-2">
-            <small>
-              <b>SSD 2 Usage</b>
-            </small>
-          </div>
-          <CProgress thin color="success-gradient" value={10} />
-          <small className="text-medium-emphasis">25GB/256GB</small>
+        <CTabPane visible={activeKey === 3}>
+          <CListGroup flush>
+            <CListGroupItem className="list-group-item border-start-4 border-start-secondary bg-light text-center fw-bold text-medium-emphasis text-uppercase small">
+              {client.first_name} {client.last_name}
+            </CListGroupItem>
+
+            <CListGroupItem>
+              <div>
+                <MedicalHistoriesViewTable data={medical_history} loading={loading} resetData={resetData} display={false} />
+              </div>
+            </CListGroupItem>
+          </CListGroup>
         </CTabPane>
       </CTabContent>
     </CSidebar>

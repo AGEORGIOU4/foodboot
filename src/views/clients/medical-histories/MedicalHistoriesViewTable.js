@@ -25,10 +25,9 @@ export const MedicalHistoriesViewTable = (props) => {
         activePage={1}
         items={props.data}
         columns={columns}
-        tableFilter
-        cleaner
+        tableFilter={props.display}
         loading={props.loading}
-        itemsPerPageSelect
+        itemsPerPageSelect={props.display}
         itemsPerPage={5}
         columnSorter
         pagination
@@ -42,6 +41,7 @@ export const MedicalHistoriesViewTable = (props) => {
             (item) => (
               <td>
                 <CButton
+                  style={{ display: (props.display) ? 'block' : 'none' }}
                   size="sm"
                   color='success'
                   variant="ghost"
@@ -54,8 +54,9 @@ export const MedicalHistoriesViewTable = (props) => {
             ),
           remove:
             (item) => (
-              <td>
+              <td >
                 <CButton
+                  style={{ display: (props.display) ? 'block' : 'none' }}
                   size="sm"
                   color='danger'
                   variant="ghost"
