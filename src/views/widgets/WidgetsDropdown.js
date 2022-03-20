@@ -16,10 +16,10 @@ import { cilArrowBottom, cilArrowTop, cilOptions } from '@coreui/icons'
 const WidgetsDropdown = () => {
   return (
     <CRow>
-      <CCol sm={6} lg={3}>
-        <CWidgetStatsA
+      {/* <CCol sm={6} lg={3}> */}
+      {/* <CWidgetStatsA
           className="mb-4"
-          color="primary-gradient"
+          color="info-gradient"
           value={
             <>
               26K{' '}
@@ -28,7 +28,7 @@ const WidgetsDropdown = () => {
               </span>
             </>
           }
-          title="Users"
+          title="Total Users"
           action={
             <CDropdown alignment="end">
               <CDropdownToggle color="transparent" caret={false} className="p-0">
@@ -53,7 +53,7 @@ const WidgetsDropdown = () => {
                     label: 'My First dataset',
                     backgroundColor: 'transparent',
                     borderColor: 'rgba(255,255,255,.55)',
-                    pointBackgroundColor: getStyle('--cui-primary'),
+                    pointBackgroundColor: getStyle('--cui-info'),
                     data: [65, 59, 84, 84, 51, 55, 40],
                   },
                 ],
@@ -102,20 +102,20 @@ const WidgetsDropdown = () => {
             />
           }
         />
-      </CCol>
-      <CCol sm={6} lg={3}>
+      </CCol> */}
+      <CCol sm={12} lg={4}>
         <CWidgetStatsA
           className="mb-4"
           color="info-gradient"
           value={
             <>
-              $62{' '}
+              62{' '}
               <span className="fs-6 fw-normal">
                 (40.9% <CIcon icon={cilArrowTop} />)
               </span>
             </>
           }
-          title="Income"
+          title="Total Clients"
           action={
             <CDropdown alignment="end">
               <CDropdownToggle color="transparent" caret={false} className="p-0">
@@ -128,6 +128,7 @@ const WidgetsDropdown = () => {
                 <CDropdownItem disabled>Disabled action</CDropdownItem>
               </CDropdownMenu>
             </CDropdown>
+
           }
           chart={
             <CChartLine
@@ -189,10 +190,10 @@ const WidgetsDropdown = () => {
           }
         />
       </CCol>
-      <CCol sm={6} lg={3}>
+      <CCol sm={12} lg={4}>
         <CWidgetStatsA
           className="mb-4"
-          color="warning-gradient"
+          color="info-gradient"
           value={
             <>
               2.49{' '}
@@ -201,7 +202,7 @@ const WidgetsDropdown = () => {
               </span>
             </>
           }
-          title="Conversion Rate"
+          title="Calendar Events"
           action={
             <CDropdown alignment="end">
               <CDropdownToggle color="transparent" caret={false} className="p-0">
@@ -262,10 +263,10 @@ const WidgetsDropdown = () => {
           }
         />
       </CCol>
-      <CCol sm={6} lg={3}>
+      <CCol sm={12} lg={4}>
         <CWidgetStatsA
           className="mb-4"
-          color="danger-gradient"
+          color="info-gradient"
           value={
             <>
               44K{' '}
@@ -274,7 +275,7 @@ const WidgetsDropdown = () => {
               </span>
             </>
           }
-          title="Sessions"
+          title="Meal Plans"
           action={
             <CDropdown alignment="end">
               <CDropdownToggle color="transparent" caret={false} className="p-0">

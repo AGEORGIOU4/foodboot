@@ -3,7 +3,7 @@ import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react-pro'
 import { DocsExample } from 'src/components'
 
 import SmartTableBasixExample from './SmartTableBasixExample'
-import SmartTableDownloadableExample from './SmartTableDownloadableExample'
+import SmartTableDownloadable from './SmartTableDownloadable'
 import SmartTableSelectableExample from './SmartTableSelectableExample'
 
 const SmartTable = () => {
@@ -36,7 +36,7 @@ const SmartTable = () => {
           </CCardHeader>
           <CCardBody>
             <DocsExample href="components/smart-table/">
-              <SmartTableDownloadableExample />
+              <SmartTableDownloadable />
             </DocsExample>
           </CCardBody>
         </CCard>

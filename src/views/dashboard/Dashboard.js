@@ -40,17 +40,13 @@ const Dashboard = () => {
         <CCardBody>
           <CRow>
 
-            <CCol md={12}>
+            <CCol md={7}>
               <WidgetsDropdown />
             </CCol>
 
-            <CCol md={6}>
+            <CCol md={5}>
               <CCalculator />
             </CCol>
-
-
-
-            <hr style={{ margin: '40px 0px 20px' }} />
 
           </CRow>
         </CCardBody>

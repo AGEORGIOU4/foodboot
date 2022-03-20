@@ -15,18 +15,25 @@ import {
   CFormSelect,
 } from '@coreui/react-pro'
 import { FormatTimestampFunction, mainUrl } from 'src/components/Common';
-import { restApiGet, restApiPost, restApiPut } from 'src/api_calls/rest';
+import { restApiGet, restApiPut } from 'src/api_calls/rest';
 import CIcon from '@coreui/icons-react';
 import { cilSave } from '@coreui/icons';
+import { CFoodPreference } from 'src/views/clients/clients/food-preferences/CFoodPreference';
+import { cidFileAdd, cilInfoCircle } from '@coreui/icons-pro';
+import { useSelector, useDispatch } from 'react-redux'
+import { AppAside } from 'src/components';
 
-const CreateMealPlan = (props) => {
+const UpdateMealPlan = (props) => {
+  const asideShow = useSelector(state => state.asideShow) // Display Clients Info
+  const dispatch = useDispatch()
+
   const [validated, setValidated] = useState(false)
   const [loading, setLoading] = useState(true)
 
   const parameters = new URLSearchParams(props.location.search);
   const [client_id, setClientID] = useState(parameters.get('id'));
 
-  var createdData = "";
+  var updatedData = "";
 
   let today = new Date();
   today.getDate();
@@ -35,7 +42,7 @@ const CreateMealPlan = (props) => {
   const [selected_client, setSelectedClient] = useState("");
 
   const [client, setClient] = useState([]);
-  const [date, setDate] = useState(today);
+  const [date, setDate] = useState(FormatTimestampFunction(today));
   const [age, setAge] = useState("");
   const [weight, setWeight] = useState("");
   const [notes, setNotes] = useState("N/A");
@@ -91,7 +98,7 @@ const CreateMealPlan = (props) => {
       event.preventDefault()
       event.stopPropagation()
     } else {
-      createdData = {
+      updatedData = {
         client_id: client_id,
         client_first_name: client.first_name,
         client_last_name: client.last_name,
@@ -103,9 +110,9 @@ const CreateMealPlan = (props) => {
 
       setLoading(true);
 
-      // Create meal plan
+      // Update meal plan
       Promise.resolve(
-        restApiPut(mainUrl + '/meal-plans/update/', createdData, true)
+        restApiPut(mainUrl + '/meal-plans/update/', updatedData, true)
           .then(function (value) {
             setLoading(false);
           }).catch(function () {
@@ -123,7 +130,7 @@ const CreateMealPlan = (props) => {
 
             <CCardHeader>
               <CSpinner color='dark' className="me-1 float-end" style={{ display: (loading) ? "block" : "none" }} variant='grow' />
-              <strong>Create Meal Plan</strong>
+              <strong>Update Meal Plan</strong>
               <CButton
                 disabled={loading}
                 className="me-1 float-end"
@@ -174,7 +181,7 @@ const CreateMealPlan = (props) => {
                   <CFormLabel htmlFor="validationCustom04">Date</CFormLabel>
                   <CFormInput type="date" id="validationCustom04" required
                     onChange={e => setDate(e.target.value)}
-                    value={FormatTimestampFunction(today)} />
+                    value={date} />
                   <CFormFeedback valid>Looks good!</CFormFeedback>
                 </CCol>
                 <CCol md={4}>
@@ -185,7 +192,8 @@ const CreateMealPlan = (props) => {
                 </CCol>
                 <CCol md={4}>
                   <CFormLabel htmlFor="validationCustom06">Notes</CFormLabel>
-                  <CFormInput type="text" id="validationCustom06" value={notes} required onChange={e => setNotes(e.target.value)} />
+                  <CFormInput type="text" id="validationCustom06" value={notes} required
+                    onChange={e => setNotes(e.target.value)} />
                   <CFormFeedback valid>Looks good!</CFormFeedback>
                 </CCol>
 
@@ -196,7 +204,7 @@ const CreateMealPlan = (props) => {
                   color='success'
                   variant="ghost"
                   onClick={handleSubmit}
-                ><CIcon icon={cilSave} /> Save Meal Plan
+                ><CIcon icon={cilSave} /> Save Info
                 </CButton>
 
                 <hr />
@@ -210,10 +218,74 @@ const CreateMealPlan = (props) => {
             </CCardBody>
 
           </CCard>
+
+          <div style={{ margin: '20px 0px', fontWeight: '900' }}>
+            Food Preferences
+          </div>
+
+          <CCard>
+            <CCardBody style={{ display: (loading) ? 'none' : 'block' }}>
+              <CFoodPreference client_id={client_id} />
+            </CCardBody>
+            <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
+              <CSpinner color='dark' variant='grow' />
+            </CCardBody>
+          </CCard>
+
+          <div style={{ margin: '20px 0px', fontWeight: '900' }}>
+            Food Combinations
+          </div>
+
+          <CCard>
+            <CCardBody style={{ display: (loading) ? 'none' : 'block' }}>
+              <div>
+                <CButton
+                  disabled={loading}
+                  className="me-1 float-end"
+                  size="sm"
+                  color='info'
+                  variant="ghost"
+                ><CIcon icon={cidFileAdd} /> Create Food Combinations
+                </CButton>
+              </div>
+
+              <div>
+
+              </div>
+
+              <CButton
+                disabled={loading}
+                className="me-1"
+                size="sm"
+                color='success'
+                variant="ghost"
+              ><CIcon icon={cilSave} /> Save All Records
+              </CButton>
+            </CCardBody>
+
+
+            <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
+              <CSpinner color='dark' variant='grow' />
+            </CCardBody>
+          </CCard>
         </CCol>
       </CRow >
+
+
+
+      <div style={{ position: 'fixed', bottom: '50px', right: '30px' }}>
+        <CButton
+          shape={'rounded-pill'}
+          color='primary'
+          size='lg'
+          onClick={() => dispatch({ type: 'set', asideShow: !asideShow })}>
+          <CIcon icon={cilInfoCircle} size='lg' />
+        </CButton>
+      </div>
+
+      <AppAside client_id={client_id} />
     </>
   )
 }
 
-export default withAuthenticationRequired(CreateMealPlan)
+export default withAuthenticationRequired(UpdateMealPlan)

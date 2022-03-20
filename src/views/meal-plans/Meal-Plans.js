@@ -60,7 +60,7 @@ const MealPlans = () => {
         .then(function (value) {
           setMealPlans(value);
           if (!value) {
-            history.push({ pathname: "/meal-plans/create-meal-plan", search: '?id=' + client_id })
+            history.push({ pathname: "/meal-plans/update-meal-plan", search: '?id=' + client_id })
           }
           if (value) {
             history.push({ pathname: "/meal-plans/edit-meal-plan", search: '?id=' + client_id })
@@ -91,8 +91,8 @@ const MealPlans = () => {
               size="sm"
               color='info'
               variant="ghost"
-              onClick={() => { history.push({ pathname: "/meal-plans/create-meal-plan" }) }}
-            ><CIcon icon={cidNoteAdd} /> Create Meal Plan
+              onClick={() => { history.push({ pathname: "/meal-plans/update-meal-plan" }) }}
+            ><CIcon icon={cidNoteAdd} /> Update Meal Plan
             </CButton>
           )} />
 
@@ -108,19 +108,10 @@ const MealPlans = () => {
         </CCardBody>
       </CCard >
 
-      <CCard className="mb-4">
-        <CCardHeader>
-          <strong>Meal Plans</strong>
-        </CCardHeader>
-
-        <CCardBody style={{ display: (loading) ? 'none' : 'block' }}>
-          <MealPlansTable data={meal_plans} loading={loading} resetData={resetData} />
-        </CCardBody>
-
-        <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
-          <CSpinner color='dark' variant='grow' />
-        </CCardBody>
-      </CCard>
+      <div style={{ margin: '20px 0px', fontWeight: '900' }}>
+        Meal Plans
+      </div>
+      <MealPlansTable data={meal_plans} loading={loading} resetData={resetData} style={{ display: (loading) ? 'none' : 'block' }} />
     </>
   )
 }

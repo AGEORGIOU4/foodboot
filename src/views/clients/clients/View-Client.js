@@ -178,7 +178,7 @@ const ViewClient = (props) => {
               </CButton>
             </div>
           )} />
-          <MedicalHistoriesViewTable data={medical_history} loading={loading} resetData={resetData} />
+          <MedicalHistoriesViewTable data={medical_history} loading={loading} resetData={resetData} display={true} />
         </CCardBody>
         <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
           <CSpinner color='dark' variant='grow' />
