@@ -49,13 +49,70 @@
     <li>View Calendar modes (day, week, month | list)</li>
     <li>CRUD operations for calendar events</li>
   </ul>
+
+   <h6>Meal Plan</h6>
+      <ul>
+        <li>View Meal Plans as Cards Table</li>
+        <li>Search engine for Meal Plans Table</li>
+        <li>CRUD operations for Meal Plans</li>
+        <li>Side Navbar that fetches and displays all client's info when Update</li>
+      </ul>
+</p>
+
+<h4>REST API calls</h4>
+<p>
+  <h6>Client</h6>
+  <ol>
+    <li>GET    /clients</li>
+    <li>GET    /clients/:id</li> 
+    <li>POST   /clients/create</li>
+    <li>PUT    /clients/update/:id</li>
+    <li>DELETE /clients/delete/:id</li>
+  </ol>
   
-    <h6>Meal Plan</h6>
-  <ul>
-    <li>View Meal Plans as Cards Table</li>
-    <li>Search engine for Meal Plans Table</li>
-    <li>CRUD operations for Meal Plans</li>
-    <li>Side Navbar that fetches and displays all client's info when Update</li>
-  </ul>
+    <h6>Medical History</h6>
+      <ol>
+        <li>GET    /clients/medical-histories/:id</li>
+        <li>PUT    /clients/medical-histories/update/:id</li>
+        <li>DELETE /clients/medical-histories/delete/:id</li>
+      </ol>
+      
+    <h6>Food Preferences</h6>
+      <ol>
+        <li>GET    /clients/food-preferences/:id</li>
+        <li>PUT    /clients/food-preferences/update/:id</li>
+        <li>DELETE /clients/food-preferences/delete/:id</li>
+      </ol>
+      
+    <h6>Food Options</h6>
+      <ol>
+        <li>GET    /food-options</li>
+        <li>POST   /food-options/create</li>
+        <li>DELETE /food-options/delete/:id</li>
+      </ol>
+      
+      <h6>Calendar</h6>
+        <ol>
+          <li>GET    /calendars</li>
+          <li>GET    /calendars/:user</li>
+          <li>POST   /calendars/create</li>
+          <li>DELETE /calendars/delete</li>
+        </ol>
+        
+      <h6>Calendar Events</h6>
+        <ol>
+          <li>GET    /calendars/calendar-events/:user</li>
+          <li>POST   /calendars/calendar-events/create</li>
+          <li>PUT    /calendars/calendar-events/update/:id</li>
+          <li>DELETE /calendars/calendar-events/delete/:id</li>
+        </ol>
+        
+      <h6>Meal Plans</h6>
+        <ol>
+          <li>GET    /meal-plans</li>
+          <li>GET    /meal-plans/:id</li>
+          <li>PUT    /meal-plans/update</li>
+          <li>DELETE /meal-plans/delete/:id</li>
+        </ol>
 </p>
 
