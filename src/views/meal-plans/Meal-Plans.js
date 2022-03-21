@@ -63,7 +63,7 @@ const MealPlans = () => {
             history.push({ pathname: "/meal-plans/update-meal-plan", search: '?id=' + client_id })
           }
           if (value) {
-            history.push({ pathname: "/meal-plans/edit-meal-plan", search: '?id=' + client_id })
+            history.push({ pathname: "/meal-plans/update-meal-plan", search: '?id=' + client_id })
           }
           setLoading(false);
         }));

@@ -29,7 +29,6 @@ const MealPlansTable = (props) => {
         tableFilter
         cleaner
         loading={props.loading}
-
         itemsPerPageSelect
         itemsPerPage={5}
         columnSorter

@@ -20,6 +20,7 @@ import {
 import CIcon from '@coreui/icons-react'
 import {
   cilApple,
+  cilInfo,
   cilList,
   cilMedicalCross,
 } from '@coreui/icons'
@@ -100,6 +101,7 @@ const AppAside = (props) => {
               <CIcon icon={cilApple} />
             </CNavLink>
           </CNavItem>
+
           <CNavItem>
             <CNavLink
               active={activeKey === 2}
@@ -119,7 +121,7 @@ const AppAside = (props) => {
                 setActiveKey(3)
               }}
             >
-              <CIcon icon={cilMedicalCross} />
+              <CIcon icon={cilInfo} />
             </CNavLink>
           </CNavItem>
 
@@ -157,6 +159,20 @@ const AppAside = (props) => {
             <CListGroupItem className="list-group-item border-start-4 border-start-secondary bg-light text-center fw-bold text-medium-emphasis text-uppercase small">
               {client.first_name} {client.last_name}
             </CListGroupItem>
+
+            <CListGroupItem>
+              <div>
+                <MedicalHistoriesViewTable data={medical_history} loading={loading} resetData={resetData} display={false} />
+              </div>
+            </CListGroupItem>
+          </CListGroup>
+        </CTabPane>
+
+        <CTabPane visible={activeKey === 3}>
+          <CListGroup flush>
+            <CListGroupItem className="list-group-item border-start-4 border-start-secondary bg-light text-center fw-bold text-medium-emphasis text-uppercase small">
+              {client.first_name} {client.last_name}
+            </CListGroupItem>
             <CListGroupItem>
               <CAvatar src={avatar} size="lg" className="float-end" />
               <div>
@@ -186,19 +202,6 @@ const AppAside = (props) => {
                     <p>{client.address}</p>
                   </CCol>
                 </CRow>
-              </div>
-            </CListGroupItem>
-          </CListGroup>
-        </CTabPane>
-        <CTabPane visible={activeKey === 3}>
-          <CListGroup flush>
-            <CListGroupItem className="list-group-item border-start-4 border-start-secondary bg-light text-center fw-bold text-medium-emphasis text-uppercase small">
-              {client.first_name} {client.last_name}
-            </CListGroupItem>
-
-            <CListGroupItem>
-              <div>
-                <MedicalHistoriesViewTable data={medical_history} loading={loading} resetData={resetData} display={false} />
               </div>
             </CListGroupItem>
           </CListGroup>

@@ -70,6 +70,24 @@ const UpdateMealPlan = (props) => {
         }));
   }, []);
 
+  // Set Clients Info 
+  React.useEffect(() => {
+    setLoading(true);
+
+    if (client_id) {
+      Promise.resolve(
+        restApiGet(mainUrl + '/meal-plans/' + client_id)
+          .then(function (value) {
+            console.log(value);
+            setDate(FormatTimestampFunction(value.date));
+            setWeight(value.weight);
+            setNotes(value.notes);
+
+            setLoading(false);
+          }));
+    }
+  }, []);
+
   function calculateAge(birthday) { // birthday is a date
     var dob = new Date(birthday);
     var ageDifMs = Date.now() - dob.getTime();
@@ -187,12 +205,14 @@ const UpdateMealPlan = (props) => {
                 <CCol md={4}>
                   <CFormLabel htmlFor="validationCustom05">Weight</CFormLabel>
                   <CFormInput type="number" id="validationCustom05" required
+                    value={weight}
                     onChange={e => setWeight(e.target.value)} />
                   <CFormFeedback valid>Looks good!</CFormFeedback>
                 </CCol>
                 <CCol md={4}>
                   <CFormLabel htmlFor="validationCustom06">Notes</CFormLabel>
                   <CFormInput type="text" id="validationCustom06" value={notes} required
+                    value={notes}
                     onChange={e => setNotes(e.target.value)} />
                   <CFormFeedback valid>Looks good!</CFormFeedback>
                 </CCol>
