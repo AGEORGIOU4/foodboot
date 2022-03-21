@@ -19,7 +19,7 @@ export const CCalculator = () => {
 
   return (
     <CForm>
-      <h6 style={{ fontWeight: '900' }}>Tools</h6>
+      <h4 style={{ fontWeight: '900' }}>Tools</h4>
       <p><small>Type weight and height to get Body Mass Index or Daily Water Intake measurements.</small></p>
 
       <CCol md={12} style={{ marginBottom: '10px' }}>
@@ -40,7 +40,9 @@ export const CCalculator = () => {
 
         <CButton color='info' size={'sm'} className='float-end' style={{ width: '54%', margin: '16px 0' }}
           onClick={() => setCalculatorResult(CalculateWaterIntake(weight, height))}><small>Calculate Daily Water Intake</small></CButton>
+      </CCol>
 
+      <CCol md={12}>
         <p id='calculator'><strong>{calculatorResult}</strong></p>
       </CCol>
 

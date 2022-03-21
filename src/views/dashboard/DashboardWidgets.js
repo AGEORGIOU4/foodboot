@@ -52,19 +52,14 @@ const DashboardWidgets = (props) => {
     <CRow>
       <CCol sm={12} lg={7}>
 
-        <CCard className="mb-4" >
-          <CButton style={{ margin: '16px 16px 0' }} href='/#/calendar'>Personal Calendar</CButton>
-          <CCardBody href='/#/calendar'>
-            <FullCalendar
-              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
-              height={262}
-              headerToolbar={{ left: 'title', right: 'prev,next' }}
-              // footerToolbar={{ right: 'today,dayGridMonth,timeGridWeek,timeGridDay' }}
-              initialView="dayGridMonth"
+        <CButton style={{ width: '100%', margin: '0 0 10px' }} href='/#/calendar'>Personal Calendar</CButton>
+        <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
+          height={300}
+          headerToolbar={{ left: 'title', right: 'prev,next' }}
+          initialView="dayGridMonth"
+        />
 
-            />
-          </CCardBody>
-        </CCard>
       </CCol>
 
       <CCol lg={5}>
