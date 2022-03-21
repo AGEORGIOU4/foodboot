@@ -1,13 +1,20 @@
 {
   "short_name": "foodboot",
   "name": "foodboot",
+  "description": "Foodboot is a Web Platform running on Cloud. Its main purpose is to work as an assistive tool for nutritionists and clients",
   "icons": [
     {
-      "src": "./foodboot-logo.png",
-      "sizes": "250x250",
+      "src": "./icons/foodboot-logo-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "./icons/foodboot-logo-512x512.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ],
+  "id": "/",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
