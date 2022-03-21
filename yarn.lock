@@ -3730,7 +3730,7 @@
     "css-what" "^5.0.0"
     "domhandler" "^4.2.0"
     "domutils" "^2.6.0"
-    "nth-check" "^2.0.0"
+    "nth-check" "^2.0.1"
 
 "css-tree@^1.1.2":
   "integrity" "sha512-tRpdppF7TRazZrjJ6v3stzv93qxRcSsFmW6cX0Zm2NVKpxE1WV1HblnghVv9TreireHkqI/VDEsfolRF1p6y7Q=="
@@ -6867,7 +6867,7 @@
   dependencies:
     "boolbase" "~1.0.0"
 
-"nth-check@^2.0.0":
+"nth-check@^2.0.1":
   "integrity" "sha512-it1vE95zF6dTT9lBsYbxvqh0Soy4SPowchj0UBGj/V6cTPnXXtQOPUbhZ6CmGzAD/rW22LQK6E96pcdJXk4A4w=="
   "resolved" "https://registry.npmjs.org/nth-check/-/nth-check-2.0.1.tgz"
   "version" "2.0.1"
