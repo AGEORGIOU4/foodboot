@@ -83,7 +83,7 @@ const ClientsTable = (props) => {
                   variant="ghost"
                   onClick={() => {
                     Swal.fire({
-                      text: 'Delete '.concat(item.name).concat(' from clients? '),
+                      text: 'Delete '.concat(item.first_name).concat(' from clients? '),
                       showCancelButton: true,
                       icon: 'error',
                       iconColor: '#e55353',
