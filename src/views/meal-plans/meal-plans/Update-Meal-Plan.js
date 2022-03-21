@@ -22,10 +22,13 @@ import { CFoodPreference } from 'src/views/clients/clients/food-preferences/CFoo
 import { cidFileAdd, cilInfoCircle } from '@coreui/icons-pro';
 import { useSelector, useDispatch } from 'react-redux'
 import { AppAside } from 'src/components';
+import { useHistory } from 'react-router-dom';
 
 const UpdateMealPlan = (props) => {
   const asideShow = useSelector(state => state.asideShow) // Display Clients Info
   const dispatch = useDispatch()
+
+  const history = useHistory({});
 
   const [validated, setValidated] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -96,17 +99,12 @@ const UpdateMealPlan = (props) => {
   }
 
   function handleChange(e) {
+    setLoading(true);
     setSelectedClient(e.target.value);
     setClientID(e.target.value);
 
-    setLoading(true);
-    Promise.resolve(
-      restApiGet(mainUrl + '/clients/' + e.target.value)
-        .then(function (value) {
-          setClient(value);
-          setAge(calculateAge(value.dob));
-          setLoading(false);
-        }));
+    history.push({ pathname: "/meal-plans/update-meal-plan", search: '?id=' + e.target.value })
+    window.location.reload(false)
   }
 
   const handleSubmit = (event) => {
@@ -148,7 +146,7 @@ const UpdateMealPlan = (props) => {
 
             <CCardHeader>
               <CSpinner color='dark' className="me-1 float-end" style={{ display: (loading) ? "block" : "none" }} variant='grow' />
-              <strong>Update Meal Plan</strong>
+              <strong>{(client_id) ? 'Update' : 'Create'} Meal Plan</strong>
               <CButton
                 disabled={loading}
                 className="me-1 float-end"
@@ -198,8 +196,8 @@ const UpdateMealPlan = (props) => {
                 <CCol md={4}>
                   <CFormLabel htmlFor="validationCustom04">Date</CFormLabel>
                   <CFormInput type="date" id="validationCustom04" required
-                    onChange={e => setDate(e.target.value)}
-                    value={date} />
+                    value={date}
+                    onChange={e => setDate(e.target.value)} />
                   <CFormFeedback valid>Looks good!</CFormFeedback>
                 </CCol>
                 <CCol md={4}>
@@ -211,7 +209,7 @@ const UpdateMealPlan = (props) => {
                 </CCol>
                 <CCol md={4}>
                   <CFormLabel htmlFor="validationCustom06">Notes</CFormLabel>
-                  <CFormInput type="text" id="validationCustom06" value={notes} required
+                  <CFormInput type="text" id="validationCustom06" required
                     value={notes}
                     onChange={e => setNotes(e.target.value)} />
                   <CFormFeedback valid>Looks good!</CFormFeedback>

@@ -92,7 +92,7 @@ const MealPlans = () => {
               color='info'
               variant="ghost"
               onClick={() => { history.push({ pathname: "/meal-plans/update-meal-plan" }) }}
-            ><CIcon icon={cidNoteAdd} /> Update Meal Plan
+            ><CIcon icon={cidNoteAdd} /> Create Meal Plan
             </CButton>
           )} />
 
