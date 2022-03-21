@@ -108,6 +108,7 @@ const Clients = () => {
                 restApiPost(mainUrl + '/clients/create/', item, false)
                   .then(function (value) {
                     SwalMixin('success', 'Clients imported!')
+                    window.location.reload(false);
                     setLoading(false);
                   }).catch(function () {
                     setLoading(false);
