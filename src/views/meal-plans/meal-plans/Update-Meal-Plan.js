@@ -51,7 +51,7 @@ const UpdateMealPlan = (props) => {
   const [notes, setNotes] = useState("N/A");
 
 
-  // Set Clients || Client
+  // Set Clients (Dropdown) || Client (if selected from previous page)
   React.useEffect(() => {
     setLoading(true);
     let url = (!client_id) ? (mainUrl.concat('/clients/')) : (mainUrl.concat('/clients/')).concat(client_id);
@@ -64,7 +64,7 @@ const UpdateMealPlan = (props) => {
             setAge(calculateAge(value.dob));
           } else {
             let arr = [...[{ id: "", first_name: "", last_name: "", email: "Select Client" }], ...value];
-            arr.map(item => item['label'] = (item.first_name) ? (item.first_name + ' ' + item.last_name) : (item.email))
+            arr.map(item => item['label'] = (item.first_name) ? (item.last_name + ' ' + item.first_name) : (item.email))
             arr.map(item => item['value'] = item.id);
 
             setClients(arr);
@@ -82,9 +82,11 @@ const UpdateMealPlan = (props) => {
         restApiGet(mainUrl + '/meal-plans/' + client_id)
           .then(function (value) {
             console.log(value);
-            setDate(FormatTimestampFunction(value.date));
-            setWeight(value.weight);
-            setNotes(value.notes);
+            if (value) {
+              setDate(FormatTimestampFunction(value.date));
+              setWeight(value.weight);
+              setNotes(value.notes);
+            }
 
             setLoading(false);
           }));

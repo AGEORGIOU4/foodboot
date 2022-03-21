@@ -20,6 +20,7 @@ export const CCalculator = () => {
   return (
     <CForm>
       <h6 style={{ fontWeight: '900' }}>Tools</h6>
+      <p><small>Type weight and height to get Body Mass Index or Daily Water Intake measurements.</small></p>
 
       <CCol md={12} style={{ marginBottom: '10px' }}>
         <CFormLabel htmlFor="validationCustom01">Enter Height (cm)</CFormLabel>
@@ -32,22 +33,17 @@ export const CCalculator = () => {
         <CFormFeedback valid>Looks good!</CFormFeedback>
       </CCol>
 
-      <CRow>
-        <CCol md={6} xs={12} style={{ textAlign: 'end', margin: '20px 0 0 0' }}>
-          <CButton color='success' variant='outline'
-            onClick={() => setCalculatorResult(CalculateBMI(weight, height))}><small>Calculate BMI</small></CButton>
-        </CCol>
-        <CCol md={6} xs={12} style={{ textAlign: 'end', margin: '20px 0 0 0' }}>
-          <CButton color='info' variant='outline'
-            onClick={() => setCalculatorResult(CalculateWaterIntake(weight, height))}><small>Calculate Daily Water Intake</small></CButton>
-        </CCol>
-      </CRow>
 
-      <CContainer style={{ padding: '10px 0 ', textAlign: 'end' }}>
-        <CCol>
-          <p id='calculator'><strong>{calculatorResult}</strong></p>
-        </CCol>
-      </CContainer>
+      <CCol md={12}>
+        <CButton color='success' size={'sm'} style={{ width: '40%', margin: '16px 0' }}
+          onClick={() => setCalculatorResult(CalculateBMI(weight, height))}><small>Calculate BMI</small></CButton>
+
+        <CButton color='info' size={'sm'} className='float-end' style={{ width: '54%', margin: '16px 0' }}
+          onClick={() => setCalculatorResult(CalculateWaterIntake(weight, height))}><small>Calculate Daily Water Intake</small></CButton>
+
+        <p id='calculator'><strong>{calculatorResult}</strong></p>
+      </CCol>
+
     </CForm>
   )
 }

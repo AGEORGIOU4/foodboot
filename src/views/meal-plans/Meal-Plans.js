@@ -27,7 +27,7 @@ const MealPlans = () => {
       restApiGet(mainUrl + '/clients')
         .then(function (value) {
           let arr = [...[{ id: "", first_name: "", last_name: "", email: "Select Client" }], ...value];
-          arr.map(item => item['label'] = (item.first_name) ? (item.first_name + ' ' + item.last_name + ' | ' + item.email) : (item.email))
+          arr.map(item => item['label'] = (item.first_name) ? (item.last_name + ' ' + item.first_name + ' | ' + item.email) : (item.email))
           arr.map(item => item['value'] = item.id);
 
           setClients(arr);

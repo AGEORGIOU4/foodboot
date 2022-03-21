@@ -31,20 +31,15 @@ const Dashboard = () => {
 
   return (
     <>
-      <CCard className="mb-4">
-        <CCardHeader>
-          <CCol md={12}>
-            <CImage src='foodboot-logo-landscape.png' height={'50px'} />
-          </CCol>
-        </CCardHeader>
+      <CCard>
         <CCardBody>
           <CRow>
 
-            <CCol md={7}>
+            <CCol md={8}>
               <WidgetsDropdown />
             </CCol>
 
-            <CCol md={5}>
+            <CCol md={4}>
               <CCalculator />
             </CCol>
 
