@@ -34,6 +34,19 @@
 
 <h4>Features</h4>
 <p>
+  <h6>Authentication</h6>
+  <ul>
+    <li>Easy on-boarding</li>
+    <li>Third-party social connection (Google)</li>
+  </ul>
+  
+  <h6>Profile</h6>
+  <ul>
+    <li>User can view profile information</li>
+    <li>User can edit profile information</li>
+    <li>User can delete profile</li>
+  </ul>
+  
   <h6>Client</h6>
   <ul>
     <li>CRUD operations for client</li>
