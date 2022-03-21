@@ -54,7 +54,7 @@ const UpdateMealPlan = (props) => {
   // Set Clients (Dropdown) || Client (if selected from previous page)
   React.useEffect(() => {
     setLoading(true);
-    let url = (!client_id) ? (mainUrl.concat('/clients/')) : (mainUrl.concat('/clients/')).concat(client_id);
+    let url = (!client_id) ? (mainUrl.concat('/clients/order')) : (mainUrl.concat('/clients/')).concat(client_id);
 
     Promise.resolve(
       restApiGet(url)

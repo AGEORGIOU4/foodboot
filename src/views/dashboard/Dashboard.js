@@ -1,17 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react'
 
 import {
   CCard,
   CCardBody,
-  CCardHeader,
   CCol,
-  CImage,
   CRow,
 } from '@coreui/react-pro'
 import { auth0ApiCall, SetUserInfo } from 'src/api_calls/auth0.js'
 import { CCalculator } from './tools'
-import WidgetsDropdown from '../widgets/WidgetsDropdown'
+import DashboardWidgets from './DashboardWidgets'
 
 const Dashboard = () => {
   const { user } = useAuth0();
@@ -36,7 +34,7 @@ const Dashboard = () => {
           <CRow>
 
             <CCol md={8}>
-              <WidgetsDropdown />
+              <DashboardWidgets user_email={user.email} />
             </CCol>
 
             <CCol md={4}>
