@@ -145,7 +145,7 @@ const UpdateMealPlan = (props) => {
   const handleCreateFoodCombination = () => {
     let today = new Date();
     today.getDate();
-    let newFoodCombination = { id: record_id, meal_plan_id: meal_plan_id, title: "", start: "", end: "", typeOfMeal: "N/A" }
+    let newFoodCombination = { id: record_id, meal_plan_id: meal_plan_id, title: "", portion: "", start: "", end: "", typeOfMeal: "N/A" }
     let newArray = []
     newArray.push(newFoodCombination, ...food_combination);
 
