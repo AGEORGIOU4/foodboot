@@ -61,6 +61,7 @@
   <ul>
     <li>View Calendar modes (day, week, month | list)</li>
     <li>CRUD operations for calendar events</li>
+    <li>DRAG n' DROP features on Updating Events</li>
   </ul>
 
    <h6>Meal Plan</h6>
