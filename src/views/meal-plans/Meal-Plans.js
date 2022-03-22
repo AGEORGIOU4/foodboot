@@ -5,7 +5,6 @@ import CIcon from '@coreui/icons-react';
 import { mainUrl } from 'src/components/Common';
 import { restApiGet } from 'src/api_calls/rest';
 import { cidNoteAdd } from '@coreui/icons-pro';
-import { SwalMixin } from 'src/components/SweetAlerts/Swal';
 import { Route } from 'react-router-dom';
 import MealPlansTable from './MealPlansTable';
 import { useHistory } from 'react-router-dom';
@@ -14,7 +13,7 @@ const MealPlans = () => {
   const history = useHistory({});
 
   const [clients, setClients] = useState([]);
-  const [meal_plans, setMealPlans] = useState([]);
+  const [meal_plans, setMealPlan] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [client_id, setClientID] = useState("");
@@ -41,7 +40,7 @@ const MealPlans = () => {
     Promise.resolve(
       restApiGet(mainUrl + '/meal-plans')
         .then(function (value) {
-          setMealPlans(value);
+          setMealPlan(value);
           setLoading(false);
         }));
   }, []);
@@ -49,22 +48,24 @@ const MealPlans = () => {
   function handleChange(e) {
     setClientID(e.target.value);
     setSelectedClient(e.target.value);
-    getMealPlans(e.target.value);
+    getMealPlanAndRedirect(e.target.value);
   }
 
-  function getMealPlans(client_id) {
+  function getMealPlanAndRedirect(client_id) {
 
     setLoading(true);
     Promise.resolve(
       restApiGet(mainUrl + '/meal-plans/' + client_id, false)
         .then(function (value) {
-          setMealPlans(value);
-          if (!value) {
-            history.push({ pathname: "/meal-plans/update-meal-plan", search: '?id=' + client_id })
-          }
+          setMealPlan(value);
+
           if (value) {
-            history.push({ pathname: "/meal-plans/update-meal-plan", search: '?id=' + client_id })
+            history.push({ pathname: "/meal-plans/update-meal-plan", search: '?id=' + client_id + '&meal_plan_id=' + value.id })
           }
+          if (!value) {
+            history.push({ pathname: "/meal-plans/update-meal-plan", search: '?id=' + client_id + '&meal_plan_id=' + "" })
+          }
+
           setLoading(false);
         }));
   }
@@ -74,7 +75,7 @@ const MealPlans = () => {
     Promise.resolve(
       restApiGet(mainUrl + '/meal-plans')
         .then(function (value) {
-          setMealPlans(value);
+          setMealPlan(value);
           setLoading(false);
         }));
   }

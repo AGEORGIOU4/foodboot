@@ -13,6 +13,7 @@ const EditProfile = React.lazy(() => import('./views/profile/Edit-Profile'))
 
 const MealPlans = React.lazy(() => import('./views/meal-plans/Meal-Plans'))
 const UpdateMealPlan = React.lazy(() => import('./views/meal-plans/meal-plans/Update-Meal-Plan'))
+const ViewMealPlan = React.lazy(() => import('./views/meal-plans/meal-plans/View-Meal-Plan'))
 
 const NutritionFacts = React.lazy(() => import('./views/nutrition-facts/Nutrition-Facts'))
 
@@ -151,6 +152,7 @@ const routes = [
 
   { path: '/meal-plans', name: 'Meal Plans', component: MealPlans, exact: true },
   { path: '/meal-plans/update-meal-plan', name: 'Update Meal Plan', component: UpdateMealPlan },
+  { path: '/meal-plans/view-meal-plan', name: 'View Meal Plan', component: ViewMealPlan },
 
   { path: '/nutrition-facts', name: 'Nutrition Facts', component: NutritionFacts },
   { path: '/analytics', name: 'Analytics', component: Analytics },

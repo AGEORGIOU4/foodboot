@@ -22,7 +22,6 @@ const MealPlansTable = (props) => {
       <CSmartTable
         header={false}
         sorterValue={{ column: 'last_name', state: 'asc' }}
-        // tableProps={{ striped: true, responsive: true }}
         activePage={1}
         items={props.data}
         columns={columns}
@@ -71,15 +70,15 @@ const MealPlansTable = (props) => {
                         size="sm"
                         color='primary'
                         variant="ghost"
-                        onClick={() => { history.push({ pathname: "/meal-plans/view-meal-plan", search: '?id=' + item.id }) }}
-
-                      ><CIcon icon={cilEye} /></CButton>
+                        onClick={() => { history.push({ pathname: "/meal-plans/view-meal-plan", search: '?id=' + item.client_id + '&meal_plan_id=' + item.id }) }}
+                      >
+                        <CIcon icon={cilEye} /></CButton>
 
                       <CButton
                         size="sm"
                         color='success'
                         variant="ghost"
-                        onClick={() => { history.push({ pathname: "/meal-plans/update-meal-plan", search: '?id=' + item.client_id }) }}
+                        onClick={() => { history.push({ pathname: "/meal-plans/update-meal-plan", search: '?id=' + item.client_id + '&meal_plan_id=' + item.id }) }}
                       >
                         <CIcon icon={cilPencil} />
                       </CButton>

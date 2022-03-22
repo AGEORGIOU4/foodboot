@@ -30,7 +30,6 @@ const DashboardWidgets = (props) => {
           if (value) {
             setTotalClients(value.count);
           }
-          console.log(value.count);
         }
         ))
   });
@@ -43,7 +42,6 @@ const DashboardWidgets = (props) => {
           if (value) {
             setTotalCalendarEvents(value.count);
           }
-          console.log(value.count);
         }
         ))
   });

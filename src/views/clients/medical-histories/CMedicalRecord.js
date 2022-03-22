@@ -57,7 +57,7 @@ export const CMedicalRecord = (props) => {
 
         {/* // Delete */}
         <CButton
-          disabled={(props.item.id === 'undefinced' ? true : false)}
+          disabled={(props.item.id === 'undefined' ? true : false)}
           size="lg"
           color='danger'
           variant="ghost"
