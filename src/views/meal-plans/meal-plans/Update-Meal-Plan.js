@@ -22,27 +22,30 @@ import { CFoodPreference } from 'src/views/clients/clients/food-preferences/CFoo
 import { cidFileAdd, cilInfoCircle } from '@coreui/icons-pro';
 import { useSelector, useDispatch } from 'react-redux'
 import { AppAside } from 'src/components';
-import { useHistory } from 'react-router-dom';
+import { CFoodCombination } from '../food-combinations/CFoodCombination';
+
+function calculateAge(birthday) { // birthday is a date
+  var dob = new Date(birthday);
+  var ageDifMs = Date.now() - dob.getTime();
+  var ageDate = new Date(ageDifMs); // miliseconds from epoch
+  return Math.abs(ageDate.getUTCFullYear() - 1970);
+}
 
 const UpdateMealPlan = (props) => {
+  let today = new Date();
+  today.getDate();
   const asideShow = useSelector(state => state.asideShow) // Display Clients Info
   const dispatch = useDispatch()
 
-  const history = useHistory({});
+  const [clients, setClients] = useState([]);
+  const [selected_client, setSelectedClient] = useState("");
 
   const [validated, setValidated] = useState(false)
   const [loading, setLoading] = useState(true)
 
-  const parameters = new URLSearchParams(props.location.search);
-  const [client_id, setClientID] = useState(parameters.get('id'));
-
-  var updatedData = "";
-
-  let today = new Date();
-  today.getDate();
-
-  const [clients, setClients] = useState([]);
-  const [selected_client, setSelectedClient] = useState("");
+  // Cannot USE SET BECAUSE TWO API CALLS ARE INVOKED!!!
+  var updatedBasicInfo = "";
+  var updatedFoodCombinations = "";
 
   const [client, setClient] = useState([]);
   const [date, setDate] = useState(FormatTimestampFunction(today));
@@ -50,11 +53,19 @@ const UpdateMealPlan = (props) => {
   const [weight, setWeight] = useState("");
   const [notes, setNotes] = useState("N/A");
 
+  const [food_combination, setFoodCombination] = useState([])
 
-  // Set Clients || Client
+  const parameters = new URLSearchParams(props.location.search);
+  var client_id = (parameters.get('id') ? (parameters.get('id')) : "");
+  // var meal_plan_id = (parameters.get('meal_plan_id') ? (parameters.get('meal_plan_id')) : "");
+  const [meal_plan_id, setMealPlanID] = useState(parameters.get('meal_plan_id') ? (parameters.get('meal_plan_id')) : "");
+
+  var record_id = Math.floor(Math.random() * 99999);
+
+  // Get-Set Clients (Dropdown) || Client (if selected from previous page)
   React.useEffect(() => {
     setLoading(true);
-    let url = (!client_id) ? (mainUrl.concat('/clients/')) : (mainUrl.concat('/clients/')).concat(client_id);
+    let url = (!client_id) ? (mainUrl.concat('/clients/order')) : (mainUrl.concat('/clients/')).concat(client_id);
 
     Promise.resolve(
       restApiGet(url)
@@ -62,9 +73,21 @@ const UpdateMealPlan = (props) => {
           if (client_id) {
             setClient(value);
             setAge(calculateAge(value.dob));
+
+            Promise.resolve(
+              restApiGet(mainUrl + '/meal-plans/' + client_id)
+                .then(function (meal_value) {
+                  if (meal_value) {
+                    setDate(FormatTimestampFunction(meal_value.date));
+                    setWeight(meal_value.weight);
+                    setNotes(meal_value.notes);
+                  }
+                  setLoading(false);
+                }));
+
           } else {
             let arr = [...[{ id: "", first_name: "", last_name: "", email: "Select Client" }], ...value];
-            arr.map(item => item['label'] = (item.first_name) ? (item.first_name + ' ' + item.last_name) : (item.email))
+            arr.map(item => item['label'] = (item.first_name) ? (item.last_name + ' ' + item.first_name) : (item.email))
             arr.map(item => item['value'] = item.id);
 
             setClients(arr);
@@ -73,48 +96,70 @@ const UpdateMealPlan = (props) => {
         }));
   }, []);
 
-  // Set Clients Info 
-  React.useEffect(() => {
-    setLoading(true);
+  // Set Basic Info on Select Client
+  function handleClientSelectChange(e) {
+    if (e.target.value) {
+      setLoading(true);
 
-    if (client_id) {
-      Promise.resolve(
-        restApiGet(mainUrl + '/meal-plans/' + client_id)
+      Promise.resolve( // Set Basic Info Section A
+        restApiGet(mainUrl + '/clients/' + e.target.value)
           .then(function (value) {
-            console.log(value);
-            setDate(FormatTimestampFunction(value.date));
-            setWeight(value.weight);
-            setNotes(value.notes);
+            if (e.target.value) {
+              setClient(value);
+              setAge(calculateAge(value.dob));
+              setSelectedClient(e.target.value);
+              client_id = e.target.value;
+            }
+            setLoading(false);
+          }));
 
+      setLoading(true);
+
+      Promise.resolve( // Set Basic Info Section B
+        restApiGet(mainUrl + '/meal-plans/' + e.target.value)
+          .then(function (value) {
+            if (value) {
+              setDate(FormatTimestampFunction(value.date));
+              setWeight(value.weight);
+              setNotes(value.notes);
+            }
+            setLoading(false);
+          }));
+    }
+  }
+
+  // Get-Set Food Combination
+  React.useEffect(() => {
+    if (meal_plan_id) {
+      setLoading(true);
+      Promise.resolve(
+        restApiGet(mainUrl + '/meal-plans/food-combinations/' + meal_plan_id)
+          .then(function (value) {
+            setFoodCombination(value);
             setLoading(false);
           }));
     }
   }, []);
 
-  function calculateAge(birthday) { // birthday is a date
-    var dob = new Date(birthday);
-    var ageDifMs = Date.now() - dob.getTime();
-    var ageDate = new Date(ageDifMs); // miliseconds from epoch
-    return Math.abs(ageDate.getUTCFullYear() - 1970);
-  }
-
-  function handleChange(e) {
+  // Reset Food Combinations on Delete
+  const resetData = () => {
     setLoading(true);
-    setSelectedClient(e.target.value);
-    setClientID(e.target.value);
-
-    history.push({ pathname: "/meal-plans/update-meal-plan", search: '?id=' + e.target.value })
-    window.location.reload(false)
+    Promise.resolve(
+      restApiGet(mainUrl + '/meal-plans/food-combinations/' + meal_plan_id)
+        .then(function (value) {
+          setFoodCombination(value);
+          setLoading(false);
+        }));
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmitBasicInfo = (event) => {
     const form = event.currentTarget
 
     if (form.checkValidity() === false) {
       event.preventDefault()
       event.stopPropagation()
     } else {
-      updatedData = {
+      updatedBasicInfo = {
         client_id: client_id,
         client_first_name: client.first_name,
         client_last_name: client.last_name,
@@ -128,8 +173,9 @@ const UpdateMealPlan = (props) => {
 
       // Update meal plan
       Promise.resolve(
-        restApiPut(mainUrl + '/meal-plans/update/', updatedData, true)
+        restApiPut(mainUrl + '/meal-plans/update/', updatedBasicInfo, true)
           .then(function (value) {
+            setMealPlanID(value.meal_plan.id);
             setLoading(false);
           }).catch(function () {
             setLoading(false);
@@ -138,82 +184,57 @@ const UpdateMealPlan = (props) => {
     setValidated(true)
   }
 
-  return (
-    <>
-      <CRow>
-        <CCol>
-          <CCard>
+  const handleCreateFoodCombination = () => {
+    let today = new Date();
+    today.getDate();
+    let newFoodCombination = { id: record_id, meal_plan_id: meal_plan_id, title: "", start: "", end: "" }
+    let newArray = []
+    newArray.push(newFoodCombination, ...food_combination);
 
-            <CCardHeader>
-              <CSpinner color='dark' className="me-1 float-end" style={{ display: (loading) ? "block" : "none" }} variant='grow' />
-              <strong>{(client_id) ? 'Update' : 'Create'} Meal Plan</strong>
-              <CButton
-                disabled={loading}
-                className="me-1 float-end"
-                size="sm"
-                color='success'
-                variant="ghost"
-                onClick={(e) => handleSubmit(e)}
-              ><CIcon icon={cilSave} /> Save
-              </CButton>
-            </CCardHeader>
+    setFoodCombination(newArray);
+  }
 
-            <CCardBody style={{ display: (loading) ? 'none' : 'block' }}>
-              <CForm
-                className="row g-3 needs-validation"
-                noValidate
-                validated={validated}
-              >
-                <CCol md={4} style={{ display: (client_id) ? "block" : "none" }}>
-                  <CFormLabel htmlFor="validationCustom01">Client</CFormLabel>
-                  <CFormInput type="text" id="validationCustom01" required disabled
-                    value={client.first_name + ' ' + client.last_name} />
-                  <CFormFeedback valid>Looks good!</CFormFeedback>
-                </CCol>
+  const handleUpdateFoodCombination = (i, e) => {
+    let newFormValues = [...food_combination];
+    newFormValues[i][e.target.name] = e.target.value;
+    setFoodCombination(newFormValues);
+  }
 
-                <CCol md={4} style={{ display: (!client_id) ? "block" : "none" }}>
-                  <CFormLabel htmlFor="validationCustom01">Client</CFormLabel>
-                  <CFormSelect
-                    value={selected_client}
-                    onChange={handleChange}
-                    options={clients} />
-                  <CFormFeedback valid>Looks good!</CFormFeedback>
-                </CCol>
+  const handleSubmitFoodCombination = (event) => {
+    const form = event.currentTarget
 
-                <CCol md={4}>
-                  <CFormLabel htmlFor="validationCustom02">Email</CFormLabel>
-                  <CFormInput type="text" id="validationCustom02" disabled
-                    value={client.email} />
-                  <CFormFeedback valid>Looks good!</CFormFeedback>
-                </CCol>
-                <CCol md={4}>
-                  <CFormLabel htmlFor="validationCustom03">Age</CFormLabel>
-                  <CFormInput type="number" id="validationCustom03" required disabled
-                    value={age}
-                  />
-                  <CFormFeedback valid>Looks good!</CFormFeedback>
-                </CCol>
-                <CCol md={4}>
-                  <CFormLabel htmlFor="validationCustom04">Date</CFormLabel>
-                  <CFormInput type="date" id="validationCustom04" required
-                    value={date}
-                    onChange={e => setDate(e.target.value)} />
-                  <CFormFeedback valid>Looks good!</CFormFeedback>
-                </CCol>
-                <CCol md={4}>
-                  <CFormLabel htmlFor="validationCustom05">Weight</CFormLabel>
-                  <CFormInput type="number" id="validationCustom05" required
-                    value={weight}
-                    onChange={e => setWeight(e.target.value)} />
-                  <CFormFeedback valid>Looks good!</CFormFeedback>
-                </CCol>
-                <CCol md={4}>
-                  <CFormLabel htmlFor="validationCustom06">Notes</CFormLabel>
-                  <CFormInput type="text" id="validationCustom06" required
-                    value={notes}
-                    onChange={e => setNotes(e.target.value)} />
-                  <CFormFeedback valid>Looks good!</CFormFeedback>
-                </CCol>
+    if (form.checkValidity() === false) {
+      event.preventDefault()
+      event.stopPropagation()
+    } else {
+
+      updatedFoodCombinations = food_combination;
+
+      setLoading(true);
+
+      // Update food combinations
+      {
+        updatedFoodCombinations.map((record, index) => {
+          Promise.resolve(
+            restApiPut(mainUrl + '/meal-plans/food-combinations/update/' + parseInt(record.id), record, true)
+              .then(function (value) {
+                setLoading(false);
+              }));
+        })
+      }
+    }
+    setValidated(true)
+  }
+
+  try {
+    return (
+      <>
+        <CRow>
+          <CCol>
+            <CCard>
+              <CCardHeader>
+                <CSpinner color='dark' className="me-1 float-end" style={{ display: (loading) ? "block" : "none" }} variant='grow' />
+                <strong>{(meal_plan_id) ? 'Update' : 'Create'} Meal Plan</strong>
 
                 <CButton
                   disabled={loading}
@@ -221,89 +242,176 @@ const UpdateMealPlan = (props) => {
                   size="sm"
                   color='success'
                   variant="ghost"
-                  onClick={handleSubmit}
-                ><CIcon icon={cilSave} /> Save Info
+                  onClick={(e) => handleSubmitBasicInfo(e)}
+                ><CIcon icon={cilSave} /> Save
                 </CButton>
+              </CCardHeader>
 
-                <hr />
+              <CCardBody style={{ display: (loading) ? 'none' : 'block' }}>
+                <CForm
+                  className="row g-3 needs-validation"
+                  noValidate
+                  validated={validated}
+                >
+                  <CCol md={4} style={{ display: (client_id) ? "block" : "none" }}>
+                    <CFormLabel htmlFor="validationCustom01">Client</CFormLabel>
+                    <CFormInput type="text" id="validationCustom01" required disabled
+                      value={client.first_name + ' ' + client.last_name} />
+                    <CFormFeedback valid>Looks good!</CFormFeedback>
+                  </CCol>
 
-              </CForm>
+                  <CCol md={4} style={{ display: (!client_id) ? "block" : "none" }}>
+                    <CFormLabel htmlFor="validationCustom01">Client</CFormLabel>
+                    <CFormSelect
+                      value={selected_client}
+                      onChange={handleClientSelectChange}
+                      options={clients} />
+                    <CFormFeedback valid>Looks good!</CFormFeedback>
+                  </CCol>
 
-            </CCardBody>
+                  <CCol md={4}>
+                    <CFormLabel htmlFor="validationCustom02">Email</CFormLabel>
+                    <CFormInput type="text" id="validationCustom02" disabled
+                      value={client.email} />
+                    <CFormFeedback valid>Looks good!</CFormFeedback>
+                  </CCol>
+                  <CCol md={4}>
+                    <CFormLabel htmlFor="validationCustom03">Age</CFormLabel>
+                    <CFormInput type="number" id="validationCustom03" required disabled
+                      value={age}
+                    />
+                    <CFormFeedback valid>Looks good!</CFormFeedback>
+                  </CCol>
+                  <CCol md={4}>
+                    <CFormLabel htmlFor="validationCustom04">Date</CFormLabel>
+                    <CFormInput type="date" id="validationCustom04" required
+                      value={date}
+                      onChange={e => setDate(e.target.value)} />
+                    <CFormFeedback valid>Looks good!</CFormFeedback>
+                  </CCol>
+                  <CCol md={4}>
+                    <CFormLabel htmlFor="validationCustom05">Weight</CFormLabel>
+                    <CFormInput type="number" id="validationCustom05" required
+                      value={weight}
+                      onChange={e => setWeight(e.target.value)} />
+                    <CFormFeedback valid>Looks good!</CFormFeedback>
+                  </CCol>
+                  <CCol md={4}>
+                    <CFormLabel htmlFor="validationCustom06">Notes</CFormLabel>
+                    <CFormInput type="text" id="validationCustom06" required
+                      value={notes}
+                      onChange={e => setNotes(e.target.value)} />
+                    <CFormFeedback valid>Looks good!</CFormFeedback>
+                  </CCol>
 
-            <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
-              <CSpinner color='dark' variant='grow' />
-            </CCardBody>
+                  <CButton
+                    disabled={loading}
+                    className="me-1 float-end"
+                    size="sm"
+                    color='success'
+                    variant="ghost"
+                    onClick={handleSubmitBasicInfo}
+                  ><CIcon icon={cilSave} /> Save Info
+                  </CButton>
 
-          </CCard>
+                </CForm>
+              </CCardBody>
 
-          <div style={{ margin: '20px 0px', fontWeight: '900' }}>
-            Food Preferences
-          </div>
+              <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
+                <CSpinner color='dark' variant='grow' />
+              </CCardBody>
 
-          <CCard>
-            <CCardBody style={{ display: (loading) ? 'none' : 'block' }}>
-              <CFoodPreference client_id={client_id} />
-            </CCardBody>
-            <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
-              <CSpinner color='dark' variant='grow' />
-            </CCardBody>
-          </CCard>
+            </CCard>
 
-          <div style={{ margin: '20px 0px', fontWeight: '900' }}>
-            Food Combinations
-          </div>
+            <div style={{ margin: '20px 0px', fontWeight: '900' }}>
+              Food Preferences
+            </div>
 
-          <CCard>
-            <CCardBody style={{ display: (loading) ? 'none' : 'block' }}>
-              <div>
-                <CButton
-                  disabled={loading}
-                  className="me-1 float-end"
-                  size="sm"
-                  color='info'
-                  variant="ghost"
-                ><CIcon icon={cidFileAdd} /> Create Food Combinations
-                </CButton>
-              </div>
+            <CCard>
+              <CCardBody style={{ display: (loading) ? 'none' : 'block' }}>
+                <CFoodPreference client_id={client_id} />
+              </CCardBody>
+              <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
+                <CSpinner color='dark' variant='grow' />
+              </CCardBody>
+            </CCard>
 
-              <div>
+            <div style={{ margin: '20px 0px', fontWeight: '900' }}>
+              Food Combinations
+            </div>
 
-              </div>
+            <CCard>
+              <CCardBody style={{ display: (loading) ? 'none' : 'block' }}>
 
-              <CButton
-                disabled={loading}
-                className="me-1"
-                size="sm"
-                color='success'
-                variant="ghost"
-              ><CIcon icon={cilSave} /> Save All Records
-              </CButton>
-            </CCardBody>
+                <CForm
+                  className="row g-3 needs-validation"
+                  noValidate
+                  validated={validated}
+                >
+                  <div>
+                    <CButton
+                      disabled={(meal_plan_id) ? false : true}
+                      className="me-1 float-end"
+                      size="sm"
+                      color='info'
+                      variant="ghost"
+                      onClick={handleCreateFoodCombination}
+                    ><CIcon icon={cidFileAdd} /> Create Food Combinations
+                    </CButton>
+                  </div>
+
+                  {food_combination.map((item, index) =>
+                    <div key={index}>
+                      <CFoodCombination item={item} index={index}
+                        handleUpdateFoodCombination={handleUpdateFoodCombination}
+                        handleSubmitFoodCombination={handleSubmitFoodCombination}
+                        resetData={resetData}
+                      />
+                    </div>
+                  )}
+
+                  <CButton
+                    disabled={(meal_plan_id) ? false : true}
+                    className="me-1"
+                    size="sm"
+                    color='success'
+                    variant="ghost"
+                    onClick={handleSubmitFoodCombination}
+                  ><CIcon icon={cilSave} /> Save All Records
+                  </CButton>
+                </CForm>
+
+              </CCardBody>
 
 
-            <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
-              <CSpinner color='dark' variant='grow' />
-            </CCardBody>
-          </CCard>
-        </CCol>
-      </CRow >
+              <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
+                <CSpinner color='dark' variant='grow' />
+              </CCardBody>
+
+            </CCard>
+          </CCol>
+        </CRow >
 
 
 
-      <div style={{ position: 'fixed', bottom: '50px', right: '30px' }}>
-        <CButton
-          shape={'rounded-pill'}
-          color='primary'
-          size='lg'
-          onClick={() => dispatch({ type: 'set', asideShow: !asideShow })}>
-          <CIcon icon={cilInfoCircle} size='lg' />
-        </CButton>
-      </div>
+        <div style={{ position: 'fixed', bottom: '50px', right: '30px' }}>
+          <CButton
+            shape={'rounded-pill'}
+            color='primary'
+            size='lg'
+            onClick={() => dispatch({ type: 'set', asideShow: !asideShow })}>
+            <CIcon icon={cilInfoCircle} size='lg' />
+          </CButton>
+        </div>
 
-      <AppAside client_id={client_id} />
-    </>
-  )
+        <AppAside client_id={client_id} />
+      </>
+    )
+  } catch (e) {
+    console.error(e);
+    return ("");
+
+  }
 }
 
 export default withAuthenticationRequired(UpdateMealPlan)

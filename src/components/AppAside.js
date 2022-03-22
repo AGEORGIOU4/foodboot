@@ -43,28 +43,30 @@ const AppAside = (props) => {
   const [activeKey, setActiveKey] = useState(1)
 
   // Set Clients
-  React.useEffect(() => {
-    setLoading(true);
-    Promise.resolve(
-      restApiGet(mainUrl + '/clients/' + props.client_id)
-        .then(function (value) {
-          setClient(value);
+  if (props.client_id) {
+    React.useEffect(() => {
+      setLoading(true);
+      Promise.resolve(
+        restApiGet(mainUrl + '/clients/' + props.client_id)
+          .then(function (value) {
+            setClient(value);
 
-          setLoading(false);
-        }));
-  }, []);
+            setLoading(false);
+          }));
+    }, []);
 
-  // Set Medical Histories
-  React.useEffect(() => {
-    setLoading(true);
-    Promise.resolve(
-      restApiGet(mainUrl + '/clients/medical-histories/' + props.client_id)
-        .then(function (value) {
-          setMedicalHistory(value);
+    // Set Medical Histories
+    React.useEffect(() => {
+      setLoading(true);
+      Promise.resolve(
+        restApiGet(mainUrl + '/clients/medical-histories/' + props.client_id)
+          .then(function (value) {
+            setMedicalHistory(value);
 
-          setLoading(false);
-        }));
-  }, []);
+            setLoading(false);
+          }));
+    }, []);
+  }
 
   // Reset Medical Histories
   const resetData = () => {

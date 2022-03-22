@@ -1,17 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react'
 
 import {
   CCard,
   CCardBody,
-  CCardHeader,
   CCol,
-  CImage,
   CRow,
 } from '@coreui/react-pro'
 import { auth0ApiCall, SetUserInfo } from 'src/api_calls/auth0.js'
 import { CCalculator } from './tools'
-import WidgetsDropdown from '../widgets/WidgetsDropdown'
+import DashboardWidgets from './DashboardWidgets'
 
 const Dashboard = () => {
   const { user } = useAuth0();
@@ -31,22 +29,18 @@ const Dashboard = () => {
 
   return (
     <>
-      <CCard className="mb-4">
-        <CCardHeader>
-          <CCol md={12}>
-            <CImage src='foodboot-logo-landscape.png' height={'50px'} />
-          </CCol>
-        </CCardHeader>
+      <CCard>
         <CCardBody>
           <CRow>
 
-            <CCol md={7}>
-              <WidgetsDropdown />
+            <CCol md={8}>
+              <DashboardWidgets user_email={user.email} />
             </CCol>
 
-            <CCol md={5}>
+            <CCol md={4}>
               <CCalculator />
             </CCol>
+
 
           </CRow>
         </CCardBody>

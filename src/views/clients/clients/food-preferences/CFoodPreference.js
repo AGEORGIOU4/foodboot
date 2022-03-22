@@ -17,6 +17,7 @@ export const CFoodPreference = (props) => {
 
   // Initialize Food Options
   React.useEffect(() => {
+
     Promise.resolve(
       restApiGet(mainUrl + '/food-options')
         .then(function (value) {
@@ -27,17 +28,19 @@ export const CFoodPreference = (props) => {
   }, []);
 
   // Get Food Preferences
-  React.useEffect(() => {
-    Promise.resolve(
-      restApiGet(mainUrl + '/clients/food-preferences/' + props.client_id)
-        .then(function (value) {
-          if (value.length != 0) {
-            selected_food_options_csv = (value[0].value);
-            selected_food_options_export = (selected_food_options_csv.split(',')) // convert csv imported from db to array
-            setSelectedFoodOptions(selected_food_options_csv.split(',')) // setter is required to handle render changes
-          }
-        }));
-  }, []);
+  if (props.client_id) {
+    React.useEffect(() => {
+      Promise.resolve(
+        restApiGet(mainUrl + '/clients/food-preferences/' + props.client_id)
+          .then(function (value) {
+            if (value.length != 0) {
+              selected_food_options_csv = (value[0].value);
+              selected_food_options_export = (selected_food_options_csv.split(',')) // convert csv imported from db to array
+              setSelectedFoodOptions(selected_food_options_csv.split(',')) // setter is required to handle render changes
+            }
+          }));
+    }, []);
+  }
 
   function handleFoodChange(e, actionMeta) {
     if (actionMeta.action === 'create-option') { // Create New Food Option
