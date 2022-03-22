@@ -45,12 +45,12 @@ const MealPlansTable = (props) => {
                       </div>
 
                       <div style={{ width: "70%", float: 'left' }}>
-                        <strong style={{ fontSize: 'medium' }}> {item.client_first_name} {item.client_last_name}</strong>
+                        <strong style={{ fontSize: 'medium' }}> {item.client_last_name} {item.client_first_name}</strong>
                       </div>
                     </div>
 
                     <div style={{ width: "30%", float: 'left', textAlign: 'end' }}>
-                      <CBadge color={'success'}><FormatTimestamp date={item.date} /></CBadge>
+                      <CBadge color={'warning'}><FormatTimestamp date={item.date} /></CBadge>
                     </div>
 
                     <div style={{ width: "100%", float: 'left' }}>
@@ -58,7 +58,7 @@ const MealPlansTable = (props) => {
                     </div>
 
                     <div style={{ width: "80%", float: 'left' }}>
-                      <small>Age:</small> <CBadge color={'warning'}><strong>{item.age}</strong></CBadge>
+                      <small>Age:</small> <CBadge color={'success'}><strong>{item.age}</strong></CBadge>
                     </div>
 
                     <CCol style={{ textAlign: 'end', paddingRight: '0' }}>

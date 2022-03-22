@@ -21,7 +21,7 @@ export const CFoodCombination = (props) => {
     <CRow>
       <CCol md={4}>
         <CFormLabel htmlFor="validationCustom01">Title</CFormLabel>
-        <CFormInput type="title" placeholder='Chicken with Rice' name="title" id="validationCustom01" required
+        <CFormInput type="text" placeholder='Chicken with Rice' name="title" id="validationCustom01" required
           value={props.item.title}
           onChange={e => props.handleUpdateFoodCombination(props.index, e)} />
         <CFormFeedback valid>Looks good!</CFormFeedback>
@@ -51,6 +51,7 @@ export const CFoodCombination = (props) => {
         <CFormLabel htmlFor="validationCustom05">Type of Meal</CFormLabel>
         <CFormSelect name="typeOfMeal" id="validationCustom05" required
           options={INITIAL_TYPES_OF_MEAL}
+          defaultValue='Breakfast'
           value={props.item.typeOfMeal}
           onChange={e => props.handleUpdateFoodCombination(props.index, e)} />
         <CFormFeedback valid>Looks good!</CFormFeedback>

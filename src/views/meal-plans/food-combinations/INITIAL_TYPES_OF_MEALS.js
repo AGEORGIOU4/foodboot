@@ -1,5 +1,7 @@
 export const INITIAL_TYPES_OF_MEAL = [
   {
+  },
+  {
     label: "Breakfast",
     text: "Breakfast",
     value: "Breakfast"
