@@ -8,16 +8,18 @@ import { cidNoteAdd } from '@coreui/icons-pro';
 import { Route } from 'react-router-dom';
 import MealPlansTable from './MealPlansTable';
 import { useHistory } from 'react-router-dom';
+import { SwalMixin } from 'src/components/SweetAlerts/Swal';
 
 const MealPlans = () => {
   const history = useHistory({});
 
   const [clients, setClients] = useState([]);
-  const [meal_plans, setMealPlan] = useState([]);
+  const [meal_plans, setMealPlans] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [client_id, setClientID] = useState("");
   const [selected_client, setSelectedClient] = useState("");
+  const [meal_plan_id, setMealPlanID] = useState("");
 
   // Set Clients
   React.useEffect(() => {
@@ -40,7 +42,7 @@ const MealPlans = () => {
     Promise.resolve(
       restApiGet(mainUrl + '/meal-plans')
         .then(function (value) {
-          setMealPlan(value);
+          setMealPlans(value);
           setLoading(false);
         }));
   }, []);
@@ -48,25 +50,18 @@ const MealPlans = () => {
   function handleChange(e) {
     setClientID(e.target.value);
     setSelectedClient(e.target.value);
-    getMealPlanAndRedirect(e.target.value);
+    getMealPlan(e.target.value);
   }
 
-  function getMealPlanAndRedirect(client_id) {
-
-    setLoading(true);
+  function getMealPlan(client_id) {
     Promise.resolve(
       restApiGet(mainUrl + '/meal-plans/' + client_id, false)
         .then(function (value) {
-          setMealPlan(value);
 
           if (value) {
-            history.push({ pathname: "/meal-plans/update-meal-plan", search: '?id=' + client_id + '&meal_plan_id=' + value.id })
-          }
-          if (!value) {
-            history.push({ pathname: "/meal-plans/update-meal-plan", search: '?id=' + client_id + '&meal_plan_id=' + "" })
+            setMealPlanID(value.id);
           }
 
-          setLoading(false);
         }));
   }
 
@@ -75,7 +70,7 @@ const MealPlans = () => {
     Promise.resolve(
       restApiGet(mainUrl + '/meal-plans')
         .then(function (value) {
-          setMealPlan(value);
+          setMealPlans(value);
           setLoading(false);
         }));
   }
@@ -92,7 +87,12 @@ const MealPlans = () => {
               size="sm"
               color='info'
               variant="ghost"
-              onClick={() => { history.push({ pathname: "/meal-plans/update-meal-plan" }) }}
+              onClick={() => {
+                (client_id && client_id !== 'Select Client') ? history.push({
+                  pathname: "/meal-plans/update-meal-plan", search: '?id=' + client_id + '&meal_plan_id=' + meal_plan_id
+                }) :
+                  (SwalMixin('info', 'Select Client!'))
+              }}
             ><CIcon icon={cidNoteAdd} /> Create Meal Plan
             </CButton>
           )} />
@@ -100,6 +100,7 @@ const MealPlans = () => {
         </CCardHeader>
         <CCardBody style={{ display: (loading) ? 'none' : 'block' }}>
           <CFormSelect
+            required
             value={selected_client}
             onChange={handleChange}
             options={clients} />

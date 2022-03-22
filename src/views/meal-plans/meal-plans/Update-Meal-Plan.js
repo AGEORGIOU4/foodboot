@@ -12,7 +12,6 @@ import {
   CCard,
   CCardHeader,
   CRow,
-  CFormSelect,
 } from '@coreui/react-pro'
 import { FormatTimestampFunction, mainUrl } from 'src/components/Common';
 import { restApiGet, restApiPut } from 'src/api_calls/rest';
@@ -37,9 +36,6 @@ const UpdateMealPlan = (props) => {
   const asideShow = useSelector(state => state.asideShow) // Display Clients Info
   const dispatch = useDispatch()
 
-  const [clients, setClients] = useState([]);
-  const [selected_client, setSelectedClient] = useState("");
-
   const [validated, setValidated] = useState(false)
   const [loading, setLoading] = useState(true)
 
@@ -56,77 +52,39 @@ const UpdateMealPlan = (props) => {
   const [food_combination, setFoodCombination] = useState([])
 
   const parameters = new URLSearchParams(props.location.search);
-  var client_id = (parameters.get('id') ? (parameters.get('id')) : "");
-  // var meal_plan_id = (parameters.get('meal_plan_id') ? (parameters.get('meal_plan_id')) : "");
+
+  var id = (parameters.get('id') ? (parameters.get('id')) : "");;
+
+  const [client_id, setClientID] = useState(parameters.get('id') ? (parameters.get('id')) : "");
   const [meal_plan_id, setMealPlanID] = useState(parameters.get('meal_plan_id') ? (parameters.get('meal_plan_id')) : "");
 
   var record_id = Math.floor(Math.random() * 99999);
 
-  // Get-Set Clients (Dropdown) || Client (if selected from previous page)
+  // Get Client's Info
   React.useEffect(() => {
     setLoading(true);
-    let url = (!client_id) ? (mainUrl.concat('/clients/order')) : (mainUrl.concat('/clients/')).concat(client_id);
 
     Promise.resolve(
-      restApiGet(url)
+      restApiGet(mainUrl + '/clients/' + client_id)
         .then(function (value) {
           if (client_id) {
             setClient(value);
             setAge(calculateAge(value.dob));
+          }
+          setLoading(false);
+        }));
 
-            Promise.resolve(
-              restApiGet(mainUrl + '/meal-plans/' + client_id)
-                .then(function (meal_value) {
-                  if (meal_value) {
-                    setDate(FormatTimestampFunction(meal_value.date));
-                    setWeight(meal_value.weight);
-                    setNotes(meal_value.notes);
-                  }
-                  setLoading(false);
-                }));
-
-          } else {
-            let arr = [...[{ id: "", first_name: "", last_name: "", email: "Select Client" }], ...value];
-            arr.map(item => item['label'] = (item.first_name) ? (item.last_name + ' ' + item.first_name) : (item.email))
-            arr.map(item => item['value'] = item.id);
-
-            setClients(arr);
+    Promise.resolve(
+      restApiGet(mainUrl + '/meal-plans/' + client_id)
+        .then(function (meal_value) {
+          if (meal_value) {
+            setDate(FormatTimestampFunction(meal_value.date));
+            setWeight(meal_value.weight);
+            setNotes(meal_value.notes);
           }
           setLoading(false);
         }));
   }, []);
-
-  // Set Basic Info on Select Client
-  function handleClientSelectChange(e) {
-    if (e.target.value) {
-      setLoading(true);
-
-      Promise.resolve( // Set Basic Info Section A
-        restApiGet(mainUrl + '/clients/' + e.target.value)
-          .then(function (value) {
-            if (e.target.value) {
-              setClient(value);
-              setAge(calculateAge(value.dob));
-              setSelectedClient(e.target.value);
-              client_id = e.target.value;
-            }
-            setLoading(false);
-          }));
-
-      setLoading(true);
-
-      Promise.resolve( // Set Basic Info Section B
-        restApiGet(mainUrl + '/meal-plans/' + e.target.value)
-          .then(function (value) {
-            if (value) {
-              setDate(FormatTimestampFunction(value.date));
-              setWeight(value.weight);
-              setNotes(value.notes);
-            }
-            setLoading(false);
-          }));
-    }
-  }
 
   // Get-Set Food Combination
   React.useEffect(() => {
@@ -160,7 +118,7 @@ const UpdateMealPlan = (props) => {
       event.stopPropagation()
     } else {
       updatedBasicInfo = {
-        client_id: client_id,
+        client_id: id,
         client_first_name: client.first_name,
         client_last_name: client.last_name,
         date: date,
@@ -187,7 +145,7 @@ const UpdateMealPlan = (props) => {
   const handleCreateFoodCombination = () => {
     let today = new Date();
     today.getDate();
-    let newFoodCombination = { id: record_id, meal_plan_id: meal_plan_id, title: "", start: "", end: "" }
+    let newFoodCombination = { id: record_id, meal_plan_id: meal_plan_id, title: "", portion: "", start: "", end: "", typeOfMeal: "N/A" }
     let newArray = []
     newArray.push(newFoodCombination, ...food_combination);
 
@@ -210,6 +168,7 @@ const UpdateMealPlan = (props) => {
 
       updatedFoodCombinations = food_combination;
 
+      console.log(updatedFoodCombinations)
       setLoading(true);
 
       // Update food combinations
@@ -257,15 +216,6 @@ const UpdateMealPlan = (props) => {
                     <CFormLabel htmlFor="validationCustom01">Client</CFormLabel>
                     <CFormInput type="text" id="validationCustom01" required disabled
                       value={client.first_name + ' ' + client.last_name} />
-                    <CFormFeedback valid>Looks good!</CFormFeedback>
-                  </CCol>
-
-                  <CCol md={4} style={{ display: (!client_id) ? "block" : "none" }}>
-                    <CFormLabel htmlFor="validationCustom01">Client</CFormLabel>
-                    <CFormSelect
-                      value={selected_client}
-                      onChange={handleClientSelectChange}
-                      options={clients} />
                     <CFormFeedback valid>Looks good!</CFormFeedback>
                   </CCol>
 
@@ -323,18 +273,22 @@ const UpdateMealPlan = (props) => {
 
             </CCard>
 
-            <div style={{ margin: '20px 0px', fontWeight: '900' }}>
-              Food Preferences
-            </div>
+            <div style={{ display: (id) ? "block" : "none" }}>
 
-            <CCard>
-              <CCardBody style={{ display: (loading) ? 'none' : 'block' }}>
-                <CFoodPreference client_id={client_id} />
-              </CCardBody>
-              <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
-                <CSpinner color='dark' variant='grow' />
-              </CCardBody>
-            </CCard>
+              <div style={{ margin: '20px 0px', fontWeight: '900' }}>
+                Food Preferences
+              </div>
+
+              <CCard>
+                <CCardBody style={{ display: (loading) ? 'none' : 'block' }}>
+                  <CFoodPreference client_id={id} />
+                </CCardBody>
+                <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
+                  <CSpinner color='dark' variant='grow' />
+                </CCardBody>
+              </CCard>
+
+            </div>
 
             <div style={{ margin: '20px 0px', fontWeight: '900' }}>
               Food Combinations
@@ -389,12 +343,11 @@ const UpdateMealPlan = (props) => {
               </CCardBody>
 
             </CCard>
+
           </CCol>
         </CRow >
 
-
-
-        <div style={{ position: 'fixed', bottom: '50px', right: '30px' }}>
+        <div style={{ display: (id) ? "block" : "none", position: 'fixed', bottom: '50px', right: '30px' }}>
           <CButton
             shape={'rounded-pill'}
             color='primary'
@@ -404,13 +357,14 @@ const UpdateMealPlan = (props) => {
           </CButton>
         </div>
 
-        <AppAside client_id={client_id} />
+        <div style={{ display: (id) ? "block" : "none" }}>
+          <AppAside client_id={id} />
+        </div>
       </>
     )
   } catch (e) {
     console.error(e);
     return ("");
-
   }
 }
 
