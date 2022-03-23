@@ -1,7 +1,7 @@
 <h2>Computer Science Final Year Thesis Project</h2>
 <h6>UCLan Cyprus</h6>
 
-<p>Foodboot is a Web Platform running on Cloud. Its main purpose is to work as an assistive tool for nutritionists and clients. The Web Platform is orchestrated by three applications that run in different modes (Admin, Nutritionist, Client) depending on the role. Each application is composed of three main components. A cloud-operating <strong>MySQL</strong> database hosted in Heroku, the <strong>Frontend</strong> written mostly in ReactJS and the <strong>Backend</strong> where RESTful API architecture was used for the platform's logic and web services written in NodeJS. As a starting template for the Frontend, the CoreUI admin panel is used. For Authentication and user's info, the platform integrates Auth0 (SaaS service). The project is hosted on GitHub.</p>
+<p>Foodboot is a Web Platform running on Cloud. Its main purpose is to work as an assistive tool for nutritionists and clients. The Web Platform is orchestrated by three applications that run in different modes (Admin, Nutritionist, Client) depending on the user's role. Each application is composed of three main components. A cloud-operating <strong>MySQL</strong> database hosted in Heroku, the <strong>Frontend</strong> written mostly in ReactJS and the <strong>Backend</strong> where RESTful API architecture was used for the platform's logic and web services written in NodeJS. As a starting template for the Frontend, the CoreUI admin panel is used. For Authentication and user's info, the platform integrates Auth0 (SaaS service). The project is hosted on GitHub.</p>
 
 <a>https://foodboot.netlify.app/</a>
 </br>
