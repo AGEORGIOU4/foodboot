@@ -74,7 +74,7 @@
       </ul>
 </p>
 
-<h4>REST API calls</h4>
+<h4>REST API Endpoints</h4>
 <p>
   <h6>Client</h6>
   <ol>
