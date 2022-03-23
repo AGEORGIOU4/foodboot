@@ -50,6 +50,7 @@
   <h6>Client</h6>
   <ul>
     <li>CRUD operations for client</li>
+    <li>Client Invitations</li>
     <li>Search engine for clients table</li>
     <li>Import/Export clients in .csv format</li>
     <li>CRUD operations for Food Preferences of each client</li>
@@ -127,6 +128,13 @@
       <li>GET    /meal-plans/:id</li>
       <li>PUT    /meal-plans/update</li>
       <li>DELETE /meal-plans/delete/:id</li>
+    </ol>
+    
+  <h6>Food Combinations</h6>
+    <ol>
+      <li>GET    /meal-plans/food-combinations/:id</li>
+      <li>PUT    /meal-plans/food-combinations/update/:id</li>
+      <li>DELETE /meal-plans/food-combinations/delete/:id</li>
     </ol>
 </p>
 
