@@ -10,6 +10,8 @@
 <li>npm install</li>
 <li>npm start</li>
 
-<p>To fetch the platform's data, run the foodboot-backend. The data are hosted in a Remote SQL Database.</p>
+<br/>
+
+<p>To fetch the platform's data, run the foodboot-backend (can be found on foodoot-backend repository). The data are hosted in a Remote SQL Database.</p>
 
 <em>More Info can be found in the main README file in the Documentation folder</em>
