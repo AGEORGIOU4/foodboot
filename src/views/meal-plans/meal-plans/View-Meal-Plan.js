@@ -34,14 +34,14 @@ const ViewMealPlan = (props) => {
   function ZoomIn() {
     zoom += 10;
     document.getElementById('meal-plan-card').style.zoom = zoom + '%';
-    document.getElementById('logo-img').style.width = '100%';
+    // document.getElementById('logo-img').style.width = '100%';
     setZoomText(zoom);
   }
 
   function ZoomOut() {
     zoom -= 10;
     document.getElementById('meal-plan-card').style.zoom = zoom + '%';
-    document.getElementById('logo-img').style.width = '100%';
+    // document.getElementById('logo-img').style.width = '100%';
     setZoomText(zoom);
   }
 
@@ -49,7 +49,6 @@ const ViewMealPlan = (props) => {
     zoom = 70;
 
     document.getElementById('meal-plan-card').style.zoom = zoom + '%';
-    document.getElementById('logo-img').style.width = '20%';
     setTimeout(() => { print(e) }, 100);
     setZoomText(zoom);
   }
@@ -148,7 +147,7 @@ const ViewMealPlan = (props) => {
               </CCol>
 
               <CCol md={4} style={{ textAlign: 'center' }}>
-                <CImage id='logo-img' width={'100%'} src={'foodboot-logo-landscape.png'} />
+                <CImage id='logo-img' width={zoom * 2} src={'foodboot-logo-landscape.png'} />
               </CCol>
 
               <CCol md={4} style={{ textAlign: 'end' }}>
