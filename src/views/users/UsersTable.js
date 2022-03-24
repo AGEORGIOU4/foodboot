@@ -11,7 +11,7 @@ const UsersTable = (props) => {
     { key: 'given_name', _props: { color: 'primary' } },
     { key: 'family_name', _props: { color: 'primary' } },
     { key: 'email', _props: { color: 'primary' } },
-    { key: 'user_metadata', 'label': 'Role', _props: { color: 'primary' } },
+    { key: 'user_metadata', 'label': 'Role', _props: { color: 'primary' } }
   ]
 
   return (
