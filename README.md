@@ -76,6 +76,8 @@
         <li>Search engine for Meal Plans Table</li>
         <li>CRUD operations for Meal Plans</li>
         <li>Side Navbar that fetches and displays all client's info when Update</li>
+        <li>View Personalized Meal Plan for each Client</li>
+        <li>Print Personalized Meal Plan for each Client</li>
       </ul>
 </p>
 
