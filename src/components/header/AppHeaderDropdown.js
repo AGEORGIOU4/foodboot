@@ -33,10 +33,6 @@ const AppHeaderDropdown = () => {
           <CIcon icon={cilUser} className="me-2" />
           Profile
         </CDropdownItem>
-        <CDropdownItem href="#">
-          <CIcon icon={cilSettings} className="me-2" />
-          Settings
-        </CDropdownItem>
         <CDropdownDivider />
         <CDropdownItem onClick={() => loginWithRedirect()}>
           <CIcon icon={cilArrowCircleRight} className="me-2" />
