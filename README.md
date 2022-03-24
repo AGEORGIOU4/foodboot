@@ -143,5 +143,8 @@
       <li>PUT    /meal-plans/food-combinations/update/:id</li>
       <li>DELETE /meal-plans/food-combinations/delete/:id</li>
     </ol>
+    
+<h4>Testing</h4>
+<p>The POSTMAN folder contains a script with all API calls tested</>
 </p>
 
