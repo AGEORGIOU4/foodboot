@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { withAuthenticationRequired } from '@auth0/auth0-react'
 
-import { CCol, CFormLabel, CSpinner, CCard, CCardBody, CRow, CImage, CCardHeader, CButton, CBadge } from '@coreui/react-pro'
-import avatar from '../../../assets/images/avatars/avatar.png'
+import { CCol, CSpinner, CCard, CCardBody, CRow, CImage, CCardHeader, CButton, CBadge, CFormSelect, CFormFeedback, CFormLabel } from '@coreui/react-pro'
 import { FormatTimestamp, mainUrl } from 'src/components/Common';
 import { restApiGet } from 'src/api_calls/rest';
 import CIcon from '@coreui/icons-react';
@@ -10,6 +9,7 @@ import { cilPrint, cilScale } from '@coreui/icons-pro';
 import { cilFullscreen, cilPencil, cilZoomIn, cilZoomOut } from '@coreui/icons';
 import { Route } from 'react-router-dom';
 import { FoodCombinationsViewTable } from '../food-combinations/FoodCombinationsViewTable';
+import { INITIAL_DAYS } from '../food-combinations/INITIAL_DAYS';
 
 const print = (e) => {
   e.preventDefault()
@@ -24,6 +24,8 @@ const ViewMealPlan = (props) => {
   const [client, setClient] = useState("");
   const [mealPlan, setMealPlan] = useState([]);
   const [foodCombinations, setFoodCombinations] = useState([]);
+
+  const [selectedDay, setSelectedDay] = useState('Monday');
 
   const parameters = new URLSearchParams(props.location.search);
   const client_id = parameters.get('id');
@@ -57,6 +59,9 @@ const ViewMealPlan = (props) => {
     setZoomText(zoom);
   }
 
+  const handleChangeDay = (e) => {
+    setSelectedDay(e.target.value);
+  }
 
   // Set Client
   React.useEffect(() => {
@@ -94,54 +99,72 @@ const ViewMealPlan = (props) => {
   return (
     <>
       <CCard id='meal-plan-card' style={{ zoom: zoom + '%' }}>
+
+
         <CCardHeader>
+          <CRow>
+            <CCol md={3}>
 
-          <CButton
-            className="me-1"
-            size="sm"
-            color='primary'
-            variant="ghost"
-            onClick={SetDefaultZoom}
-          ><CIcon icon={cilFullscreen} /></CButton>
-          <CButton
-            className="me-1"
-            size="sm"
-            color='primary'
-            variant="ghost"
-            onClick={ZoomIn}
-          ><CIcon icon={cilZoomIn} /></CButton>
+              <CFormSelect name="typeOfMeal" id="validationCustom06" required
+                className="me-1"
+                options={INITIAL_DAYS}
+                defaultValue='Monday'
+                value={selectedDay}
+                onChange={handleChangeDay}
+              />
+              <CFormFeedback className="me-1" valid>Looks good!</CFormFeedback>
+            </CCol>
 
-          <CButton
-            className="me-1"
-            size="sm"
-            color='primary'
-            variant="ghost"
-            onClick={ZoomOut}
-          ><CIcon icon={cilZoomOut} /></CButton>
+            <CCol md={9}>
+              <Route render={({ history }) => (
+                <CButton
+                  className="me-1 float-end"
+                  size="sm"
+                  color='success'
+                  variant="ghost"
+                  onClick={() => { history.push({ pathname: "/meal-plans/update-meal-plan", search: '?id=' + client_id + '&meal_plan_id=' + meal_plan_id }) }}
+                ><CIcon icon={cilPencil} /> Edit
+                </CButton>
+              )} />
 
-          <CBadge color={'primary'}>{zoomText} %</CBadge>
+              <CButton
+                className="me-1 float-end"
+                size="sm"
+                color='secondary'
+                variant="ghost"
+                onClick={promptPrint}
+              >
+                <CIcon icon={cilPrint} /> Print
+              </CButton>
 
-          <CButton
-            className="me-1 float-end"
-            size="sm"
-            color='secondary'
-            variant="ghost"
-            onClick={promptPrint}
-          >
-            <CIcon icon={cilPrint} /> Print
-          </CButton>
+              <CButton
+                className="me-1 float-end"
+                size="sm"
+                color='primary'
+                variant="ghost"
+                onClick={SetDefaultZoom}
+              ><CIcon icon={cilFullscreen} /></CButton>
+              <CButton
+                className="me-1 float-end"
+                size="sm"
+                color='primary'
+                variant="ghost"
+                onClick={ZoomIn}
+              ><CIcon icon={cilZoomIn} /></CButton>
 
-          <Route render={({ history }) => (
-            <CButton
-              className="me-1 float-end"
-              size="sm"
-              color='success'
-              variant="ghost"
-              onClick={() => { history.push({ pathname: "/meal-plans/update-meal-plan", search: '?id=' + client_id + '&meal_plan_id=' + meal_plan_id }) }}
-            ><CIcon icon={cilPencil} /> Edit
-            </CButton>
-          )} />
+              <CButton
+                className="me-1 float-end"
+                size="sm"
+                color='primary'
+                variant="ghost"
+                onClick={ZoomOut}
+              ><CIcon icon={cilZoomOut} /></CButton>
 
+              <CBadge className="me-1 float-end"
+                color={'primary'}>{zoomText} %</CBadge>
+
+            </CCol>
+          </CRow>
         </CCardHeader>
         <CCardBody style={{ display: (loading) ? 'none' : 'block', padding: '40px' }}>
           <div>
@@ -155,10 +178,14 @@ const ViewMealPlan = (props) => {
                 <strong>Date</strong>
                 <br />
                 <FormatTimestamp date={mealPlan.date} />
+                <br />
+                <br />
+                <br />
+                <h1>{selectedDay}</h1>
               </CCol>
 
               <CCol md={4} style={{ textAlign: 'center' }}>
-                <CImage id='logo-img' width={zoom * 2} src={'foodboot-logo-landscape.png'} />
+                <CImage id='logo-img' width={zoom * 4} src={'foodboot-logo-landscape.png'} />
               </CCol>
 
               <CCol md={4} style={{ textAlign: 'end' }}>
@@ -179,11 +206,11 @@ const ViewMealPlan = (props) => {
           </div>
 
           {/* Breakfast */}
-          <FoodCombinationsViewTable data={foodCombinations} loading={loading} title={'Breakfast'} color={'success'} typeOfMeal={'Breakfast'} />
-          <FoodCombinationsViewTable data={foodCombinations} loading={loading} title={'Morning Snack'} color={'info'} typeOfMeal={'Morning Snack'} />
-          <FoodCombinationsViewTable data={foodCombinations} loading={loading} title={'Lunch'} color={'warning'} typeOfMeal={'Lunch'} />
-          <FoodCombinationsViewTable data={foodCombinations} loading={loading} title={'Afternoon Snack'} color={'primary'} typeOfMeal={'Afternoon Snack'} />
-          <FoodCombinationsViewTable data={foodCombinations} loading={loading} title={'Dinner'} color={'danger'} typeOfMeal={'Dinner'} />
+          <FoodCombinationsViewTable data={foodCombinations} loading={loading} title={'Breakfast'} color={'success'} typeOfMeal={'Breakfast'} day={selectedDay} />
+          <FoodCombinationsViewTable data={foodCombinations} loading={loading} title={'Morning Snack'} color={'info'} typeOfMeal={'Morning Snack'} day={selectedDay} />
+          <FoodCombinationsViewTable data={foodCombinations} loading={loading} title={'Lunch'} color={'warning'} typeOfMeal={'Lunch'} day={selectedDay} />
+          <FoodCombinationsViewTable data={foodCombinations} loading={loading} title={'Afternoon Snack'} color={'primary'} typeOfMeal={'Afternoon Snack'} day={selectedDay} />
+          <FoodCombinationsViewTable data={foodCombinations} loading={loading} title={'Dinner'} color={'danger'} typeOfMeal={'Dinner'} day={selectedDay} />
 
 
         </CCardBody>
@@ -192,6 +219,11 @@ const ViewMealPlan = (props) => {
           <CSpinner color='dark' variant='grow' />
         </CCardBody>
 
+      </CCard>
+
+      <CCard>
+        <CCardBody>
+        </CCardBody>
       </CCard>
     </>
   )

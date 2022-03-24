@@ -18,7 +18,7 @@ export const FoodCombinationsViewTable = (props) => {
   return (
     <Route render={({ history }) => (
       <CSmartTable
-        columnFilterValue={{ typeOfMeal: props.typeOfMeal }}
+        columnFilterValue={{ typeOfMeal: props.typeOfMeal, day: props.day }}
         sorterValue={{ column: 'start', state: 'asc' }}
         items={props.data}
         tableProps={{ responsive: true }}

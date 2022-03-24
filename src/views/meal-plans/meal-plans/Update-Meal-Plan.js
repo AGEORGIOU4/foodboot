@@ -42,6 +42,7 @@ const UpdateMealPlan = (props) => {
 
   const [validated, setValidated] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [dayLoading, setDayLoading] = useState(false)
 
   // Cannot USE SET BECAUSE TWO API CALLS ARE INVOKED!!!
   var updatedBasicInfo = "";
@@ -93,12 +94,12 @@ const UpdateMealPlan = (props) => {
 
   async function GetFoodCombinations(day) {
     if (meal_plan_id) {
-      setLoading(true);
+      setDayLoading(true);
       Promise.resolve(
         restApiGet(mainUrl + '/meal-plans/food-combinations/' + meal_plan_id + '/' + day)
           .then(function (value) {
             setFoodCombination(value);
-            setLoading(false);
+            setDayLoading(false);
           }));
     }
   }
@@ -358,7 +359,11 @@ const UpdateMealPlan = (props) => {
                         <CFormFeedback className="me-1" valid>Looks good!</CFormFeedback>
                       </CCol>
 
-                      <CCol md={6}>
+                      <CCol md={1}>
+                        <CSpinner style={{ textAlign: 'center', display: (dayLoading) ? "block" : "none" }} color='dark' variant='grow' />
+                      </CCol>
+
+                      <CCol md={5}>
                         <CButton
                           disabled={(meal_plan_id) ? false : true}
                           className="me-1 float-end"
@@ -366,7 +371,7 @@ const UpdateMealPlan = (props) => {
                           color='info'
                           variant="ghost"
                           onClick={(handleCreateFoodCombination)}
-                        ><CIcon icon={cidFileAdd} /> Create Food Combinations
+                        ><CIcon icon={cidFileAdd} /> Create Food Combination
                         </CButton>
                       </CCol>
                     </CRow>
