@@ -12,6 +12,7 @@ import {
   CCard,
   CCardHeader,
   CRow,
+  CFormSelect,
 } from '@coreui/react-pro'
 import { FormatTimestampFunction, mainUrl } from 'src/components/Common';
 import { restApiGet, restApiPut } from 'src/api_calls/rest';
@@ -24,6 +25,7 @@ import { AppAside } from 'src/components';
 import { CFoodCombination } from '../food-combinations/CFoodCombination';
 import { Route } from 'react-router-dom';
 import { SwalMixin } from 'src/components/SweetAlerts/Swal';
+import { INITIAL_DAYS } from '../food-combinations/INITIAL_DAYS';
 
 function calculateAge(birthday) { // birthday is a date
   var dob = new Date(birthday);
@@ -52,6 +54,7 @@ const UpdateMealPlan = (props) => {
   const [notes, setNotes] = useState("N/A");
 
   const [food_combination, setFoodCombination] = useState([])
+  const [selectedDay, setSelectedDay] = useState("Monday")
 
   const parameters = new URLSearchParams(props.location.search);
 
@@ -88,12 +91,24 @@ const UpdateMealPlan = (props) => {
         }));
   }, []);
 
+  async function GetFoodCombinations(day) {
+    if (meal_plan_id) {
+      setLoading(true);
+      Promise.resolve(
+        restApiGet(mainUrl + '/meal-plans/food-combinations/' + meal_plan_id + '/' + day)
+          .then(function (value) {
+            setFoodCombination(value);
+            setLoading(false);
+          }));
+    }
+  }
+
   // Get-Set Food Combination
   React.useEffect(() => {
     if (meal_plan_id) {
       setLoading(true);
       Promise.resolve(
-        restApiGet(mainUrl + '/meal-plans/food-combinations/' + meal_plan_id)
+        restApiGet(mainUrl + '/meal-plans/food-combinations/' + meal_plan_id + '/' + selectedDay)
           .then(function (value) {
             setFoodCombination(value);
             setLoading(false);
@@ -147,15 +162,22 @@ const UpdateMealPlan = (props) => {
   const handleCreateFoodCombination = () => {
     let today = new Date();
     today.getDate();
-    let newFoodCombination = { id: record_id, meal_plan_id: meal_plan_id, title: "", portion: "", start: "", end: "", typeOfMeal: "Other" }
+    let newFoodCombination = { id: record_id, meal_plan_id: meal_plan_id, title: "", portion: "", start: "", end: "", typeOfMeal: "Breakfast", day: selectedDay }
     let newArray = []
     newArray.push(newFoodCombination, ...food_combination);
 
     setFoodCombination(newArray);
   }
 
+  const handleChangeDay = (e) => {
+    setSelectedDay(e.target.value);
+    let day = e.target.value;
+    GetFoodCombinations(day);
+  }
+
   const handleUpdateFoodCombination = (i, e) => {
     let newFormValues = [...food_combination];
+    console.log(newFormValues);
     newFormValues[i][e.target.name] = e.target.value;
     setFoodCombination(newFormValues);
   }
@@ -320,17 +342,36 @@ const UpdateMealPlan = (props) => {
                   noValidate
                   validated={validated}
                 >
-                  <div>
-                    <CButton
-                      disabled={(meal_plan_id) ? false : true}
-                      className="me-1 float-end"
-                      size="sm"
-                      color='info'
-                      variant="ghost"
-                      onClick={handleCreateFoodCombination}
-                    ><CIcon icon={cidFileAdd} /> Create Food Combinations
-                    </CButton>
-                  </div>
+
+                  <CCardHeader>
+                    <CRow>
+                      <CCol md={6}>
+                        <CFormLabel className="me-1" htmlFor="validationCustom06">Select Day</CFormLabel>
+                        <CFormSelect name="typeOfMeal" id="validationCustom06" required
+                          disabled={(meal_plan_id) ? false : true}
+                          className="me-1"
+                          options={INITIAL_DAYS}
+                          defaultValue='Monday'
+                          value={selectedDay}
+                          onChange={handleChangeDay}
+                        />
+                        <CFormFeedback className="me-1" valid>Looks good!</CFormFeedback>
+                      </CCol>
+
+                      <CCol md={6}>
+                        <CButton
+                          disabled={(meal_plan_id) ? false : true}
+                          className="me-1 float-end"
+                          size="sm"
+                          color='info'
+                          variant="ghost"
+                          onClick={(handleCreateFoodCombination)}
+                        ><CIcon icon={cidFileAdd} /> Create Food Combinations
+                        </CButton>
+                      </CCol>
+                    </CRow>
+
+                  </CCardHeader>
 
                   {food_combination.map((item, index) =>
                     <div key={index}>

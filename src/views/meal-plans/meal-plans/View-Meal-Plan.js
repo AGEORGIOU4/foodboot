@@ -6,8 +6,8 @@ import avatar from '../../../assets/images/avatars/avatar.png'
 import { FormatTimestamp, mainUrl } from 'src/components/Common';
 import { restApiGet } from 'src/api_calls/rest';
 import CIcon from '@coreui/icons-react';
-import { cilPrint } from '@coreui/icons-pro';
-import { cilPencil, cilZoomIn, cilZoomOut } from '@coreui/icons';
+import { cilPrint, cilScale } from '@coreui/icons-pro';
+import { cilFullscreen, cilPencil, cilZoomIn, cilZoomOut } from '@coreui/icons';
 import { Route } from 'react-router-dom';
 import { FoodCombinationsViewTable } from '../food-combinations/FoodCombinationsViewTable';
 
@@ -16,7 +16,7 @@ const print = (e) => {
   window.print()
 }
 
-var zoom = 100;
+var zoom = 60;
 
 const ViewMealPlan = (props) => {
   const [loading, setLoading] = useState(false);
@@ -34,19 +34,23 @@ const ViewMealPlan = (props) => {
   function ZoomIn() {
     zoom += 10;
     document.getElementById('meal-plan-card').style.zoom = zoom + '%';
-    // document.getElementById('logo-img').style.width = '100%';
     setZoomText(zoom);
   }
 
   function ZoomOut() {
     zoom -= 10;
     document.getElementById('meal-plan-card').style.zoom = zoom + '%';
-    // document.getElementById('logo-img').style.width = '100%';
+    setZoomText(zoom);
+  }
+
+  function SetDefaultZoom() {
+    zoom = 60;
+    document.getElementById('meal-plan-card').style.zoom = zoom + '%';
     setZoomText(zoom);
   }
 
   function promptPrint(e) {
-    zoom = 70;
+    zoom = 60;
 
     document.getElementById('meal-plan-card').style.zoom = zoom + '%';
     setTimeout(() => { print(e) }, 100);
@@ -89,9 +93,16 @@ const ViewMealPlan = (props) => {
 
   return (
     <>
-      <CCard id='meal-plan-card'>
+      <CCard id='meal-plan-card' style={{ zoom: zoom + '%' }}>
         <CCardHeader>
 
+          <CButton
+            className="me-1"
+            size="sm"
+            color='primary'
+            variant="ghost"
+            onClick={SetDefaultZoom}
+          ><CIcon icon={cilFullscreen} /></CButton>
           <CButton
             className="me-1"
             size="sm"
@@ -176,7 +187,6 @@ const ViewMealPlan = (props) => {
 
 
         </CCardBody>
-
 
         <CCardBody style={{ textAlign: 'center', display: (loading) ? "block" : "none" }}>
           <CSpinner color='dark' variant='grow' />

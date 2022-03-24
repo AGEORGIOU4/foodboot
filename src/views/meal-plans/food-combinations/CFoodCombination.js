@@ -99,6 +99,7 @@ export const CFoodCombination = (props) => {
           }}
         > <CIcon icon={cidTrash} /></CButton>
       </CCol>
+      <hr />
     </CRow>
   )
 }

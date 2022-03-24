@@ -4,23 +4,23 @@ import { CFooter, CImage, } from '@coreui/react-pro'
 
 const AppFooter = () => {
   return (
-    <CFooter>
+    <CFooter style={{ background: '#d9dce0' }}>
       <div >
         <a href="https://github.com/AGEORGIOU4/foodboot-frontend" target="_blank" rel="noopener noreferrer">
-          <CImage src='foodboot-logo-landscape.png' height={'50px'} />
+          <CImage src='foodboot-logo-landscape.png' height={'31px'} />
         </a>
         <span className="ms-1">&copy; 2022 UCLan Cyprus.</span>
       </div>
 
       <div className="ms-auto" style={{ margin: '0px 20px' }}>
-        <span className="me-1">Powered by</span>
-        <a href="https://www.linkedin.com/in/ageorgiou4/" target="_blank" rel="noopener noreferrer">
-          <strong>Andreas Georgiou</strong>
+        <span className="me-1"><small>Powered by</small></span>
+        <a href="https://www.linkedin.com/in/ageorgiou4/" style={{ textDecoration: 'none', color: '#007bff' }} target="_blank" rel="noopener noreferrer">
+          <strong><small>Andreas Georgiou</small></strong>
         </a>
       </div>
       <div>
       </div>
-    </CFooter>
+    </CFooter >
   )
 }
 
