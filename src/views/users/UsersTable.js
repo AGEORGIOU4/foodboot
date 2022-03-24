@@ -49,34 +49,6 @@ const UsersTable = (props) => {
               rounded={true} />
           </td>
         ),
-        edit:
-          (item) => (
-            <td>
-              <CButton
-                size="sm"
-                color='success'
-                variant="ghost"
-                onClick={() => {
-                  //   this.removeAdmin(item.email)
-                }}
-
-              ><CIcon icon={cilPencil} /></CButton>
-            </td>
-          ),
-        remove:
-          (item) => (
-            <td>
-              <CButton
-                size="sm"
-                color='danger'
-                variant="ghost"
-                onClick={() => {
-                  //   this.removeAdmin(item.email)
-                }}
-
-              ><CIcon icon={cilTrash} /></CButton>
-            </td>
-          ),
       }}
     />
   )
