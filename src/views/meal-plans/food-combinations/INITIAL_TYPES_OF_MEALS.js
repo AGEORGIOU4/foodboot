@@ -1,5 +1,8 @@
 export const INITIAL_TYPES_OF_MEAL = [
   {
+    label: "Other",
+    text: "Other",
+    value: "Other"
   },
   {
     label: "Breakfast",
@@ -17,8 +20,13 @@ export const INITIAL_TYPES_OF_MEAL = [
     value: "Dinner"
   },
   {
-    label: "Snack",
-    text: "Snack",
-    value: "Snack"
+    label: "Morning Snack",
+    text: "Morning Snack",
+    value: "Morning Snack"
   },
+  {
+    label: "Afternoon Snack",
+    text: "Afternoon Snack",
+    value: "Afternoon Snack"
+  }
 ]

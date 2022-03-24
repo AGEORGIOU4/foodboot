@@ -18,10 +18,12 @@ import { restApiGet, restApiPut } from 'src/api_calls/rest';
 import CIcon from '@coreui/icons-react';
 import { cilSave } from '@coreui/icons';
 import { CFoodPreference } from 'src/views/clients/clients/food-preferences/CFoodPreference';
-import { cidFileAdd, cilInfoCircle } from '@coreui/icons-pro';
+import { cidFileAdd, cilEye, cilInfoCircle } from '@coreui/icons-pro';
 import { useSelector, useDispatch } from 'react-redux'
 import { AppAside } from 'src/components';
 import { CFoodCombination } from '../food-combinations/CFoodCombination';
+import { Route } from 'react-router-dom';
+import { SwalMixin } from 'src/components/SweetAlerts/Swal';
 
 function calculateAge(birthday) { // birthday is a date
   var dob = new Date(birthday);
@@ -145,7 +147,7 @@ const UpdateMealPlan = (props) => {
   const handleCreateFoodCombination = () => {
     let today = new Date();
     today.getDate();
-    let newFoodCombination = { id: record_id, meal_plan_id: meal_plan_id, title: "", portion: "", start: "", end: "", typeOfMeal: "N/A" }
+    let newFoodCombination = { id: record_id, meal_plan_id: meal_plan_id, title: "", portion: "", start: "", end: "", typeOfMeal: "Other" }
     let newArray = []
     newArray.push(newFoodCombination, ...food_combination);
 
@@ -165,10 +167,8 @@ const UpdateMealPlan = (props) => {
       event.preventDefault()
       event.stopPropagation()
     } else {
-
       updatedFoodCombinations = food_combination;
 
-      console.log(updatedFoodCombinations)
       setLoading(true);
 
       // Update food combinations
@@ -194,6 +194,24 @@ const UpdateMealPlan = (props) => {
               <CCardHeader>
                 <CSpinner color='dark' className="me-1 float-end" style={{ display: (loading) ? "block" : "none" }} variant='grow' />
                 <strong>{(meal_plan_id) ? 'Update' : 'Create'} Meal Plan</strong>
+
+
+                <Route render={({ history }) => (
+                  <CButton
+                    style={{ display: (client_id && meal_plan_id) ? 'block' : 'none' }}
+                    className="me-1 float-end"
+                    size="sm"
+                    color='primary'
+                    variant="ghost"
+                    onClick={() => {
+                      (client_id && meal_plan_id) ? history.push({
+                        pathname: "/meal-plans/view-meal-plan", search: '?id=' + client_id + '&meal_plan_id=' + meal_plan_id
+                      }) :
+                        (SwalMixin('info', 'No meal plan found!'))
+                    }}
+                  ><CIcon icon={cilEye} /> View
+                  </CButton>
+                )} />
 
                 <CButton
                   disabled={loading}

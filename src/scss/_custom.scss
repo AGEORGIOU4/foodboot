@@ -43,3 +43,31 @@
 .spinner-grow.text-primary {
   background: #4f5d73;
 }
+
+.breadcrump-item{
+  text-decoration: none;
+  padding: 10px 0.65em;
+  margin: 10px 5px;
+  color: white;
+  background-color: #3399ff;
+  border: 1px solid #3399ff;
+  border-radius: 0.25rem;
+}
+
+.breadcrumb-item a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.breadcrumb-item.active {
+  color: #6c757d
+}
+
+.breadcrumb-row {
+  padding: 10px;
+  margin: 0px 14px;
+  width: 100%;
+  background-color: #e9ecef;
+  border: 2px solid #e9ecef;
+  border-radius: 0.25rem;
+}
