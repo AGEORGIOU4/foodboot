@@ -1,10 +1,5 @@
 export const INITIAL_TYPES_OF_MEAL = [
   {
-    label: "Other",
-    text: "Other",
-    value: "Other"
-  },
-  {
     label: "Breakfast",
     text: "Breakfast",
     value: "Breakfast"

@@ -12,8 +12,10 @@ export const CLoading = (props) => {
     <div>
       <CContainer style={{ textAlign: 'center' }}>
         {/* <h1>Welcome to foodboot</h1> */}
-        <CImage src='foodboot-logo-landscape.png' height={'150px'} />
-        <p className="text-medium-emphasis">Loading...</p>
+        <CCol style={{ padding: '100px' }}>
+          <CImage src='foodboot-logo-landscape.png' height={'150px'} />
+          <p className="text-medium-emphasis">Loading...</p>
+        </CCol>
         <CRow>
           <CCol xs={12}>
             <CSpinner variant='border' color='dark'></CSpinner>

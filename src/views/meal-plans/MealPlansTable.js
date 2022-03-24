@@ -21,6 +21,7 @@ const MealPlansTable = (props) => {
     <Route render={({ history }) => (
       <CSmartTable
         header={false}
+        tableProps={{ responsive: true }}
         sorterValue={{ column: 'last_name', state: 'asc' }}
         activePage={1}
         items={props.data}
