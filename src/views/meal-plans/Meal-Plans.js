@@ -4,15 +4,12 @@ import { CButton, CCard, CCardBody, CCardHeader, CFormSelect, CSpinner } from '@
 import CIcon from '@coreui/icons-react';
 import { mainUrl } from 'src/components/Common';
 import { restApiGet } from 'src/api_calls/rest';
-import { cidNoteAdd } from '@coreui/icons-pro';
+import { cidNoteAdd, cilEye, cisNoteAdd } from '@coreui/icons-pro';
 import { Route } from 'react-router-dom';
 import MealPlansTable from './MealPlansTable';
-import { useHistory } from 'react-router-dom';
 import { SwalMixin } from 'src/components/SweetAlerts/Swal';
 
 const MealPlans = () => {
-  const history = useHistory({});
-
   const [clients, setClients] = useState([]);
   const [meal_plans, setMealPlans] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,6 +17,8 @@ const MealPlans = () => {
   const [client_id, setClientID] = useState("");
   const [selected_client, setSelectedClient] = useState("");
   const [meal_plan_id, setMealPlanID] = useState("");
+
+  const [mealPlanFlag, setMealPlanFlag] = useState(false);
 
   // Set Clients
   React.useEffect(() => {
@@ -57,11 +56,12 @@ const MealPlans = () => {
     Promise.resolve(
       restApiGet(mainUrl + '/meal-plans/' + client_id, false)
         .then(function (value) {
-
           if (value) {
             setMealPlanID(value.id);
+            setMealPlanFlag(true);
+          } else {
+            setMealPlanFlag(false);
           }
-
         }));
   }
 
@@ -83,6 +83,23 @@ const MealPlans = () => {
 
           <Route render={({ history }) => (
             <CButton
+              style={{ display: (mealPlanFlag) ? 'block' : 'none' }}
+              className="me-1 float-end"
+              size="sm"
+              color='primary'
+              variant="ghost"
+              onClick={() => {
+                (client_id && client_id !== 'Select Client') ? history.push({
+                  pathname: "/meal-plans/view-meal-plan", search: '?id=' + client_id + '&meal_plan_id=' + meal_plan_id
+                }) :
+                  (SwalMixin('info', 'Select Client!'))
+              }}
+            ><CIcon icon={cilEye} /> View
+            </CButton>
+          )} />
+
+          <Route render={({ history }) => (
+            <CButton
               className="me-1 float-end"
               size="sm"
               color='info'
@@ -93,7 +110,7 @@ const MealPlans = () => {
                 }) :
                   (SwalMixin('info', 'Select Client!'))
               }}
-            ><CIcon icon={cidNoteAdd} /> Create Meal Plan
+            ><CIcon icon={cisNoteAdd} /> {(mealPlanFlag) ? 'Edit Meal Plan' : 'Create Meal Plan'}
             </CButton>
           )} />
 

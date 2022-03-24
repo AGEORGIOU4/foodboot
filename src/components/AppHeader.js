@@ -18,9 +18,8 @@ import { cilMenu } from '@coreui/icons'
 
 import AppBreadcrumb from './AppBreadcrumb'
 import AppHeaderDropdown from './header/AppHeaderDropdown'
-import { cidSignalCellularNoInternet0, cisSignal } from '@coreui/icons-pro'
+import { cidScreenDesktop, cidSignalCellularNoInternet0, cisSignal } from '@coreui/icons-pro'
 import { SwalMixin } from './SweetAlerts/Swal'
-import { useHistory } from 'react-router-dom';
 
 const AppHeader = () => {
   const dispatch = useDispatch()
@@ -65,7 +64,17 @@ const AppHeader = () => {
 
           <CHeaderNav>
             <CHeaderBrand>
-              <CIcon height={20} icon={(online_connection) ? cisSignal : cidSignalCellularNoInternet0} />
+              <CIcon height={20} icon={(online_connection) ? cisSignal : cidSignalCellularNoInternet0}
+                onClick={() => { SwalMixin('success', 'Internet Connection is healthy') }}
+              />
+            </CHeaderBrand>
+          </CHeaderNav>
+
+          <CHeaderNav>
+            <CHeaderBrand>
+              <CIcon height={20} icon={cidScreenDesktop}
+                onClick={() => { SwalMixin('info', 'For better experience, use Desktop device') }}
+              />
             </CHeaderBrand>
           </CHeaderNav>
 

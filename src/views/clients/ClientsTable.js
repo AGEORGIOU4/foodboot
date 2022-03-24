@@ -9,6 +9,8 @@ import { restApiDelete } from 'src/api_calls/rest'
 import Swal from 'sweetalert2'
 import { cilEye } from '@coreui/icons-pro'
 
+const mailMessage = '?subject=Join foodboot&body=I would like to invite you at foodboot for your nutrition monitoring! Use the following link: ' + `https://footboot.netlify.app`
+
 const ClientsTable = (props) => {
   const columns = [
     {
@@ -25,6 +27,7 @@ const ClientsTable = (props) => {
     { key: 'address', _props: { color: 'success' } },
     { key: 'edit', label: '', _style: { width: '0%' }, sorter: false, filter: false, _props: { color: 'success' } },
     { key: 'remove', label: '', _style: { width: '0%' }, sorter: false, filter: false, _props: { color: 'success' } },
+    { key: 'invite', label: '', _style: { width: '0%' }, sorter: false, filter: false, _props: { color: 'success' } },
   ]
 
   return (
@@ -38,7 +41,6 @@ const ClientsTable = (props) => {
         tableFilter
         cleaner
         loading={props.loading}
-
         itemsPerPageSelect
         itemsPerPage={5}
         columnSorter
@@ -100,6 +102,17 @@ const ClientsTable = (props) => {
                     })
                   }}
                 > <CIcon icon={cilTrash} /></CButton>
+              </td >
+            ),
+          invite:
+            (item) => (
+              <td>
+                <CButton
+                  size="sm"
+                  color='warning'
+                  // variant="outline"
+                  onClick={() => { window.open('mailto:' + item.email + mailMessage); }}
+                >Invite</CButton>
               </td >
             ),
         }}
