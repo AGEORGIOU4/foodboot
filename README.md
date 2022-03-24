@@ -3,11 +3,13 @@
 
 <h4>Frontend in ReactJS</h4>
 
-<p>To run please the frontend please execute the following commands</p>
+<p>To run the frontend please execute the following commands</p>
 
 <br/>
 
 <li>npm install</li>
-<li>node</li>
+<li>npm start</li>
+
+<p>To fetch the platform's data, run the foodboot-backend. The data are hosted in a Remote SQL Database.</p>
 
 <em>More Info can be found in the main README file in the Documentation folder</em>
