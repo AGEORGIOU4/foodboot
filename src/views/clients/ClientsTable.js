@@ -9,7 +9,7 @@ import { restApiDelete } from 'src/api_calls/rest'
 import Swal from 'sweetalert2'
 import { cilEye } from '@coreui/icons-pro'
 
-const mailMessage = '?subject=Join foodboot&body=I would like to invite you at foodboot for your nutrition monitoring! Use the following link: ' + `https://footboot.netlify.app`
+const mailMessage = '?subject=Join foodboot&body=I would like to invite you at foodboot for your nutrition monitoring! Use the following link: ' + `https://foodboot-client.netlify.app`
 
 const ClientsTable = (props) => {
   const columns = [
