@@ -1,9 +1,9 @@
 <h2>Computer Science Final Year Thesis Project</h2>
 <h6>UCLan Cyprus</h6>
 
-<h4>Frontend in ReactJS</h4>
+<h4>Nutritionist's frontend in ReactJS</h4>
 
-<p>To run the frontend please execute the following commands</p>
+<p>To run the nutritionist's frontend please execute the following commands</p>
 
 <br/>
 
