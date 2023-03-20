@@ -14,7 +14,7 @@ export async function auth0ApiCall(method, url, params, atomic) {
   };
 
   await axios.request(options).then((response) => {
-    console.log((atomic) ? response.data[0] : response.data)
+    //console.log((atomic) ? response.data[0] : response.data)
     data = ((atomic) ? response.data[0] : response.data);
     return data;
   }).catch(function (error) {
