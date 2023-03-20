@@ -21,6 +21,7 @@ const Dashboard = () => {
       auth0ApiCall('GET', 'https://foodboot.eu.auth0.com/api/v2/users', 'q: ' + user.email + ', search_engine: v3', true)
         .then(function (value) {
           userData = value;
+          console.log(userData);
           if (!userData.given_name || !userData.family_name || !userData.user_metadata) {
             SetUserInfo(userData.user_id, userData.given_name, userData.family_name, userData.user_metadata);
           }
